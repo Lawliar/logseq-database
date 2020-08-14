@@ -39,5 +39,5 @@ BTW, to see how `-rpath` is defined, use
 ```
 readelf -d <compiled llvm pass shared library>
 ```
-Also note that, "-lz3 -L<path to the directory libz3.so>" only tells the linker that libz3.so is here.
+Also note that, `-lz3 -L<path to the directory libz3.so>` only tells the linker that libz3.so is here.
 If this shared library is linked in run-time, `-rpath` must be modified accordingly.
