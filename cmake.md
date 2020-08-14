@@ -4,7 +4,7 @@
 ```
 generates compile_commands.json for each compiling unit
 and modify the command for generating certain file
-## run-time shared library not found
+## cmake building llvm when run-time shared library not found
 build llvm pass shared library with 
 ```
 -L<path to libz3.so> -lz3
