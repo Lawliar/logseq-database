@@ -39,5 +39,20 @@ BTW, to see how `-rpath` is defined, use
 ```
 readelf -d <compiled llvm pass shared library>
 ```
+
 Also note that, `-lz3 -L<path to the directory libz3.so>` only tells the linker that libz3.so is here.
 If this shared library is linked in run-time, `-rpath` must be modified accordingly.
+
+Also note `-lz3 -L<path to the directory of libz3.so>` is when you do 
+```
+link_directories("${DEPS_Z3_DIR}/bins/lib")
+link_library(z3)
+```
+However, with 
+```
+find_library(Z3_LIBRARY z3 HINTS "${DEPS_Z3_DIR}/bins/lib/")
+target_link_libraries(KSym ${Z3_LIBRARY})
+```
+will add the full path to libz3.so to the end of the linker commandline,
+which has the same effect here with `-lz3 -L<path to directory of libz3.so>`
+which is, cannot find `libz3.so` at run time since `-rpath` is not modified.
