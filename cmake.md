@@ -32,10 +32,10 @@ defined in
 `/lib/cmake/llvm/ADDllvm.cmake`
 I'm not able to modify that -rpath to include `<path to libz3.so>`
 
-So either place this libz3.so under `$ORIGIN/../lib`
+So either place this libz3.so under `$ORIGIN/../lib`(with `$ORIGIN` being the <llvm compiled shared library>)
 or compile a static library for z3, so that the link will not be at runtime.
 
-BTW, to look for shared library dependency, use
+BTW, to see how -rpath is defined, use
 ```
 readelf -d <compiled llvm pass shared library>
 ```
