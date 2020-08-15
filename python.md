@@ -66,3 +66,5 @@ case 'b': 2;break;
 default: 9;
 }
 ```
+# Debug but pdb is too slow.
+Use IPython.embed()
