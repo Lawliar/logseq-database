@@ -56,5 +56,7 @@ target_link_libraries(KSym ${Z3_LIBRARY})
 will add the full path to libz3.so to the end of the linker commandline,
 which has the same effect here with `-lz3 -L<path to directory of libz3.so>`
 which is, cannot find `libz3.so` at run time since `-rpath` is not modified.
+and `find_library+target_link_libraries` is preferred compared to `link_directory+link_library`
+as `link_directory`might confuse the linker, and since`target_link_libraries` requires full path to the library thus don't have the problem
 
 the link.txt can be found at `CMakeFiles/KSym.dir/link.txt`
