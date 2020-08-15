@@ -4,10 +4,10 @@
 ```
 generates compile_commands.json for each compiling unit
 and modify the command for generating certain file
-## run-time shared library not found
+## cmake building llvm when run-time shared library not found
 build llvm pass shared library with 
 ```
--L<path to libz3.so> -lz3
+-L<path to directory of libz3.so> -lz3
 ```
 and then 
 ```
@@ -18,8 +18,8 @@ most likely will get
 libz3.so cannot find, no such file or directory
 ```
 this is because, libz3.so will be looked for in runtime
-and the directories to look for in runtime is specified by -rpath
-However, since llvm overwrites -rpath with
+and the directories to look for in runtime is specified by `-rpath`
+However, since llvm overwrites `-rpath` with
 ```
 set(_install_rpath "\$ORIGIN/../lib${LLVM_LIBDIR_SUFFIX}" ${extra_libdir})
 
@@ -30,12 +30,33 @@ set_target_properties(${name} PROPERTIES
 ```
 defined in 
 `/lib/cmake/llvm/ADDllvm.cmake`
-I'm not able to modify that -rpath to include `<path to libz3.so>`
+I'm not able to modify that `-rpath` to include `<path to libz3.so>`
 
-So either place this libz3.so under `$ORIGIN/../lib`
+So either place this libz3.so under `$ORIGIN/../lib`(with `$ORIGIN` being the <llvm compiled shared library>)
 or compile a static library for z3, so that the link will not be at runtime.
 
-BTW, to look for shared library dependency, use
+BTW, to see how `-rpath` is defined, use
 ```
 readelf -d <compiled llvm pass shared library>
 ```
+
+Also note that, `-lz3 -L<path to the directory libz3.so>` only tells the linker that libz3.so is here.
+If this shared library is linked in run-time, `-rpath` must be modified accordingly.
+
+Also note `-lz3 -L<path to the directory of libz3.so>` is when you do 
+```
+link_directories("${DEPS_Z3_DIR}/bins/lib")
+link_library(z3)
+```
+However, with 
+```
+find_library(Z3_LIBRARY z3 HINTS "${DEPS_Z3_DIR}/bins/lib/")
+target_link_libraries(KSym ${Z3_LIBRARY})
+```
+will add the full path to libz3.so to the end of the linker commandline,
+which has the same effect here with `-lz3 -L<path to directory of libz3.so>`
+which is, cannot find `libz3.so` at run time since `-rpath` is not modified.
+and `find_library+target_link_libraries` is preferred compared to `link_directory+link_library`
+as `link_directory`might confuse the linker, and since`target_link_libraries` requires full path to the library thus don't have the problem
+
+the link.txt can be found at `CMakeFiles/KSym.dir/link.txt`
