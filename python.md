@@ -14,6 +14,11 @@ On RedHat like distros it should be
 ```
 sudo yum install python-devel
 ```
+the same solution applies to the similar problem when install pygraphviz
+and the dev package is
+```
+python -m pip install pygraphviz
+```
 # Use
 ## filter a list
 ```
