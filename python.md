@@ -73,3 +73,6 @@ default: 9;
 ```
 # Debug but pdb is too slow.
 Use IPython.embed()
+## Cannot exit ipython interactive console?
+`ctrl+d`, `exit()` and `quit()` cannot work
+use `import os; os._exit(1)` instead
