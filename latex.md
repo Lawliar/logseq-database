@@ -14,3 +14,30 @@ pdflatex -shell-escape myfile.tex
 ```
 sudo apt-get install texlive-full
 ```
+## Algorithm
+```
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+\begin{algorithm}
+\caption{Psedocode for ISR analysis\cm{This psedo code outline the general workflow}}
+\label{alg:main loop}
+
+\begin{algorithmic}[1]
+\State $\textbf{AS}$=\{$S_{init}$\}
+\While{ $\textbf{AS}$ $!= \emptyset$}
+    \State Dequeue $\textbf{S}$ from $\textbf{AS}$ according to heuristic
+    \State $\textbf{S}^{'}\gets$  $eval(\textbf{S})$
+    \If{sss} 
+        \State xxx 
+        \State uuu 
+    \ElsIf{check global variable}
+        \State ...
+    \ElsIf{MMIO access}
+        \State Use P2IM module
+        \State ...
+        \State $\textbf{AS}\gets \textbf{AS}\cup \textsl{\textsf{S}}$
+    \EndIf
+\EndWhile
+\end{algorithmic}
+\end{algorithm}
+```
