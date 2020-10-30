@@ -29,3 +29,12 @@ sudo apt-get install libz-dev
 sudo apt-get install gdb
 sudo apt-get install build-essential libx11-dev
 ```
+
+## Ctrl+s
+https://unix.stackexchange.com/questions/12107/how-to-unfreeze-after-accidentally-pressing-ctrl-s-in-a-terminal
+
+## copy past in tmux 
+- Copy from tmux clipboard
+ctrl+b+[ join the visual copy mode, select, copy with enter, then in anther tmux pane, ctrl+b+] past.
+- Copy from system clipboard
+Copy by using anything(right-click mouse), then past with `Shift+ctrl+v`
