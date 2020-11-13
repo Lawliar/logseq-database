@@ -60,3 +60,7 @@ and `find_library+target_link_libraries` is preferred compared to `link_director
 as `link_directory`might confuse the linker, and since`target_link_libraries` requires full path to the library thus don't have the problem
 
 the link.txt can be found at `CMakeFiles/KSym.dir/link.txt`
+
+## statically link a library
+1. this library needs to be position independent code
+2. when you link_directories, and there are dynamic lib as well as static lib, e.g. libz3.a  libz3.so, it seems, when you say 'link_libraries'/'target_link_libraries' later , cmake will assume you mean the dynamic one, so it will not statically link the static library even if it's there.

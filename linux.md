@@ -12,3 +12,6 @@ make M=./drivers/staging/comedi/
 ##sudo and keep the environment variables
 `sudo` seems can change the environment variables,
 use `sudo -E` to keep these environment variables
+
+## expose local port to the intenet
+Local heavy task like tensorflow/syzkaller, usually use local web service to report progress, CLI tool like links/lynx functionality is very limited(a little fancy display will result in failure), thus we can either expose certain port to the public(`localchannel` is a very good tool in this regard), also, VNC can be used.

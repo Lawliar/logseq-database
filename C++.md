@@ -21,3 +21,7 @@ extern "C"{
 ```
 otherwise, although the C function will be compiled into the same binary with the C++ functions,
 the symbol will not be correctly resolved. As a consequence, you will have runtime undefined symbolc error.
+## two AND conditions e.g. if (a && b)
+always `a` get evaluated first, if a is false, then b will not be evaluated. 
+## default value for function parameter
+should only set the default value in the function declaration, should not be defined again in the function's implmenetation.
