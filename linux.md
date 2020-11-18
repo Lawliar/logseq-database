@@ -15,3 +15,27 @@ use `sudo -E` to keep these environment variables
 
 ## expose local port to the intenet
 Local heavy task like tensorflow/syzkaller, usually use local web service to report progress, CLI tool like links/lynx functionality is very limited(a little fancy display will result in failure), thus we can either expose certain port to the public(`localchannel` is a very good tool in this regard), also, VNC can be used.
+
+## sort htop as the process hierachy
+F5
+## check out port status
+netstat -tulpn | grep 56741
+note that, if this port is occupied by a root process, and you're normal user, the program name won't be displayed, use sudo to show the program name.
+
+## check out the directory size
+du -h -d 1
+
+## ssh set-up
+after key gen, you have `id_rsa` and `id_rsa.pub`, former, your private key, is passphrase protected, the latter, you pub key, is your public identity.
+### remote setting
+copy `id_rsa.pub` to your remote server which you use your pub key as a login authentication method, and append it into `~/.ssh/authorized_keys`, 
+then the remote server can recognize you as an authenticated party.
+### local setting
+place your two key files into ~/.ssh/
+add 
+`eval `ssh-agent`
+ssh-add
+`
+to your .bashrc, then ssh-agent will remember the passphrase you use (to protect the private key), so, you don't have to input the passphrase everytime you use your private key.
+
+now, you should be able to just ssh remote\_user@server to login to your server.

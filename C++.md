@@ -25,3 +25,8 @@ the symbol will not be correctly resolved. As a consequence, you will have runti
 always `a` get evaluated first, if a is false, then b will not be evaluated. 
 ## default value for function parameter
 should only set the default value in the function declaration, should not be defined again in the function's implmenetation.
+## if you want to see a function that failed
+if you want to know how it failed, but you only know it failed after it failed, you can just replay the failure again after it failed.
+## stupiest bug error
+trace_it = eachInter->second.erase(trace_it);
+delete(*trace_it);
