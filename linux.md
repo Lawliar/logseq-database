@@ -39,3 +39,7 @@ ssh-add
 to your .bashrc, then ssh-agent will remember the passphrase you use (to protect the private key), so, you don't have to input the passphrase everytime you use your private key.
 
 now, you should be able to just ssh remote\_user@server to login to your server.
+## bash command line
+ctrl + a: move cursor to the beginning of the cmd line
+ctrl + u: clear current line
+ctrl + e: move cursor to the end of this line
