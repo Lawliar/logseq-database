@@ -72,3 +72,9 @@ will work
 ## "fullpage" package will overwrite the margin parameter
 
 Why the hell do you do that? Why do you exist in the first place?
+
+## an empty line
+
+```\linebreak```doesn't work
+
+use ```\bigskip```instead
