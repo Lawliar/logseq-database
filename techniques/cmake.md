@@ -64,3 +64,9 @@ the link.txt can be found at `CMakeFiles/KSym.dir/link.txt`
 ## statically link a library
 1. this library needs to be position independent code
 2. when you link_directories, and there are dynamic lib as well as static lib, e.g. libz3.a  libz3.so, it seems, when you say 'link_libraries'/'target_link_libraries' later , cmake will assume you mean the dynamic one, so it will not statically link the static library even if it's there.
+
+## -DCMAKE_PREFIX_PATH
+```
+Specifies a path which will be used by the FIND_XXX() commands
+```
+

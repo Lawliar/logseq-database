@@ -43,3 +43,9 @@ now, you should be able to just ssh remote\_user@server to login to your server.
 ctrl + a: move cursor to the beginning of the cmd line
 ctrl + u: clear current line
 ctrl + e: move cursor to the end of this line
+## ports
+sudo lsof -i -P -n | grep LISTEN
+sudo netstat -tulpn | grep LISTEN
+sudo lsof -i:22 ## see a specific port such as 22 ##
+sudo nmap -sTU -O IP-address-Here
+
