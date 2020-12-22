@@ -4,6 +4,7 @@
 ```
 generates compile_commands.json for each compiling unit
 and modify the command for generating certain file
+
 ## cmake building llvm when run-time shared library not found
 build llvm pass shared library with 
 ```
@@ -70,3 +71,10 @@ the link.txt can be found at `CMakeFiles/KSym.dir/link.txt`
 Specifies a path which will be used by the FIND_XXX() commands
 ```
 
+```
+
+## generate IR when compiling
+CC=clang CXX=clang++ cmake -G "Unix Makefiles" -DCMAKE_C_FLAGS=-flto -DCMAKE_CXX_FLAGS=-flto
+
+## generate build command
+CMAKE_EXPORT_COMPILE_COMMANDS=True

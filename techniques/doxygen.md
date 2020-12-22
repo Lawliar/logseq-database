@@ -4,3 +4,7 @@
 3. `doxygen -g`
 4. modify this Doxyfile
 5. `doxygen Doxyfile`
+
+## doxygen not generating callgraph for all functions:
+some configurations are not set
+https://stackoverflow.com/questions/52318468/why-doesnt-doxygen-create-a-callgraph-of-my-c-code
