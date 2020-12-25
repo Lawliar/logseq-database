@@ -53,3 +53,5 @@ sudo netstat -tulpn | grep LISTEN
 sudo lsof -i:22 ## see a specific port such as 22 ##
 sudo nmap -sTU -O IP-address-Here
 
+## pipe
+https://askubuntu.com/questions/420981/how-do-i-save-terminal-output-to-a-file
