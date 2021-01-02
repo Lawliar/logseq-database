@@ -27,7 +27,5 @@
 *~
 
 # Output
-paper.pdf
-thesis.pdf
 *.gz
 *.pptx
