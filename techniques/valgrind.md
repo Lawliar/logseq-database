@@ -5,7 +5,7 @@ valgrind --tool=memcheck
 ## vgdb
 in one shell, run valgrind
 ```
-valgrind --leak-check=full/--tool=massif --vgdb=yes --vgdb-error=0 ./prog <para>
+valgrind --leak-check=full/or (--tool=massif) --threshold=0.01 --vgdb=yes --vgdb-error=0 ./prog <para>
 ```
 in another shell(basically follow the instructions given by the first shell)
 ```

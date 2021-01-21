@@ -14,3 +14,6 @@ After I switched to using ld.lld-5.0, all errors were gone.
 ## If you expand -std-link-opts, you get:
 
 Pass Arguments: -targetlibinfo -datalayout -notti -jstti -no-aa -tbaa -scoped-noalias -assumption-tracker -basicaa -verify -verify-di -ipsccp -globalopt -constmerge -deadargelim -domtree -instcombine -basiccg -inline-cost -inline -prune-eh -globalopt -globaldce -basiccg -argpromotion -domtree -instcombine -lazy-value-info -jump-threading -domtree -sroa -basiccg -functionattrs -globalsmodref-aa -domtree -loops -loop-simplify -lcssa -licm -memdep -mldst-motion -domtree -memdep -gvn -memdep -memcpyopt -dse -loops -scalar-evolution -loop-simplify -lcssa -indvars -loop-deletion -branch-prob -block-freq -loop-vectorize -scalar-evolution -alignment-from-assumptions -instcombine -lazy-value-info -jump-threading -simplifycfg -globaldce -verify -verify-di -print-module
+
+## opt -dot-cfg built-in.ll
+will write cfgs for all functions into seperated files, super useful!

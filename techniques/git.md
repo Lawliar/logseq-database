@@ -17,7 +17,11 @@ Then when I diff, I saw no change, then I just "git add" then "git commit --amen
 Then "git push" complained that,"Your branch and 'origin/master' have diverged,".
 
 Then I realized, the "git commit --amend" seems to screw up the last commit (which overwrites the HEAD in github), 
+I found this out because when I "git log", I didn't see the commit message I just wrote, but the commit message of the one that's in github,
 I guess github saw the commit I pushed, is not the child of the HEAD it has, 
 that is why github reject my push.
 
 Then I fixed this, by "git reset --sfot <the last commit on github>" , "git commit " again.
+
+## git bisect
+https://www.youtube.com/watch?v=P3ZR_s3NFvM

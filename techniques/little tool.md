@@ -8,3 +8,4 @@ windows built-in malicious software removal
 -Tsvg instead
 ## disk-usage
 duf https://github.com/muesli/duf
+## "nm" - list symbols from object files

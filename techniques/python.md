@@ -76,3 +76,8 @@ Use IPython.embed()
 ## Cannot exit ipython interactive console?
 `ctrl+d`, `exit()` and `quit()` cannot work
 use `import os; os._exit(1)` instead
+## built-in hash() function is randomized by default from python3.2 onward
+Although in the same run, hash of the same value is the same,
+across different run, hash of the same value will be different.
+add set PYTHONHASHSEED=0 to disable it
+https://stackoverflow.com/questions/27522626/hash-function-in-python-3-3-returns-different-results-between-sessions
