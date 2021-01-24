@@ -1,3 +1,5 @@
+# llvm use error
+
 ## make the headers of llvm
 https://github.com/compiler-explorer/compiler-explorer/issues/1687
 make install-llvm-headers
@@ -17,3 +19,12 @@ Pass Arguments: -targetlibinfo -datalayout -notti -jstti -no-aa -tbaa -scoped-no
 
 ## opt -dot-cfg built-in.ll
 will write cfgs for all functions into seperated files, super useful!
+
+# llvm programming tricks
+## ValueID
+`value` is a foundamental class, which is a super class of all the important class like `Instruction` and `Function`
+It distinguishes different actual instantiated subclassed by `enum llvm::Value::ValueTy`.
+So when you look at a value, its SubclassID field(unsigned char) should tell you what really the subclass is.
+And an interesting fact based on this is, the value representing `Instruction` is always the biggest number in this enumeration.
+Saying so isn't very accurate, since `Instruction` itself also uses the exact same field to distinguish different Instructions like AddInstruction, GEP.
+All these different instructions are enumerated from the enumerator of `Instruction` on-ward. This is also why `Instruction` should be the biggest value in the previous enumeration.
