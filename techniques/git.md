@@ -25,3 +25,17 @@ Then I fixed this, by "git reset --sfot <the last commit on github>" , "git comm
 
 ## git bisect
 https://www.youtube.com/watch?v=P3ZR_s3NFvM
+
+## git clear history
+https://gist.github.com/stephenhardy/5470814
+
+This might be problematic with repositories with git submodules.
+I believe the recipe in this SO answer is a safer way: https://stackoverflow.com/a/13102849
+
+git checkout --orphan newBranch
+git add -A  # Add all files and commit them
+git commit
+git branch -D master  # Deletes the master branch
+git branch -m master  # Rename the current branch to master
+git push -f origin master  # Force push master branch to github
+git gc --aggressive --prune=all     # remove the old files
