@@ -91,3 +91,6 @@ reinstall jedi
 https://github.com/ipython/ipython/issues/12740
 pip install jedi==0.17.2
 
+## pprint is very useful when priting complex built-in strcutures
+
+such as list in a dict in a list in a struct e.t.c,
