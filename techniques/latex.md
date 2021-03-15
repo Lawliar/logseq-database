@@ -78,3 +78,6 @@ Why the hell do you do that? Why do you exist in the first place?
 ```\linebreak```doesn't work
 
 use ```\bigskip```instead
+
+## macro ignores the tailing space:
+invoke macro like "\macro{}" instead of just "\macro"
