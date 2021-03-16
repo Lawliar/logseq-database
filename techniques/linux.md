@@ -55,3 +55,6 @@ sudo nmap -sTU -O IP-address-Here
 
 ## pipe
 https://askubuntu.com/questions/420981/how-do-i-save-terminal-output-to-a-file
+
+## list file recursively
+`tree`
