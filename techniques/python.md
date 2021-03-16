@@ -94,3 +94,10 @@ pip install jedi==0.17.2
 ## pprint is very useful when priting complex built-in strcutures
 
 such as list in a dict in a list in a struct e.t.c,
+
+## pip freeze and pip install -r
+when in a virtualenv, just use `pip freeze > requirements.txt` to output the packages installed
+then in a new virtualenv use `pip install -r requirements.txt`
+
+## `Python.h` not found
+probably because you install python via apt, and apart from python3.7, you'll need to install python3.7-dev as well
