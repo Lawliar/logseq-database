@@ -81,3 +81,15 @@ use ```\bigskip```instead
 
 ## macro ignores the tailing space:
 invoke macro like "\macro{}" instead of just "\macro"
+
+## hierachy
+
+https://tex.stackexchange.com/questions/186981/is-there-a-subsubsubsection-command
+
+- \part{part}
+- \chapter{chapter}
+- \section{section}
+- \subsection{subsection}
+- \subsubsection{subsubsection}
+- \paragraph{paragraph}
+- \subparagraph{subparagraph}
