@@ -78,3 +78,16 @@ CC=clang CXX=clang++ cmake -G "Unix Makefiles" -DCMAKE_C_FLAGS=-flto -DCMAKE_CXX
 
 ## generate build command
 CMAKE_EXPORT_COMPILE_COMMANDS=True
+
+## output build/link command
+`make VERBOSE=1`
+
+## find_library
+`
+find_library(
+    lib_name_var
+    NAMES LIB_FORMAL_NAME
+    HINTS "${PROJECT_SOURCE_DIR}/deps/findfirst/build"
+)
+`
+if LIB_FORMAL_NAME not found, the var ${lib_name_var} will be set to "lib_name_var-NOTFOUND"
