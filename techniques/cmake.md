@@ -71,8 +71,6 @@ the link.txt can be found at `CMakeFiles/KSym.dir/link.txt`
 Specifies a path which will be used by the FIND_XXX() commands
 ```
 
-```
-
 ## generate IR when compiling
 CC=clang CXX=clang++ cmake -G "Unix Makefiles" -DCMAKE_C_FLAGS=-flto -DCMAKE_CXX_FLAGS=-flto
 
@@ -91,3 +89,22 @@ find_library(
 )
 `
 if LIB_FORMAL_NAME not found, the var ${lib_name_var} will be set to "lib_name_var-NOTFOUND"
+
+## inter-lib dependency
+say a executable `exe` depends on lib `a` `b` `c` and lib `a` depends on lib `a1`
+the right way to specify this dependency can be as simple as
+`
+add_lib(a)
+target_link_libraries(a a1)
+add_lib(b)
+add_lib(c)
+add_exe(exe)
+target_link_libraries(exe a b c)
+`
+More specifically, although when 
+`
+target_link_libraries(a a1)
+`
+a1 will not be linked into a(thus, in liba, all symbolcs from a1 will be undefined)
+however, cmake will add a1 later in the linking stage whenever liba is used.
+How smart.

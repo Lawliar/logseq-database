@@ -22,8 +22,10 @@ extern "C"{
   xxx
 }
 ```
-otherwise, although the C function will be compiled into the same binary with the C++ functions,
+otherwise, although the C function will be arched into the same (static) binary with the C++ functions,
 the symbol will not be correctly resolved. As a consequence, you will have runtime undefined symbolc error.
+
+More specifically, the name of symbols(say a function) compiled from C will not match the name which is referenced in C++(because C++ will mangle the name), thus when linking undefined symbol error will occur.
 
 ## two AND conditions e.g. if (a && b)
 always `a` get evaluated first, if a is false, then b will not be evaluated. 
