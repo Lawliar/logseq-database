@@ -16,3 +16,9 @@ rename window:`prefix+ctrl+,`
 tmux a(ttach) -dt session name
 tmux ls
 tmux kill-session 
+## mouse supoort
+add
+`
+set -g mouse on
+`
+~/.tmux.conf
