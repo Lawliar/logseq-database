@@ -1,0 +1,3 @@
+## basic
+### Different jargons MCU,MPU,CPU...
+https://www.eejournal.com/article/what-the-faq-are-cpus-mpus-mcus-and-gpus/
