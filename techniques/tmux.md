@@ -16,3 +16,5 @@ rename window:`prefix+ctrl+,`
 tmux a(ttach) -dt session name
 tmux ls
 tmux kill-session 
+## swap positions of panes
+https://superuser.com/questions/879190/how-does-one-swap-two-panes-in-tmux
