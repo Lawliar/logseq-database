@@ -1,0 +1,10 @@
+## Cannot connect qc35 to macbook:
+The problem is: 
+1. Powering up qc35, it won't automatically connect to MacBookPro(maybe other laptop as well?), it won't connect.
+2. If you go to the bluetooth page and connect, the windows will show it's connected, however, no soundback will be given from qc35, and the connect will turn from connected to dis-connected soon as well.
+3. Clearing the device list(by push the power button to the right for 10s) on the headphone does not work as well
+How to solve this:
+according to this pose:
+https://community.bose.com/t5/Headphones-Archive/QC-35-II-won-t-connect-to-Macbook-Pro/td-p/110693
+Just connect the usb from the headphone to the computer. Wait for 10s.(charge for some time? In my problem, my QC35 has 60% power.)
+Then it works again.
