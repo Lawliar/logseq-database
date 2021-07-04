@@ -8,3 +8,6 @@ the latter writes to .vscode/settings.json in the current folder.
 
 Said these, just open File->Preferences->Settings, and add folder you want to exclude when searching
 Remember to specify whether this setting is applied to the user or one specific workspace.
+
+For the current workspace though, you can just type down the folders you want to exluce at the search sidebar.
+It will survive even you close that editor(did not see any conf written into .vscode though, not sure how this works)
