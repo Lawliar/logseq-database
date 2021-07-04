@@ -58,3 +58,9 @@ https://askubuntu.com/questions/420981/how-do-i-save-terminal-output-to-a-file
 
 ## list file recursively
 `tree`
+
+## watch
+watch "ps au"
+
+## shell does not support up arrow:
+https://askubuntu.com/questions/325807/arrow-keys-home-end-tab-complete-keys-not-working-in-shell
