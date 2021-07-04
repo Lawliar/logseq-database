@@ -11,3 +11,5 @@ Remember to specify whether this setting is applied to the user or one specific 
 
 For the current workspace though, you can just type down the folders you want to exluce at the search sidebar.
 It will survive even you close that editor(did not see any conf written into .vscode though, not sure how this works)
+
+https://stackoverflow.com/questions/29971600/choose-folders-to-be-ignored-during-search-in-vs-code
