@@ -12,6 +12,12 @@ git rm --cached -r mydirectory
 ```
 
 ## git reset
+
+### undo git commit
+git reset HEAD~
+### undo git add
+git reset <file added wrongfully>
+
 The arose from a mistak I had the other day, when I was "git commit" without "git add".
 Then when I diff, I saw no change, then I just "git add" then "git commit --amend".
 Then "git push" complained that,"Your branch and 'origin/master' have diverged,".
