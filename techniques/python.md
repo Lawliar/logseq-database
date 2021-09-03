@@ -101,3 +101,8 @@ then in a new virtualenv use `pip install -r requirements.txt`
 
 ## `Python.h` not found
 probably because you install python via apt, and apart from python3.7, you'll need to install python3.7-dev as well
+
+## pdb_attach
+attach to a running python process
+https://pypi.org/project/pdb-attach/
+Just remember to listen to some port in your python program

@@ -64,3 +64,14 @@ watch "ps au"
 
 ## shell does not support up arrow:
 https://askubuntu.com/questions/325807/arrow-keys-home-end-tab-complete-keys-not-working-in-shell
+
+## shared memory
+
+1. key_id = ftok(...)
+2. block_id = shmget(key_id...)
+3. ptr = shmat(block_id), shmdt(ptr)
+
+without 1, you can also specify key_id to IPC_PRIVATE
+
+### Different between shared memory key(key_id) and shared memory ID(block ID)
+https://stackoverflow.com/questions/19518607/shared-memory-whats-the-difference-between-the-key-and-the-id

@@ -18,3 +18,4 @@ tmux ls
 tmux kill-session 
 ## swap positions of panes
 https://superuser.com/questions/879190/how-does-one-swap-two-panes-in-tmux
+### looks like this swap pane does not directly swap the pane specified by the number shown by crtl+q, it has sth todo with the visit history??
