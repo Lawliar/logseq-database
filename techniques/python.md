@@ -106,3 +106,6 @@ probably because you install python via apt, and apart from python3.7, you'll ne
 attach to a running python process
 https://pypi.org/project/pdb-attach/
 Just remember to listen to some port in your python program
+
+## pyconfig.h not found when pip installing packages
+Most likely, when you install `apt install python-dev` or `python3-dev`, it's just for specific python version(say, 3.8), and if you switch to python3.6, you need to install  `python3.6-dev` as well 
