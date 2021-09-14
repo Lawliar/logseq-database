@@ -15,3 +15,7 @@ docker exec -it [container-id] bash
 `
 docker run --name ubuntu_bash -v /home/lcm/Github/indy-sdk:/home -i -t ubuntu:xenial bash
 `
+
+### app running inside container connecting to localhost
+instead of using `localhost` as the ip address, use `host.docker.internal` instead.
+Since container has its own network interface, "localhost" or "127.0.0.1" are not the same as outside the container
