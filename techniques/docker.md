@@ -11,6 +11,9 @@ docker attach `docker ps -q -l` # reattach the terminal & stdin
 `
 docker exec -it [container-id] bash
 `
+### attach to a container as root
+docker exec -u 0 -it [container-id] bash
+
 ### run a container and attach
 `
 docker run --name ubuntu_bash -v /home/lcm/Github/indy-sdk:/home -i -t ubuntu:xenial bash
@@ -19,3 +22,10 @@ docker run --name ubuntu_bash -v /home/lcm/Github/indy-sdk:/home -i -t ubuntu:xe
 ### app running inside container connecting to localhost
 instead of using `localhost` as the ip address, use `host.docker.internal` instead.
 Since container has its own network interface, "localhost" or "127.0.0.1" are not the same as outside the container
+
+
+### docker bind to tcp 4 ports
+docker will expose container's port to the host tcp6 port even if the port inside the container is tcp 4.
+fix this by adding `-p 127.0.0.1:port1-port2:port1-port2` at `docker run`
+related discussion:
+https://github.com/moby/moby/issues/2174

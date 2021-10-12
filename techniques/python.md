@@ -109,3 +109,7 @@ Just remember to listen to some port in your python program
 
 ## pyconfig.h not found when pip installing packages
 Most likely, when you install `apt install python-dev` or `python3-dev`, it's just for specific python version(say, 3.8), and if you switch to python3.6, you need to install  `python3.6-dev` as well 
+
+## execute python with tee
+python -u <python program> |  tee <outputfile>
+https://stackoverflow.com/questions/21662783/linux-tee-is-not-working-with-python

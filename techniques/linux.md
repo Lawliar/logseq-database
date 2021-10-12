@@ -75,3 +75,6 @@ without 1, you can also specify key_id to IPC_PRIVATE
 
 ### Different between shared memory key(key_id) and shared memory ID(block ID)
 https://stackoverflow.com/questions/19518607/shared-memory-whats-the-difference-between-the-key-and-the-id
+
+## pmap <PID>
+meassure memory
