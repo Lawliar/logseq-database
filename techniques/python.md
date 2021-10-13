@@ -113,3 +113,8 @@ Most likely, when you install `apt install python-dev` or `python3-dev`, it's ju
 ## execute python with tee
 python -u <python program> |  tee <outputfile>
 https://stackoverflow.com/questions/21662783/linux-tee-is-not-working-with-python
+
+
+## python multi thread appears to be sequencial
+https://stackoverflow.com/questions/52479870/python-running-threads-sequentially
+BIG MISTAKE!!!
