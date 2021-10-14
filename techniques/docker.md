@@ -29,3 +29,9 @@ docker will expose container's port to the host tcp6 port even if the port insid
 fix this by adding `-p 127.0.0.1:port1-port2:port1-port2` at `docker run`
 related discussion:
 https://github.com/moby/moby/issues/2174
+
+### listen to host port on the container
+- EXPOSE port in the dockerfile
+- -p <hostip>:<containerip>
+- in the app(inside the container) use `0.0.0.0` instead of `127.0.0.1`
+https://stackoverflow.com/questions/39525820/docker-port-forwarding-not-working

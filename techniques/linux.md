@@ -78,3 +78,7 @@ https://stackoverflow.com/questions/19518607/shared-memory-whats-the-difference-
 
 ## pmap <PID>
 meassure memory
+
+
+## if some software installation page force you to read some licence, and you keep pressing enter, and miss the "do you accept" and default to N, thus abort
+Just press Ctrl+C or S to scroll to the last
