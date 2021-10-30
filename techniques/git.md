@@ -36,3 +36,11 @@ git branch -D master  # Deletes the master branch
 git branch -m master  # Rename the current branch to master
 git push -f origin master  # Force push master branch to github
 git gc --aggressive --prune=all     # remove the old files
+
+## git CA cert verification failed
+the problem can be :
+fatal: unable to access 'https://repo.or.cz/jimtcl.git/': server certificate verification failed. CAfile: none CRLfile: none
+fatal: clone of 'https://repo.or.cz/jimtcl.git' into submodule path '/home/lcm/Desktop/pico/openocd/jimtcl' failed
+
+-- how to solve:
+https://stackoverflow.com/questions/35821245/github-server-certificate-verification-failed

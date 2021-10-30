@@ -1,0 +1,2 @@
+## bootable usb drive
+rufus
