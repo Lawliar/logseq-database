@@ -118,3 +118,7 @@ https://stackoverflow.com/questions/21662783/linux-tee-is-not-working-with-pytho
 ## python multi thread appears to be sequencial
 https://stackoverflow.com/questions/52479870/python-running-threads-sequentially
 BIG MISTAKE!!!
+
+## can re-bind list but not integer in python closure
+inside a closure, you can append to a list defined outside the closure, but you cannot increment an integer(very weird)
+https://stackoverflow.com/questions/21959985/why-cant-python-increment-variable-in-closure

@@ -7,3 +7,6 @@ for example `-Wreturn-type` will raise a warning if a function with non-void ret
 
 ## instrumentation with gcc
 https://gcc.gnu.org/onlinedocs/gcc/Instrumentation-Options.html
+
+## -fsanitize-coverage is ignored
+it looks like it does not work well with -flto, just remove -flto and it managed to instrument

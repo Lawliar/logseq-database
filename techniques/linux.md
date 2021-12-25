@@ -97,3 +97,5 @@ https://serverfault.com/questions/50585/whats-the-best-way-to-check-if-a-volume-
 
 ## failed to create symbolic link: operation not supported on socket
 most likely it's because you're making a shared library in a shared folder, making shared library is not supported, somehow? Just move to a local folder, because creating a sym link to a shared file(not physically located in the file system) does not make too much sense.
+## invalid value of canonical build
+https://github.com/openucx/ucx/issues/3871
