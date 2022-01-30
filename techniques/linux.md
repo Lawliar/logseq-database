@@ -56,14 +56,6 @@ sudo nmap -sTU -O IP-address-Here
 ## pipe
 https://askubuntu.com/questions/420981/how-do-i-save-terminal-output-to-a-file
 
-## list file recursively
-`tree`
-
-## watch
-watch "ps au"
-
-## shell does not support up arrow:
-https://askubuntu.com/questions/325807/arrow-keys-home-end-tab-complete-keys-not-working-in-shell
 
 ## shared memory
 
@@ -83,8 +75,6 @@ meassure memory
 ## if some software installation page force you to read some licence, and you keep pressing enter, and miss the "do you accept" and default to N, thus abort
 Just press Ctrl+C or S to scroll to the last
 
-## user log out
-sudo pkill -KILL -u <username>
 
 ## /etc/fstab
 https://wiki.debian.org/fstab
@@ -92,6 +82,7 @@ sth like this if you wanto to mount a folder shared in windows to linux
 `
 //10.110.150.217/Users/lcm/Documents/GitHub /home/lcm/win-github cifs username=lcm,noauto,sync,rw,users 0 0
 `
+
 ## check if a mountpoint is mounted
 https://serverfault.com/questions/50585/whats-the-best-way-to-check-if-a-volume-is-mounted-in-a-bash-script
 
@@ -99,3 +90,21 @@ https://serverfault.com/questions/50585/whats-the-best-way-to-check-if-a-volume-
 most likely it's because you're making a shared library in a shared folder, making shared library is not supported, somehow? Just move to a local folder, because creating a sym link to a shared file(not physically located in the file system) does not make too much sense.
 ## invalid value of canonical build
 https://github.com/openucx/ucx/issues/3871
+
+
+## merge output of different commands together:
+https://unix.stackexchange.com/questions/64736/combine-the-output-of-two-commands-in-bash
+`(command1 & command 2)`
+
+## user log out
+sudo pkill -KILL -u <username>
+
+## shell does not support up arrow:
+https://askubuntu.com/questions/325807/arrow-keys-home-end-tab-complete-keys-not-working-in-shell
+
+## list file recursively
+`tree`
+
+## watch
+watch "ps au"
+
