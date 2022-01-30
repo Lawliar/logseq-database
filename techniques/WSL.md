@@ -32,6 +32,7 @@ sudo apt-get install build-essential libx11-dev
 
 ## Ctrl+s
 https://unix.stackexchange.com/questions/12107/how-to-unfreeze-after-accidentally-pressing-ctrl-s-in-a-terminal
+Ctrl+s will freeze the terminal, use ctrl+q to unfreeze
 
 ## copy past in tmux 
 - Copy from tmux clipboard

@@ -16,9 +16,10 @@ rename window:`prefix+ctrl+,`
 tmux a(ttach) -dt session name
 tmux ls
 tmux kill-session 
-## mouse supoort
-add
-`
-set -g mouse on
-`
-~/.tmux.conf
+## swap positions of panes
+https://superuser.com/questions/879190/how-does-one-swap-two-panes-in-tmux
+### looks like this swap pane does not directly swap the pane specified by the number shown by crtl+q, it has sth todo with the visit history??
+## copy tmux to clipboard
+https://unix.stackexchange.com/questions/131011/use-system-clipboard-in-vi-copy-mode-in-tmux
+## paste inside tmux
+shift + right click

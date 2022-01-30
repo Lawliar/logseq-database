@@ -101,3 +101,24 @@ then in a new virtualenv use `pip install -r requirements.txt`
 
 ## `Python.h` not found
 probably because you install python via apt, and apart from python3.7, you'll need to install python3.7-dev as well
+
+## pdb_attach
+attach to a running python process
+https://pypi.org/project/pdb-attach/
+Just remember to listen to some port in your python program
+
+## pyconfig.h not found when pip installing packages
+Most likely, when you install `apt install python-dev` or `python3-dev`, it's just for specific python version(say, 3.8), and if you switch to python3.6, you need to install  `python3.6-dev` as well 
+
+## execute python with tee
+python -u <python program> |  tee <outputfile>
+https://stackoverflow.com/questions/21662783/linux-tee-is-not-working-with-python
+
+
+## python multi thread appears to be sequencial
+https://stackoverflow.com/questions/52479870/python-running-threads-sequentially
+BIG MISTAKE!!!
+
+## can re-bind list but not integer in python closure
+inside a closure, you can append to a list defined outside the closure, but you cannot increment an integer(very weird)
+https://stackoverflow.com/questions/21959985/why-cant-python-increment-variable-in-closure
