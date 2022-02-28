@@ -9,3 +9,5 @@ it looks like, in, say a container, `dpkg --print-foreign-architectures` is turn
 in order to install i386 package, you have to add it by `dpkg --add-architecture i386`, then `apt update`
 then you can `apt install libz3-dev:i386`
 https://www.linode.com/community/questions/19916/how-do-i-enable-32-bit-support-on-my-64-bit-os
+## Never FUCKING Shutdown Ubuntu through physical button. You will regret.
+more specifically, you won't be able to login the GUI. Likely you will enter recovery mode and do fsck, but it's too much pain, just shutdown through software
