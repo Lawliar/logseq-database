@@ -3,3 +3,9 @@ https://www.joho.se/2020/10/01/pdftk-and-php-pdftk-on-ubuntu-18-04-without-using
 ## "authentication required" window won't disappear even if the passwd is entered
 https://www.reddit.com/r/gnome/comments/fscvql/comment/g2o8vsq/?utm_source=share&utm_medium=web2x&context=3
 `alt+f2` and then `r`
+
+## add other package installation support for apt
+it looks like, in, say a container, `dpkg --print-foreign-architectures` is turned off by default,
+in order to install i386 package, you have to add it by `dpkg --add-architecture i386`, then `apt update`
+then you can `apt install libz3-dev:i386`
+https://www.linode.com/community/questions/19916/how-do-i-enable-32-bit-support-on-my-64-bit-os

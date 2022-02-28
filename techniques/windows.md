@@ -27,3 +27,14 @@ https://www.pcmag.com/how-to/stop-your-computer-from-randomly-waking-up-from-sle
 https://docs.microsoft.com/en-us/answers/questions/189406/windows-10-waking-up-from-sleep-on-its-own.html
 #### disable timer waking
 https://support.microsoft.com/en-us/topic/pc-automatically-wakes-from-sleep-mode-ii-5b98d03e-427b-b007-046a-3db8ebe2c2a2 
+
+
+## PROCESS EXIT with code 1 or WSL2 distro failing to startup with code 4294967295
+most likely in my setting it's because I'm exporting remote linux's filesystem to my WSL2,
+and through either 1. /etc/fstab or 2. I automatically mount it in my .bashrc, anyone of these 2 failed.
+This caused this problem.
+
+What you should do is 
+1. make sure everything is fine on the linux side(ethernet cable is not loose, it's pingable)
+2. https://github.com/microsoft/WSL/issues/4899
+run `netsh winsock reset` as admin, and then reboot.

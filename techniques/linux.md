@@ -108,3 +108,13 @@ https://askubuntu.com/questions/325807/arrow-keys-home-end-tab-complete-keys-not
 ## watch
 watch "ps au"
 
+
+## install 32-bit library on 64 bit OS
+### When you try to build a 32-bit lib/exe on a 64-bit OS, if you have to install all kinds of 32-bit dependent libraries/packages(binutil:i386), and it starts messing with the 64-bit libraries, you should seriously consider if you should just use a 32-bit docker image
+https://askubuntu.com/questions/1304803/ubuntu-20-04-install-both-32-bit-and-64-bit-libraries
+check out the foreign arch and add that e.g. apt install z3:i386
+
+
+## check where the apt package is installed
+dpkg -L libz3-dev:i386
+
