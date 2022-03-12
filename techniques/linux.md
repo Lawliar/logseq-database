@@ -113,8 +113,19 @@ watch "ps au"
 ### When you try to build a 32-bit lib/exe on a 64-bit OS, if you have to install all kinds of 32-bit dependent libraries/packages(binutil:i386), and it starts messing with the 64-bit libraries, you should seriously consider if you should just use a 32-bit docker image
 https://askubuntu.com/questions/1304803/ubuntu-20-04-install-both-32-bit-and-64-bit-libraries
 check out the foreign arch and add that e.g. apt install z3:i386
+### if the docker doesn't have 32bit image(say for example, not ubuntu-20.04 still don't have 386 support)chroot is the best option
+follow these two links
+https://help.ubuntu.com/community/BasicChroot
+https://www.r-bloggers.com/2012/03/build-32-bit-r-on-64-bit-ubuntu-by-utilizing-chroot/
+`sudo debootstrap --variant=buildd --arch i386 Focal /home/lcm/github/symcc/chroot http://mirror.enzu.com/ubuntu/`
 
 
 ## check where the apt package is installed
 dpkg -L libz3-dev:i386
+
+
+## `locate` from `apt install mlocate`
+usage: `locate libc.so.6` to see the locations of these libraries
+## lddtree
+`sudo apt install pax-utils`
 

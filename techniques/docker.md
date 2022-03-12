@@ -35,3 +35,15 @@ https://github.com/moby/moby/issues/2174
 - -p <hostip>:<containerip>
 - in the app(inside the container) use `0.0.0.0` instead of `127.0.0.1`
 https://stackoverflow.com/questions/39525820/docker-port-forwarding-not-working
+
+
+### docker without sudo
+$ sudo groupadd docker
+$ sudo usermod -aG docker $USER
+$ newgrp docker 
+then reboot
+
+### you mount some dir into the container, and inside the container, you create some folder, since the folder is created under root inside the container, when you edit it outside the container, it also requires root.  Now, in order for a easy access, you just chown the folder -R for the folder created inside the container. 
+
+## re-direct stdin stdout from the container to the terminal
+use `-a stdin -a stderr -a stdout` to `docker run` in this way, if you did any redirect inside the container, it will be printed out to the terminal instead of writing into somefile inside the container
