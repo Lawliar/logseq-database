@@ -13,3 +13,7 @@ For the current workspace though, you can just type down the folders you want to
 It will survive even you close that editor(did not see any conf written into .vscode though, not sure how this works)
 
 https://stackoverflow.com/questions/29971600/choose-folders-to-be-ignored-during-search-in-vs-code
+
+## multi screen 
+at command exploration, choose duplicate workspace
+https://stackoverflow.com/questions/47260995/visual-studio-code-tabs-editors-of-the-same-project-in-multiple-screens

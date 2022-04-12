@@ -38,3 +38,6 @@ What you should do is
 1. make sure everything is fine on the linux side(ethernet cable is not loose, it's pingable)
 2. https://github.com/microsoft/WSL/issues/4899
 run `netsh winsock reset` as admin, and then reboot.
+
+## 网易云输出设备：
+为什么一定要选“WaveOut: Microsoft Sound Mapper”?

@@ -11,3 +11,5 @@ https://gist.github.com/helinwang/2c7bd2867ea5110f70e6431a7c80cd9b
 https://maelvls.dev/go111module-everywhere/
 for the heterotrust project, set GO111MODULE to on, it will force the go.mod to work, otherwise it won't find the enhanced-go-spire package
 For me, since I mount my large ubuntu drive to my small WSL2, so I host all the code in the mounted drive, I tend to keep all the code there, as a result, I not only install GOROOT at the shared folder(which is automatically configured when I install go from the pre-built binary), GOPATH is by default point to the home dir, which is not shared, so I modify that to point to `gopath` folder in the shared drive as well, not my WSL and ubuntu shared the same GOROOT and GOPATH.
+### VS Code "error loading workspace you are outside of a module"
+Open your VSCode explorer from the directory where your go.mod is located.

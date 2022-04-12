@@ -61,3 +61,9 @@ And use the generated bit code for the callgraph analysis!
 
 ## mix C/C++ code
 https://isocpp.org/wiki/faq/mixing-c-and-cpp
+
+## boost:
+### graph library
+https://www.technical-recipes.com/2015/getting-started-with-the-boost-graph-library/
+### add vertex properties
+https://www.boost.org/doc/libs/1_42_0/libs/graph/doc/bundles.html

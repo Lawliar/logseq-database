@@ -15,3 +15,7 @@ more specifically, you won't be able to login the GUI. Likely you will enter rec
 
 ## login and black screen:
 ctrl+alt+f5(or whatever f key) to login and then reboot
+
+## search for executable among apt
+https://askubuntu.com/questions/257905/how-can-i-tell-which-package-an-executable-came-from
+`apt-file` rocks

@@ -122,3 +122,11 @@ BIG MISTAKE!!!
 ## can re-bind list but not integer in python closure
 inside a closure, you can append to a list defined outside the closure, but you cannot increment an integer(very weird)
 https://stackoverflow.com/questions/21959985/why-cant-python-increment-variable-in-closure
+
+## select virtualenv as kernel for jupyter notebook
+you need to install some package inside the virtualenv and blablabla
+https://anbasile.github.io/posts/2017-06-25-jupyter-venv/
+https://stackoverflow.com/questions/58119823/jupyter-notebooks-in-visual-studio-code-does-not-use-the-active-virtual-environm
+
+## sys.path
+https://newbedev.com/where-is-python-s-sys-path-initialized-from

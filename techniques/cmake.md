@@ -108,3 +108,10 @@ target_link_libraries(a a1)
 a1 will not be linked into a(thus, in liba, all symbolcs from a1 will be undefined)
 however, cmake will add a1 later in the linking stage whenever liba is used.
 How smart.
+
+## gracefully pass in compiler flags and liner flags
+https://stackoverflow.com/questions/44284275/passing-compiler-options-cmake
+
+## XXConfig.cmake.in
+this cannot be used for cmake to find the project, this built package needs to be installed, and it will turn into XXConfig.cmake.
+## Use CMAKE_INSTALL_PREFIX to install it
