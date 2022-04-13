@@ -77,3 +77,7 @@
 - The ludlows:
     - Sheet Music:https://1drv.ms/b/s!AhJeHeojaUF3gtZ_NtaOg2HDhbd_0g?e=Stuu6l
     - Recording: https://www.youtube.com/watch?v=0tuy7uIj8H4
+
+- Liebeslied:
+    - Sheet Music: https://musescore.com/rsr/scores/2295356
+    - Recording: https://www.youtube.com/watch?v=rnW_Nhpt7no
