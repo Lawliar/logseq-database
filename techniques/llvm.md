@@ -28,3 +28,22 @@ So when you look at a value, its SubclassID field(unsigned char) should tell you
 And an interesting fact based on this is, the value representing `Instruction` is always the biggest number in this enumeration.
 Saying so isn't very accurate, since `Instruction` itself also uses the exact same field to distinguish different Instructions like AddInstruction, GEP.
 All these different instructions are enumerated from the enumerator of `Instruction` on-ward. This is also why `Instruction` should be the biggest value in the previous enumeration.
+
+# StringRef
+it's essentially just a pointer pointing to a string(although std::string's content is allocated on the heap).
+If you string goes out of scope, the pointer itself will also be invalid.
+
+# type duplicates:
+this blogs says it all
+https://lowlevelbits.org/type-equality-in-llvm/
+The problem I have is that, I'm creating a new struct type within my pass(so it's not created by the source code), and even with this, the IR is generating duplicated types for each function.
+I later found out it is because the pass I'm writing is a function pass, thus, the same type is created everytime a new function is analyzed. I solved this by only calling this struct creating function only once, instead of everytime a function is analyzed.
+
+## instrument and cross-compilation:
+it should be pretty common situation where you wanto to cross compile(e.g., to ARM) and do a pass(e.g., instrumentation).
+I tried to use the one-liner initially e.g., through `clang -Xclang load -Xclang <my pass> <architecture specific flags`, for all clang 9, 10, 11, 12(because it's based on the legacy pass manager), it crashed inside my pass, due to some weird pointer pointing to invalid memory, and that pointer is dereferenced inside my code by llvm(not by my code). More specifically, I imported some function prototypes(those function are defined by runtime) through `M.getOrInsertFunction`, these functions's callee's UseList(which is a pointer is messed up if you use the one-liner).
+So I was forced to try to seperate this one-liner into different stages:
+1. generate the IR
+2. instrument the IR
+3. compile the IR into ARM object file
+And I specify all the flags just to stage 1, for 2, 3 it's just a few flags(e.g., load the pass e.t.c, ask `llc` to generate obj file), and it worked.

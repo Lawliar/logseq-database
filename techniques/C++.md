@@ -67,3 +67,7 @@ https://isocpp.org/wiki/faq/mixing-c-and-cpp
 https://www.technical-recipes.com/2015/getting-started-with-the-boost-graph-library/
 ### add vertex properties
 https://www.boost.org/doc/libs/1_42_0/libs/graph/doc/bundles.html
+
+
+## how to silence unused parameter warning, when you really don't have to use the parameters
+https://stackoverflow.com/questions/1486904/how-do-i-best-silence-a-warning-about-unused-variables

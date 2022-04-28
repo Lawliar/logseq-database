@@ -115,3 +115,15 @@ https://stackoverflow.com/questions/44284275/passing-compiler-options-cmake
 ## XXConfig.cmake.in
 this cannot be used for cmake to find the project, this built package needs to be installed, and it will turn into XXConfig.cmake.
 ## Use CMAKE_INSTALL_PREFIX to install it
+
+
+## print all set variables:
+`
+get_cmake_property(_variableNames VARIABLES)
+list (SORT _variableNames)
+foreach (_variableName ${_variableNames})
+    message(STATUS "${_variableName}=${${_variableName}}")
+endforeach()
+`
+this can be so helpful!
+https://stackoverflow.com/questions/9298278/cmake-print-out-all-accessible-variables-in-a-script
