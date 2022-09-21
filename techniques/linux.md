@@ -123,9 +123,16 @@ https://www.r-bloggers.com/2012/03/build-32-bit-r-on-64-bit-ubuntu-by-utilizing-
 ## check where the apt package is installed
 dpkg -L libz3-dev:i386
 
+## if a shared library is missing: maybe you need to clean the cache
+https://stackoverflow.com/questions/21758828/purging-and-rebuilding-ldconfig-cache
+`
+rm /etc/ld.so.cache
+ldconfig
+`
 
 ## `locate` from `apt install mlocate`
 usage: `locate libc.so.6` to see the locations of these libraries
 ## lddtree
 `sudo apt install pax-utils`
+
 

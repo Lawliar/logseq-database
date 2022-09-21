@@ -71,3 +71,19 @@ https://www.boost.org/doc/libs/1_42_0/libs/graph/doc/bundles.html
 
 ## how to silence unused parameter warning, when you really don't have to use the parameters
 https://stackoverflow.com/questions/1486904/how-do-i-best-silence-a-warning-about-unused-variables
+
+## when cout does not print, remember to add cout.flush()
+
+## lambda capture
+https://thispointer.com/c11-lambda-how-to-capture-local-variables-inside-lambda/
+
+## reinterpret_cast
+https://stackoverflow.com/a/25902515/7244310
+
+## instruction profiler
+- valgrind + kcachegrind
+https://stackoverflow.com/a/771005/7244310
+or valgrind + gprof2dot
+## time profiler
+https://stackoverflow.com/questions/6663614/use-valgrind-to-know-timein-seconds-spent-in-each-function
+https://developer.ridgerun.com/wiki/index.php/Profiling_with_GPerfTools

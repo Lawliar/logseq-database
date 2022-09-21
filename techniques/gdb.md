@@ -1,2 +1,12 @@
 ## exit src/asm layout
 Ctrl-x +a
+
+## count how many times a function is called:
+https://stackoverflow.com/questions/7830954/gdb-is-there-a-command-that-allows-you-to-see-how-many-times-a-function-has-bee
+
+`
+b <file:line_number or function name>
+ignore <breakpoint identifier> 100000
+`
+after execution
+`info breakpoints`

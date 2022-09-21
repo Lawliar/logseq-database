@@ -130,3 +130,6 @@ https://stackoverflow.com/questions/58119823/jupyter-notebooks-in-visual-studio-
 
 ## sys.path
 https://newbedev.com/where-is-python-s-sys-path-initialized-from
+
+## ModuleNotFoundError: No module named 'distutils.cmd'
+`sudo apt install python3.7-distutils`

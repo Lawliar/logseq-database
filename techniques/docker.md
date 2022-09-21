@@ -47,3 +47,6 @@ then reboot
 
 ## re-direct stdin stdout from the container to the terminal
 use `-a stdin -a stderr -a stdout` to `docker run` in this way, if you did any redirect inside the container, it will be printed out to the terminal instead of writing into somefile inside the container
+
+## docker network:
+https://docs.docker.com/network/network-tutorial-standalone/

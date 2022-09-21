@@ -93,3 +93,23 @@ https://tex.stackexchange.com/questions/186981/is-there-a-subsubsubsection-comma
 - \subsubsection{subsubsection}
 - \paragraph{paragraph}
 - \subparagraph{subparagraph}
+
+## table of hline, cline for multi-row multi-columns:
+https://tex.stackexchange.com/questions/133804/losing-the-vertical-line-on-my-table-when-using-multicolumn
+
+## quotation mark
+
+https://tex.stackexchange.com/questions/52351/quote-marks-are-backwards-using-texmaker-pdflatex
+
+
+## squeze table
+### insert 
+\renewcommand{\tabcolsep}{1pt}
+... # your table
+\renewcommand{\tabcolsep}{6pt}
+
+to reduce the padded white space
+
+### use p{1mm} or c{1mm} to specify the column length
+
+### use \multicolumn{1}{c}{...} to still make each cell centered

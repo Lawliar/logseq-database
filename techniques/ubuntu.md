@@ -19,3 +19,18 @@ ctrl+alt+f5(or whatever f key) to login and then reboot
 ## search for executable among apt
 https://askubuntu.com/questions/257905/how-can-i-tell-which-package-an-executable-came-from
 `apt-file` rocks
+
+## windows remote access exit right after I put in the credential
+it turns out gnome seems fucked up
+I switched to xfce4 through:
+`sudo apt install xfce4
+sudo update-alternatives --config x-session-manager`
+although the UI looks uglier, but 
+https://askubuntu.com/a/1390749/803553
+
+After gnone is fucked up, I am fed up with the ugly xforce, so I switch back to gnome(which crashes instantly as I connected).
+I installed gnome-shell ubuntu-gnome-desktop(which to my suprise, were not installed)
+I reinstall gnome-session, and switch back to it via update-laternatives, it worked.
+
+## prevent ubuntu from hibernation
+https://askubuntu.com/questions/473037/how-to-permanently-disable-sleep-suspend
