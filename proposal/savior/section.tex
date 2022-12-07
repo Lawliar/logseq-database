@@ -1,0 +1,17 @@
+\newcommand{\afl}{{\sc AFL}\xspace}
+\newcommand{\aflgo}{{\sc AFLGo}\xspace}
+\newcommand{\tfuzz}{{\sc TFuzz}\xspace}
+\newcommand{\angora}{{\sc Angora}\xspace}
+\newcommand{\driller}{{\sc Driller}\xspace}
+\newcommand{\qsym}{{\sc QSYM}\xspace}
+\section{Towards Bug-Driven and Verification-Based Hybrid Fuzzing}
+Defenses combating in-process memory abuse should be muti-dimensional, since there is no existing approaches provide guaranteed protection against all variants of in-process memory abuse. \shreds~\cite{shreds} provides isolation with better granularity, but each shred still subjects to direct exploitation. \norax~\cite{norax} and existing fine-grained ASLR~\cite{ccr} drastically raise the bar of code-reuse attacks, but data-only attacks~\cite{dop} still remains unsolved.
+Hence, to develop comprehensive defense, another important perspective is to stand in the shoes of an attacker. In this section, I propose a novel automated bug-finding system aiming to decrease the number of low-hanging bugs that lead to further attacks such as code-reuse attack, or more generally, in-process memory abuse. As a result, raising the bar of in-process memory abuse.
+
+
+\input{savior/overview}
+
+\input{savior/methodology}
+
+\input{savior/eval}
+

@@ -1,0 +1,66 @@
+\section{Introduction}
+\subsection{In-Process Memory Abuse}
+% execution units sharing address space is great, flexible, enable high performant software designs.
+Modern operating systems manage running instances of software in the granularity of processes. 
+Each process is conceptually comprised of threads for parallel job processing. While threads have 
+independent copies of the basic data structure such as process context for OS to manage their execution, they by design share the same memory address space. Sharing address space has numerous benefits. In terms of performance, it allows low-overhead communication among the running units. For example, Threads can coordinate efficiently with locking mechanisms implemented based on variable shared in the address space (e.g, spinlock~\cite{spinlock}). In terms of development flexibility, sharing the same memory space allows developers to define global data structures accessible from different components of the software.
+These benefits outweigh the risk of security back in the early 60s when the design of virtual memory was introduced. It works well when most components in a software are developed by the same party. However, as the software engineering paradigm shifts, more parties are often involved in developing a single piece of software, and therefore, the lack of security boundaries among their components becomes a realistic concern and an opportunity for attacks. This trend is driven by the following factors.
+
+% first problem, code entities are from different origins. but they are sharing the same address space.
+First, modern software is much less monolithic and more modularized. They use code from different origins at different privilege levels. 
+However, most OSes still treat processes as indivisible security entities. Making the matter worse, a recent study~\cite{enigmasurvey} shows that, around two billion software components with known vulnerabilities are downloaded per year. 
+Researchers also found that 85.6\% of the libraries used in over a million Android applications in the Google play store are outdated~\cite{3rdpartysurvey}. 
+This has caused malicious actors to exploit these widely used libraries~\cite{taomikesdk,baidusdk,fbsdk,dropboxsdk} or implant their harmful logics into important infrastructure softwares~\cite{xcodeghost}. 
+
+% lead to second problem, it makes attacker's life easier.
+Second, this memory-sharing design also opens a convenient door for advanced attacks. For example, Return-Oriented Programing (ROP~\cite{rop}) allows attackers to execute malicious payload without code injection. Information leak attacks~\cite{serna2012cve} take advantage of the single-process design to exfiltrate sensitive data such as private key. They can also disclose function pointer values stored in the same memory address space, which allows bypass of Address Space Layout Randomization (ASLR~\cite{aslr}).
+
+Over the years, we have seen various kinds of attacks that exploit this address space sharing feature.
+\point{Stealing secret data} Via either injected shellcode or planted malicious libraries, attackers may obtain unchecked access to victim processes' memory, and in turn, exfiltrate cleartext secrets. Moreover, data thefts may happen without code injection if memory disclosure vulnerabilities exist in target programs. Such attacks are often seen in both network-facing programs and mobile apps. The former, including web servers and browsers, is often prone to remote secret thefts (e.g., the Heartbleed bug~\cite{heartbleed}) whereas the latter tends to contain many untrusted libraries (e.g., advertisement and analytics~\cite{adinjection_profit}).
+
+\point{Mining memory} In-process malicious code may silently scan the entire user-space memory for private data, such as passwords, credit card numbers, and sensitive logs. For instance, memory-scrapping code are found inside almost all the recent attacks on POS (Point of Sale) machines~\cite{pos}. Memory scrapers are also used for illegally identifying and tracking users~\cite{memscrap}.
+
+\point{Executing private code} Malicious code injected into a victim process can freely execute the code loaded in the memory space, including private and privileged functions that are only intended for a few pieces of code in the same process. For instance, dlopen is a private API on iOS and is not allowed to be directly called by apps. However, since iOS runtime always loads dlopen and other private APIs inside every app process, malicious apps can stealthily invoke these system-reserved APIs to escalate privileges or bypass security checks~\cite{iris,jekyll}.
+
+\point{Privilege Escalation} When vulnerable components are exploited, attackers are able to execute malicious logics via either injected code or reused code gadgets in the victim process. The malicious logics are then granted the same privilege as the exploited process.
+
+% summarize, what is in-process memory abuse.
+Despite their different goals, the aforementioned attacks all hinge on the same capability to succeed -- access to data or code that belong to other components (e.g., functions, modules, libraries, etc.) executing in the same process context.
+ In this thesis, we generically refer to attacks that exploit memory address space sharing as \emph{In-process memory abuse}. Ranging from data theft to privilege escalation, a variety of user-space attacks, launched either remotely or locally, can succeed because attackers can freely access (or abuse) target programs' memory content in the same process context.
+%problem statement again
+
+%\point{Conducting code-reuse attacks} This is a more generic form of executing code in
+%the context of a victim process. The attack is mostly originated from a subverted vulnerable components, attacker then redirects execution to different code sections loaded in the same process. The goal is to impersonate as the compromised process for various purposes such as privilege escalation, sandbox-escaping, etc. Since the wide adoption of mitigation techniques like Data Execution Prevention (DEP~\cite{dep}), code-reuse attacks~\cite{ropnoreturn, ret2libc, ret2libc2, ret2libc3,jitrop} have become a common attacking technique.
+\subsection{Thesis Statement}
+
+In light of the surging issue of in-process memory abuse and the lack of effective countermeasures, my research takes three steps to protect victim programs from such attacks.
+
+First, we need new memory protection mechanisms to protect sensitive data and code against malicious code that manages to run in the same process context. One obvious solution to in-process memory abuse is to redesign the memory sharing scheme and how OSes manage execution units (i.e, threads), creating independent address space for each software components. Unfortunately, despite vast research efforts, such solutions are often not backward compatible. They require completely rewriting applications running atop, which makes such solutions impractical.
+
+Second, we need strong and practical software attack mitigations to protect valuable yet vulnerable components from being directly exploited. As creating isolations among mutually untrusted components alone may fail to prevent such in-process memory abuse. Numerous studies~\cite{boomerang,tsgx} have shown that attackers are able to exploit code running inside trusted executing environments, bypassing all deployed mitigations~\cite{controljujutsu,jitrop,rop}. 
+
+Lastly, since software offense and defense is an ever-going arm race. There is no existing approaches which can provide guaranteed protection against all variants of in-process memory abuse. To develop comprehensive defense, another important perspective is to stand in the shoes of an attacker. We need tools that help with finding unintended memory accessing bugs in an automated fashion. Decreasing those software bugs that lead to illegal memory access can effectively increase the bar of in-process memory abuse.
+
+\subsection{Approaches Overview}
+In this thesis, 
+%I first investigate the effectiveness and feasibility of existing works that try to directly or indirectly mitigate and prevent in-process memory abuse. Then,
+I present three novel techniques aiming to defend in-process memory abuse. 
+%from two different aforementioned angles, namely \emph{memory access regulation} and \emph{memory access bug detection}.
+
+%first work: shreds aids developers to create use-to-use in-process memory isolation to protect their secret data
+First, I present \textsc {Shreds}~\cite{shreds}, a set of OS-backed programming primitives that addresses developers currently unmet needs for fine-grained, convenient, and efficient protection of sensitive memory content against in-process adversaries. A shred can be viewed as a flexibly defined segment of a thread execution (hence the name). Each shred is associated with a protected memory pool, which is accessible only to code running in the shred. To stay backward compatible, shreds offer in-process private memory without relying on separate page tables, nested paging, or even modified hardware. Plus, shreds provide the essential data flow and control flow protections for running sensitive code. We have built the compiler toolchain and the OS module that together enable shreds on Linux. We demonstrated the usage of shreds and evaluated their performance using 5 non-trivial open source software, including OpenSSH and Lighttpd. The results show that shreds are fairly easy to use and incur low runtime overhead (4.67\%).
+
+%second work: norax provides xom primitive for combating information-leak based memory reuse attacks
+Second, I present \textsc {Norax}~\cite{norax}, a practical system that retrofits execute-only memory (XOM) into stripped COTS binaries. Since code reuse attacks exploiting memory disclosure vulnerabilities can bypass all deployed mitigations. One promising defense against this class of attacks is to enable XOM protection on top of fine-grained ASLR. However, existing works implementing XOM, despite their efficacy, only protect programs that have been (re)built with new compiler support, leaving commercial-off-the-shelf (COTS) binaries and source-unavailable programs unprotected.  Unlike these techniques, \textsc {Norax} requires neither source code nor debugging symbols. \textsc {Norax} statically transforms existing binaries so that during runtime their code sections can be loaded into XOM memory pages with embedded data relocated and data references properly updated. \textsc {Norax} allows transformed binaries to leverage the new hardware-based XOM support--a feature widely available on AArch64 platforms (e.g., recent mobile devices) yet virtually unused due to the incompatibility of existing binaries. Furthermore, NORAX is designed to co-exist with other COTS binary hardening techniques, such as in-place randomization (IPR~\cite{ipr}). We apply NORAX to the commonly used Android system binaries running on SAMSUNG Galaxy S6 and LG Nexus 5X devices. The results show that \textsc {Norax} on average slows down the execution of transformed binaries by 1.18\% and increases their memory footprint by 2.21\%, suggesting NORAX is practical for real-world adoption.
+
+%Finally: savior, a verifiable bug-driven hybrid testing framework, to detect memory errors that could potentially lead to 
+% in-process memory abuse attacks.
+Finally, I propose \textsc {Savior}, the first hybrid testing system driven by bug search and empowered with buggy condition verification. Differing from theexisting hybrid testing tools, \textsc {Savior} prioritizes the concolic execution to solve branch predicates guarding more potential 
+vulnerabilities and then drives fuzz testing to reach code with more potential vulnerabilities. Going beyond that, \textsc {Savior} inspects all vulnerable 
+candidates along the running program path in concolic execution. By modeling the faulty situations with SMT constraints, it solves proofs 
+of valid vulnerabilities and outputs concrete test cases. Our evaluation shows that the bug-driven approach outperforms the state-of-art 
+code coverage driven hybrid testing tools in vulnerability detection. In our preliminary experiments comparing \savior with state-of-the-art software testing techniques on the widely used LAVA benchmark~\cite{lava}. Within 5 hours, in addition to triggering all bugs in {\tt base64}, {\tt md5sum} and {\tt uniq}, \savior found 1904 bugs in {\tt who} and many other unlisted bugs. This is, to the best of our knowledge, by far the best results in the existing literatures.
+
+%On average, \textsc {Savior} detects vulnerabilities XX\% faster and discovers YY\% more 
+%security violations. According to the experimental result on 14 well fuzzed benchmark programs, \textsc {Savior} triggers 2196 unique security violations within 24 hours.
+

@@ -1,0 +1,53 @@
+\subsection{Implementation}
+\label{adinjection:sec:impl}
+
+We implemented \origintracer as a set of modifications to the Chromium browser.
+In particular, we modified both Blink and the extension engine to track the
+provenance of content insertion, modification, and removal according to the
+semantics presented in Section~\ref{adinjection:sec:design}. These modifications
+also implement provenance indicators for suspicious content that does not
+originate from the publisher.
+
+\subsubsection{Tracking Publisher Provenance}
+
+A core component of \origintracer is responsible for introducing and propagating
+provenance label sets for DOM elements. To track the modifications, we monitor
+JavaScript execution in Blink. In order to have a complete mediation of all DOM
+modifications to Web page, \texttt{Node} class in Blink implementation was
+instrumented in order to assign provenance label sets for newly created or
+modified elements using the label set applied to the currently executing script.
+
+\subsubsection{Tracking Extension Provenance}
+\label{adinjection:sec:impl:extension}
+
+Chromium extensions can manipulate the web page's content by injecting
+\emph{content scripts} into the web page or using the \texttt{webRequest} API.
+Content scripts are JavaScript programs that can manipulate the web page using
+the shared DOM, communicate with external servers via \texttt{XMLHttpRequest},
+invoke a limited set of \texttt{chrome.*} APIs, and interact with their owning
+extension's background page. By using \texttt{webRequest}, extensions are also
+able to modify and block HTTP requests and responses in order to change the web
+page's DOM. In this work, we only track content modifications by content scripts
+and leave identifying ad injection by \texttt{webRequest} for future engineering
+work.
+
+\subsubsection{Content Provenance Indicators}
+\label{adinjection:sec:impl:indicators}
+
+Given DOM provenance information, \origintracer must first
+\begin{inparaenum}[\itshape i)\upshape]
+    \item identify when suspicious content modifications -- e.g.,
+    extension-based ad injection -- has occurred, and additionally
+    \item communicate this information to the user in an easily comprehensible
+    manner.
+\end{inparaenum}
+
+To implement the first requirement, our prototype monitors for content
+modifications where a subtree of elements are annotated with label sets that
+contains a particular extension's label. There are several possible options to
+communicate content provenance. In our current prototype, provenance is
+indicated using a configurable border color of the root element of the
+suspicious DOM subtree. This border should be chosen to be visually distinct
+from the existing color palette of the web page. Finally, a tooltip indicating
+the root label is displayed when the user hovers their mouse over the DOM
+subtree.

@@ -1,0 +1,56 @@
+\subsection{Overview}
+
+There are many existing techniques of how style directives could be injected
+into a site~\cite{ccs2012scriptless,ccs2010cross_origin_css}. A relatively
+recent class of attacks is Relative Path Overwrite (RPO), first proposed in a
+blog post by Gareth Heyes~\cite{rpo} in 2014. These attacks exploit the semantic
+disconnect between web browsers and web servers in interpreting relative paths
+(\textit{path confusion}). More concretely, in certain settings an attacker can
+manipulate a page's URL in such a way that the web server still returns the same
+content as for the benign URL. However, using the manipulated URL as the base,
+the web browser incorrectly expands relative paths of included resources, which
+can lead to resources being loaded despite not being intended to be included by
+the developer. We define a page as \textit{vulnerable} if:
+
+\begin{itemize}
+
+\item The page includes at least one stylesheet using a relative path.
+
+\item The server is set up to serve the same page even if the URL is manipulated
+by appending characters that browsers interpret as path separators.
+
+\item The page reflects style directives injected into the URL or cookie. Note
+that the reflection can occur in an arbitrary location within the page, and
+markup or script injection are not necessary.
+
+\item The page does not contain a \texttt{<base>} HTML tag before relative paths
+that would let the browser know how to correctly expand them.
+
+\end{itemize}
+
+We define a vulnerable page as \textit{exploitable} if the injected style is
+interpreted by the browser--that is, if an attacker can force browsers to render
+the page in quirks mode. This can occur in two alternative ways:
+
+\begin{itemize}
+
+\item The vulnerable HTML page specifies a \textit{document type} that causes
+the browser to use quirks mode instead of standards mode. The document type
+indicates the HTML version and dialect used by the page;
+
+\item Even if the page specifies a document type that would usually result in
+standards mode being used, quirks mode parsing can often be enforced in Internet
+Explorer~\cite{prssi}. Framed documents inherit the parsing mode from the parent
+document, thus an attacker can create an attack page with an older document type
+and load the vulnerable page into a frame. This trick only works in Internet
+Explorer, however, and it may fail if the vulnerable page uses any anti-framing
+technique, or if it specifies an explicit value for the \texttt{X-UA-Compatible}
+HTTP header (or equivalent).
+
+\end{itemize}
+
+In this section, we present the first in-depth study of style injection
+vulnerability using RPO. We extract pages using relative-path stylesheets from
+the Common Crawl dataset~\cite{common_crawl}, automatically test if style
+directives can be injected using RPO, and determine whether they are interpreted
+by the browser.

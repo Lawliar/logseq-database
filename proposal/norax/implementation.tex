@@ -1,0 +1,29 @@
+\subsection{Implementation}
+\label{norax:sec:impl}
+\NORAX is fully implemented based on two commercial mobile phones, Samsung Galaxy S6 and LG Nexus 5X. In this section, we present the implementation of \NORAX on LG Nexus 5X, which is equipped with Qualcomm Snapdragon 808 MSM8992 (4 x ARM Cortex-A53 \& 2 x ARM Cortex-A57) and 2GB RAM. The phone is running Android OS v6.0.1 (Marshmallow) with Linux kernel v3.14 (64-bit). 
+\subsubsection{Kernel Modification}
+We modified several OS subsystems in order to implement the design discussed in \S~\ref{norax:sec:design}. To start off, the memory management (MM) subsystem is modified to enable the execute-only memory configuration and securely handle the legitimate page fault triggered by data abort on reading the execute-only memory. Specifically, we intercept the page fault handler, the \emph{do\_page\_fault()} function, to implement the design of \emph{\NMonitor}. 
+Implementing the semantics for all kinds of memory load instructions is error-prone and requires non-trivial engineering effort, but there is one additional caveat, as page fault is one of the most versatile events in Linux kernel that has very diversified usages, such as copy-on-write (COW), demand paging and memory page swappings etc. Also, accessing the same virtual address could fault multiple times (e.g., First triggered by demand paging, and then by XOM access violation).
+If not carefully examined, irrelevant page fault events could be mistakenly treated as XOM-related ones, which may cause the entire system to be unstable or even crash. 
+%If we are not careful enough and falsely choose to handle a page fault simply because we see in the faulting VMA structure it has execute but no read permission, while the actually the page fault is triggered because of a non-present page (could be demand paging), the system will enter a unstable state and eventually it may crash.
+To precisely pinpoint the related page fault events, we devise a series of constraints to filter the irrelevant ones. when a page fault happens, the following checks are performed:
+\begin{itemize}
+	\item Check if the faulting process contains \NORAX converted module, this is indicated by a flag set by \emph{\NLoader} when loading a converted binary. This flag will be propagated when the process \emph{forks} a new child, and properly removed if the new child does an \emph{exec} to run a new program.
+	\item Check the exception syndrome register on exception level one (ESR\_EL1\cite{esrinterp}) for two fields: {(\rom{1})} Exception class and {(\rom{2})} Data fault status code. This ensures the fault is triggered by the user space program, and it faults on the last level page table entry (we only enforce XOM at pte entries) because of permission violation.
+	\item Check the VMA permission flags and only handle the case of reading an execute-only page. All these restrictions together ensure that we do not mistake other page fault events with ours.
+\end{itemize}
+
+
+
+%--we maintain in the process task\_struct a list of policies one for each module.
+To verify the integrity of a violation triggered by XOM, we extend the \emph{task\_struct} to maintain a list of access policies, one for each module.
+We also instrument the \emph{set\_pte} function to ensure the permission of a page must follow the $\bf{R}\oplus\bf{X}$ policy. This way, we prevent the attacker from tricking the OS to remap the execute-only memory through high-level interfaces. 
+The modified kernel subsystems also include the file system (FS) and system calls where we instrument the executable loader and implement the design of \emph{\NLoader} plugins respectively.
+
+ 
+%-- reserve space to map our metadata.
+\subsubsection{Bionic Linker Modification}
+In a running program, all the libraries needed by the executable are loaded by the linker. In order to handle those converted libraries and make the code regions of the whole process execute-only, we directly modify the linker's source code to place hooks before the library loading and symbol resolution routines as described in \S~\ref{subsec:loader}. One quirk of the Bionic linker is that when loading libraries, it places those modules right next to each other, leaving no space in-between. This causes problems from multiple perspectives. Firstly, it lowers the entropy of the address space randomness thus undermines the effectiveness of ASLR. Secondly, it also ``squeezes'' out the space for \emph{\NLoader} to load the \NORAX-related metadata. To resolve this issue, \emph{\NPatcher} encodes the size of the total metadata into the \NORAX header when it recomposes the binary, and we instrument the linker such that when it is loading a library it will leave a gap with the size of the sum of the encoded number (zero for the unconverted binaries) and a randomly generated nuance.
+
+
+

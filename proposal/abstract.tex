@@ -1,0 +1,21 @@
+\begin{abstract}
+	
+Low-level system software are the fundamental components of today's cyberspace. 
+They operate the power grids (e.g., the Programmable Logic Controller), factory machines as well as our home devices (e.g., the Linux kernel). 
+Unlike their desktop-side or server-side counterparts, they feature in 
+1). Intensive and direct interactions with the hardware without the abstraction from the operating system (OS), 
+2). Relatively large code space, and 
+3). Diversity of their execution environments. 
+These features uniquely pose significant challenges on automatic detection of their defects.
+These defects subsequently lead to all kinds of security problems and attacks. 
+
+Symbolic execution, at the same time, has been extensively studied to become the cornerstone technique of automatically discovering the defects inside the desktop or server programs. 
+Unfortunately, due to the aforementioned challenges, it has not achieved so much success in the low-level system field as it has done in those traditional OS-based environments. 
+
+
+In this thesis, I present three novel systems which address these challenges in order to better apply symbolic execution, this powerful program analysis tool, to secure the low-level system software. 
+First, to address the intensive interactions with the hardware, I present \textsc{SPEAR}, a novel symbolic execution framework which runs the firmware directly on the real device while channelling it to the symbolic engine on the workstation, taking the advantages of both worlds. 
+Second, to scale symbolic execution to a large code base, I present \textsc{KUBO}, an inter-procedural static analysis tool based on symbolic execution to reason the undefined behaviors (UB) inside the linux kernel. \textsc{KUBO} uniquely combines UB Sanitizers and backward symbolic execution to statically and soundly confirm the triggerability of the UB bugs inside the linux kernel. 
+Finally, to increase the bar of in-process memory abuse, I propose \textsc{Savior}, a hybrid testing system designed for prioritization of exploring buggy code and verification of bug existence. The strategies should yield a more complete detection of bugs and significantly accelerate the detection rate. 
+
+\end{abstract}

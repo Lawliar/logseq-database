@@ -1,0 +1,68 @@
+\subsection{Overview}
+\label{savior:sec:overview}
+
+Facilitated by efforts from both the academia and the industry, software testing 
+techniques gain remarkable advancement in finding security vulnerabilities.
+In particular, people have deeply exploited fuzz testing~\cite{takanen2008fuzzing, 
+zalewski2014american} and concolic execution~\cite{Sen07a,majumdar2007hybrid}
+to disclose a great amount of vulnerabilities every year. Nevertheless, the 
+evolution of fuzz testing and concolic execution is gradually impeded by their 
+intrinsic limitations. On one hand, fuzz testing quickly covers
+different code regions but hardly reaches compartments that are guarded by
+complex conditions. On the other hand, concolic execution excels at solving conditions and
+enumerating execution paths while it frequently sinks the exploration into code
+segments that contain a large volume of execution paths (\eg loop).
+Due to these limitations, using fuzz testing or concolic execution alone often
+ends with a substantial amount of uncovered code within the given time frame. 
+To enlarge code coverage, recent researches explore the idea of hybrid testing which 
+assembles both fuzz testing and concolic execution~\cite{qsyminsu,driller,jfuzz}.
+
+The insight of hybrid testing is to apply fuzz testing on the path exploration and 
+leverage concolic execution to resolve complex conditions. A hybrid approach relies 
+on fuzz testing to exhaustively explore code regions. Once fuzzing stops 
+making progress, the hybrid approach switches to concolic execution which replays the 
+seeds accumulated in fuzzing. While following the path pertaining to a given seed,
+concolic execution examines at each of the conditional statements to check 
+whether the other branch remains uncovered. If so, it
+solves the constraints leading to the new branch. 
+This enables concolic execution to generate a new seed which 
+guides fuzz testing to deeper code space exploration.
+
+As demonstrated in recent works~\cite{driller,qsyminsu}, hybrid testing creates new 
+opportunities towards high code coverage. However, it still adopts the code-driven philosophy, 
+which unfortunately falls short of the needs of vulnerability mining.
+First, hybrid testing treats all the branches indiscriminately. However, 
+most of these branches might lead to code lack of vulnerabilities and the exploration on 
+them involves expensive computation (\eg constraint solving and extra fuzzing). 
+Consequently, hybrid testing often exhausts the assigned CPU cycles way before it could 
+resolve the branches guarding vulnerabilities. 
+%
+Second, hybrid testing can fail to catch a vulnerability even if it reaches the vulnerable 
+code region following a correct path. This is mainly because hybrid testing exercises new branch in the manner of random execution, which oftentimes has low chance to satisfy the subtle conditions to trigger the vulnerability. 
+
+In this section, I propose \savior (abbreviation for {\bf
+S}peedy-{\bf A}utomatic-{\bf V}ulnerability-{\bf I}ncentivized-{\bf OR}acle),
+a hybrid testing tool that evolves towards being bug-driven and verification-based. To fulfill 
+this goal, \savior incorporates two novel techniques as follows. 
+\point {Bug-driven Prioritization} Instead of solving the unreached branches 
+in an indiscriminate manner, \savior prioritizes those that have higher 
+promise in leading to vulnerable code. Specifically, prior to the testing, 
+\savior labels all the potential sites with vulnerability in the target program. As 
+there lacks theories to obtain the ground truth of vulnerabilities, \savior follows 
+the extant schemes~\cite{ubsanlist, Dietz:2012} to conservatively capture all the possibilities. 
+In addition, \savior statically computes the code regions dominated by each branch. 
+At the time of testing, \savior prioritizes concolic execution on branches that dominate 
+code with more vulnerability labels. Since such branches guard higher volumes 
+of vulnerabilities, advancing the schedule to reach them can significantly 
+expedite the discovery of vulnerabilities. 
+
+\point {Bug-guided Search} 
+Going beyond accelerating vulnerability finding, \savior also comprehensively seeks 
+for vulnerabilities along the paths explored by fuzzing. 
+While \savior executes a seed with concolic execution, it revisits each 
+of the vulnerability label that remain unconfirmed on the execution path.
+That is, \savior constructs the constraints to trigger such a vulnerability following the current path. 
+If the synthesized constraints are satisfiable, \savior generates a test 
+case as a proof of this vulnerability. Otherwise \savior verifies that the vulnerability 
+is un-triggerable by arbitrary inputs going through this path. 
+

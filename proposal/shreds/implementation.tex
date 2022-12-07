@@ -1,0 +1,83 @@
+\subsection{Implementation}
+\label{shreds:sec:impl}
+
+We built S-compiler based on LLVM~\cite{lattner2004llvm} and its C front-end  Clang~\cite{clang}. We built S-driver with Linux as the reference OS. The implemented system was deployed and evaluated on a quad-core ARM Cortex-A7 computer (Raspberry Pi 2 Model B running Linux 4.1.15).
+
+\point{S-compiler}
+The modular and pass-based architecture of LLVM allows us to take advantage of the existing analyzers and easily extends the compilation pipeline. 
+S-compiler adds two new passes to LLVM: the shred analysis pass and the security instrumentation pass. Both operate on LLVM bitcode as the IR. 
+
+The analysis pass carries out the checks on the usages and security properties of shreds, as described in \S~\ref{shreds:sec:design}. 
+We did not use LLVM's built-in data flow analysis for those checks due to its overly heuristic point-to analysis and the unnecessarily conservative transfer functions.
+Instead, we implemented our specialized data flow analysis based on the basic round-robin iterative algorithm, with weak context sensitivity and a straightforward propagation model (i.e., only tracking value-conserving propagators).
+We also had to extend LLVM's compilation pipeline because it by default only supports intra-module passes while S-compiler needs to perform inter-module analysis. We employed a linker plugin, called the Link-Time Optimization (LTO), to cross link the IR of all compilation modules and feed the linked IR to our analyzers. 
+
+
+The instrumentation pass uses the LLVM IR Builder interfaces to insert security checks into the analyzed IR, which are necessary for enforcing the in-shred control flow regulations and preventing dynamic data leaks. 
+
+\IncMargin{1em}
+\begin{algorithm}
+\small
+\SetKwData{Spool}{s\_pool}
+\SetKwData{Owner}{s\_owner}
+\SetKwData{FaultThread}{fault\_thread}
+\SetKwData{CPUDomain}{cpu\_domain}
+\SetKwData{SpoolDomain}{s\_pool\_domain}
+\SetKwFunction{FindSpool}{FindSpool}
+\SetKwFunction{GetOwner}{GetOwner}
+\SetKwFunction{GetCPUDomain}{GetCPUDomain}
+\SetKwFunction{GetSpoolDomain}{GetSpoolDomain}
+\SetKwFunction{BadArea}{bad\_area}
+\SetKwFunction{GoodArea}{good\_area}
+\SetKwFunction{RestoreDACR}{RestoreDACR}
+\SetKwFunction{UnlockSPool}{UnlockSPool}
+\SetKwFunction{AdjustSPool}{AdjustSPool}
+\SetKwFunction{LockActiveSPoolList}{LockOtherActiveSPools}
+\SetKwInOut{Input}{input}
+\SetKwInOut{Output}{result}
+\Input{The faulting virtual address $fault\_addr$}
+\Output{Recover from the domain fault, or kill the faulting thread}
+\BlankLine
+\emph{/*Identity check*/}\\
+  \Spool$\leftarrow$ \FindSpool{$fault\_addr$}\;
+  \Owner$\leftarrow$ \GetOwner{$\Spool$}\;
+  \If{\FaultThread is NOT in shred}{goto \BadArea}
+  \If{\FaultThread is NOT \Owner}{goto \BadArea}
+\BlankLine
+\emph{/*Recover from domain fault*/}\\
+  \CPUDomain$\leftarrow$ \GetCPUDomain{}\;
+  \SpoolDomain$\leftarrow$ \GetSpoolDomain{\Spool}\;
+   \If{\Spool is unlocked}
+   {
+   		  
+          \If{\CPUDomain $=$ \SpoolDomain}
+          {
+            \emph{/*No need to change domain for s\_pool*/} \\
+            \RestoreDACR{}\;
+          }
+          \Else
+   		  {
+   		    \AdjustSPool{\CPUDomain}  
+   		  }
+   }
+    \Else
+    {
+    	\UnlockSPool{\CPUDomain} 
+    }
+   \LockActiveSPoolList{\Spool}\;
+\caption{Domain Fault Handler}\label{dom_fault_handler}
+\end{algorithm}
+\DecMargin{1em}
+
+\point{S-driver}
+We built S-driver into a Loadable Kernel Module (LKM) for Linux. 
+S-driver creates a virtual device file ({\tt /dev/shreds}) to handle the {\tt ioctl} requests made internally by the shred APIs. 
+It uses 13 out of 16 memory domains to protect s-pools because the recent versions of Linux kernel for ARM already occupies 3 domains (for isolating device, kernel, and user-space memory). 
+S-driver uses the available domains to protect unlimited s-pools and controls each CPU's access to the domains as described in \S~\ref{shreds:sec:design}.
+Since Linux does not provide callback interfaces for drivers to react to scheduling events, in order to safely handle context switches or signal dispatches in shreds, 
+S-driver dynamically patches the OS scheduler so that, during every context switch, the DACR of the current CPU is reset, which locks the open s-pool, if any. 
+The overhead of this operation is negligible because resetting the DACR only takes a single lightweight instruction. 
+To capture illegal access to s-pools and lazily adjust domain assignments, 
+S-driver registers itself to be the only handler of domain faults and is triggered whenever a domain violation happens. 
+Algorithm~\ref{dom_fault_handler} shows how S-driver handles a domain fault. 
+Purely implementing S-driver as a LKM allows shreds to be introduced into a host without installing a custom-build kernel image.

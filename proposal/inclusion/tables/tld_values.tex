@@ -1,0 +1,42 @@
+\begin{table}[t]
+    \centering
+    \footnotesize
+    \label{inclusion:tab:tld}
+    \caption{TLD values}
+    \begin{subtable}{.43\textwidth}
+        \centering
+        \caption{Individual}
+        \label{inclusion:tab:tld:individual}
+        \begin{tabular}{ll}
+        \toprule
+        \textbf{Value} & \textbf{Example} \\
+        \midrule
+        \texttt{none} & IPs, Extensions \\
+        \texttt{gen} & *.com, *.org \\
+        \texttt{gen-subdomain} & *.us.com \\
+        \texttt{cc} & *.us, *.de, *.cn \\
+        \texttt{cc-subdomain} & *.co.uk, *.com.cn \\
+        \texttt{cc-int} & *.xn{-{}-}p1ai (ru) \\
+        \texttt{other} & *.biz, *.info \\
+        \bottomrule
+        \end{tabular}
+    \end{subtable}
+    \begin{subtable}{.54\textwidth}
+        \centering
+        \caption{Relative}
+        \label{inclusion:tab:tld:relative}
+        \begin{tabular}{ll}
+        \toprule
+        \textbf{Value} & \textbf{Example} \\
+        \midrule
+        \texttt{none} & root resource \\
+        \texttt{\{got,lost\}-tld} & Ext. $\rightarrow$ *.de, *.us $\rightarrow$ IP \\
+        \texttt{gen-to-\{cc,other\}} & *.org $\rightarrow$ \{*.de, *.info\} \\
+        \texttt{cc-to-\{gen,other\}} & *.uk $\rightarrow$ \{*.com, *.biz\} \\
+        \texttt{other-to-\{gen,cc\}} & *.info $\rightarrow$ \{*.net, *.uk\} \\
+        \texttt{same-\{gen,cc,other\}} & *.com $\rightarrow$ *.com \\
+        \texttt{diff-\{gen,cc,other\}} & *.info $\rightarrow$ *.biz \\
+        \bottomrule
+        \end{tabular}
+    \end{subtable} 
+\end{table}

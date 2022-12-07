@@ -1,0 +1,62 @@
+\subsection{Overview}
+\label{norax:sec:overview}
+
+Although creating isolations among mutually untrusted component with finer granularity can largely prevent in-process memory abuse, attackers could still exploit a vulnerable components directly. Numerous studies~\cite{boomerang,tsgx} have shown that attackers are able to exploit code running inside trusted executing environments, bypassing all deployed mitigations~\cite{controljujutsu,jitrop,rop}. 
+Such attacks increasingly leverage code-reuse techniques~\cite{rop,ret2libc,jop} to gain control of vulnerable programs.
+Since contemporary softwares widely employ code integrity protection techniques, such as data execution prevention (DEP~\cite{dep}), to prevent traditional code injection attacks. 
+In code reuse attacks, a target application's control flow is manipulated in a way that snippets of existing code (called gadgets) are chained and run to carry out malicious activities.
+
+Knowledge of process memory layout is a key prerequisite for code-reuse
+attacks to succeed.  Attackers need to know the exact binary instruction locations in
+memory to assemble the chain of gadgets. Commodity operating systems
+widely adopt address space layout randomization (ASLR), which loads code binaries at
+random memory locations unpredictable to attackers. Without knowing the locations of needed
+code or gadgets, attackers cannot build code-reuse chains.  
+
+However, \emph{memory
+disclosure} attacks can use information leaks in programs to de-randomize code
+locations, thus defeating ASLR.  Such attacks either
+ read the program code (\emph{direct} de-randomization) or read code
+pointers (\emph{indirect} de-randomization).  
+Given that deployed ASLR techniques only randomize the load address of a large chunk of data or code, leaking a single code pointer or a small sequence
+of code allows attackers to identify the corresponding chunk, infer its base address, and calculate the addresses of gadgets contained in the chunk. 
+
+More sophisticated fine-grained ASLR
+techniques~\cite{davi2013gadge,smashinggadget, ilr,aslp,binstir} aim
+at shuffling code blocks within the same module to make it more difficult for attackers
+to guess the location of binary instructions. Nevertheless, research by
+Snow et al.~\cite{jitrop} proves that memory disclosure vulnerabilities can
+bypass the most sophisticated ASLR techniques.
+
+Therefore, a robust and effective defense against code-reuse attacks should combine fine-grained ASLR with memory disclosure prevention. 
+Some recent works proposed to prevent memory disclosures using compile-time techniques~\cite{readactor,readactorpluplu,lr2}. Despite their effectiveness, these solutions cannot cover COTS binaries that cannot be easily recompiled and redeployed. These binaries constitute a significant portion of real-world applications that need protection. 
+
+
+In this section, we present \NORAX~\footnote{\NORAX stands for \textbf{NO}
+\textbf{R}ead \textbf{A}nd e\textbf{X}ecute.}, which protects COTS binaries from code memory disclosure attacks. 
+The goal of \NORAX is to allow COTS binaries to take advantage of execute-only memory (XOM), a new security feature that recent AArch64 CPUs provide and is widely available on today's mobile devices. 
+While useful for preventing memory disclosure-based code reuse~\cite{jitrop, brop}, XOM remains barely used by user and system binaries due to its requirement for recompilation. 
+\NORAX removes this requirement by automatically patching COTS binaries and loading their code to XOM. As a result, when used together with ASLR, \NORAX enables robust mitigation against code reuse attacks for COTS binaries.
+% It is worth noting that while we demonstrate \NORAX on Android, the ideas behind \NORAX are generally applicable to any AAarch64 platform. 
+
+% \NORAX allows COTS binaries to be loaded in hardware-enforced XOM, a security feature
+%supported by recent ARM CPUs (i.e., AArch64). Such CPUs are widely seen on today's mobile devices. 
+%Although it is an effective defense against disclosure-based code reuse~\cite{jitrop, brop}, 
+%Without \NORAX, to use the XOM feature, binaries need to be (re)built with the necessary compiler support. This requirement stands in between the valuable security feature and a large number of COTS binaries (e.g., all Android system executables and libraries) that are already running on AArch64 CPUs but were not compiled with XOM support. 
+%XOM remains largely unused by apps and system libraries due to its requirement for recompiling programs into compatible binaries. 
+%\NORAX removes this requirement. It automatically patches existing binaries and loads their code to XOM-enforced memory regions, without affecting binaries' normal execution. As a result, binaries without special (re)compilation can benefit from the hardware-backed XOM feature and be protected against code memory disclosure. Further, 
+
+%It is worth noting that we use Android as the reference platform for building and evaluating \NORAX. However,  \NORAX's approach and techniques  are generally applicable to other AArch64  platforms. 
+
+\NORAX consists of four major components: \emph{
+\NDisassembler,
+\NPatcher,
+\NLoader,
+and \NMonitor}. 
+The first two perform offline binary analysis and transformation. They convert COTS binaries built for AArch64 without XOM support into one whose code can be protected by XOM during runtime. 
+The other two components provide supports for loading and monitoring the patched, XOM-enabled binaries during runtime.  
+The design of \NORAX tackles a fundamentally difficult problem: identifying data embedded in code segments, which are common in ARM binaries, and relocating such data elsewhere so that during runtime code memory pages can be made executable-only while allowing all embedded data to be readable. 
+
+We apply \NORAX to Android system binaries running on
+%commodity systems. Upon writing, NORAX has been fully implemented on the modern 
+SAMSUNG Galaxy S6 and LG Nexus 5X devices. The results show that \NORAX on average slows down the transformed binaries by 1.18\% and increases their memory footprint by  2.21\%, suggesting \NORAX is practical for real-world adoption. 

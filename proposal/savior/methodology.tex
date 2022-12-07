@@ -1,0 +1,84 @@
+\subsection{Methodology}
+\label{savior:sec:methodology}
+
+\savior's hybrid testing demands the static information of vulnerability 
+labels and the domination relations. We gather the 
+required information via static analysis on the LLVM IR of the target 
+program. 
+
+\point{Vulnerability Labeling} 
+Currently, \savior leverages existing tools to provide vulnerability information. We have summarized that,
+In general, any tool satisfying the following criteria can plug-and-play. 
+
+\begin{itemize}
+\item As \savior loads the labels prior to testing, the tool should 
+be able to work statically on the code.
+
+\item The tool should conduct sound analysis. In other words, 
+we expect a complete set of labels which should mark all the potential 
+vulnerabilities of interests. 
+%
+An unsound tool may miss a lot of true labels, which affects \savior 
+in two ways. First, the weights of many non-covered branches are 
+falsely lowered since the labels in their dominating code get reduced. 
+This delays \savior to solve them and the defers the identification 
+of vulnerabilities guarded by them. Second, \savior will lose guidance 
+to those true labels and miss the opportunities to catch them 
+during vulnerability verification. We understand that a such 
+tool often produces many false postives. This may also 
+reduce the effectiveness of \savior in prioritization. 
+So we should employ additional analysis that can help reduce such false positives. 
+
+\item An applicable tool has to summarize the triggering 
+conditions once it labels a vulnerability.
+The reason is that \savior relies on such conditions 
+as guidance in vulnerability verification. Going beyond that, 
+we only accept conditions that have data dependency with 
+objects in the target program (\eg conditions that checks status of 
+variables in the program). Otherwise our concolic execution will 
+not correlate the program execution with the vulnerability conditions 
+and hence, unable to verify the existence of bug. 
+For instance, the widely used AddressSanitizer~\cite{serebryany2012addresssanitizer} 
+verifies the vulnerability based on the status of its own red-zone,  
+which are not applicable to \savior.
+
+\item Engineering wise, we expect the tool to be compatible with LLVM IR, since 
+\savior runs with LLVM IR. In addition, the tool needs to either marks the labels 
+it plants or exports related information. This is mainly because \savior needs 
+such information for prioritizing non-covered branches and 
+vulnerability verification.  
+\end{itemize}
+
+In our current design, \savior employs 
+LLVM UBSan~\cite{ubsanlist}, which conservatively capture 
+a wide spectrum of undefined behaviors. 
+By default, \savior only enables certain components in UBSan to 
+labels issues that have explicit security consequences, 
+including signed/unsigned integer overflow, floating cast overflow,
+pointer arithmetic overflow and out-of-bounds array indexing. 
+In addition, we patch the Clang front-end to attach UBSan labels
+to the generated IR. 
+%Note that UBSan natively instruments the vulnerability conditions, 
+%which are associated with the internal variables. 
+The vulnerability conditions created by UBSan mostly follow
+the comprehensive summaries in~\cite{wang2013towards} 
+and we omit their details. 
+
+\point{Domination Analysis} This analysis proceeds with two phases 
+which first construct the inter-procedure control flow graph (CFG) and then build the
+pre-domination tree on the CFG. We present their specifics in the following.
+
+To generate the inter-procedure CFG, we use an algorithm similar to the one 
+implemented in SVF~\cite{sui2016svf}. The algorithm starts with building intra-procedure CFGs for 
+individual functions and then connect them by the caller-callee relation.
+To resolve indirect calls, it iteratively performs point-to analysis and expand 
+the targets of indirect calls. In \savior, we utilize the Andersen's algorithm 
+in point-to analysis for better efficiency. Note that our design is fully compatible 
+with other point-to analyses that have higher precision 
+(\eg flow-sensitive analysis~\cite{hardekopf2011flow}). 
+
+Taking the above inter-procedure CFG as input, we run the algorithm proposed in~\cite{cooper2001simple}
+to construct the domination tree. This enables us to understand the code regions dominated by each of 
+the basic blocks and count the number vulnerability labels enclosed. 
+For the convenience of access at the time of testing, we encode the dominated bug number 
+(metadata in LLVM IR) at the beginning of each basic block. 

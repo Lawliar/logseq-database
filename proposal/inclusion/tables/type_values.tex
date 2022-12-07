@@ -1,0 +1,44 @@
+\begin{table}[t]
+    \centering
+    \footnotesize
+    \label{inclusion:tab:type}
+    \caption{Type values}
+    \begin{subtable}{.43\textwidth}
+        \centering
+        \caption{Individual}
+        \label{inclusion:tab:type:individual}
+        \begin{tabular}{ll}
+            \toprule
+            \textbf{Value} & \textbf{Example} \\
+            \midrule
+            \texttt{ipv6} & 2607:f0d0::::4 \\
+            \texttt{ipv4-private} & 192.168.0.1 \\
+            \texttt{ipv4-public} & 4.2.2.4 \\
+            \texttt{extension} & Ext. Scripts \\
+            \texttt{dns-sld} & google.com \\
+            \texttt{dns-sld-sub} & www.google.com \\
+            \texttt{dns-non-sld} & abc.dyndns.org \\
+            \texttt{dns-non-sld-sub} & a.b.dyndns.org \\
+            \bottomrule
+        \end{tabular}
+    \end{subtable}
+    \begin{subtable}{.54\textwidth}
+        \centering
+        \caption{Relative}
+        \label{inclusion:tab:type:relative}
+        \begin{tabular}{ll}
+            \toprule
+            \textbf{Value} & \textbf{Example} \\
+            \midrule
+            \texttt{none} & root resource \\
+            \texttt{same-site} & w.google.com $\rightarrow$ ad.google.com \\
+            \texttt{same-sld} & 1.dyndns.org $\rightarrow$ 2.dyndns.org \\
+            \texttt{same-company} & ad.google.com $\rightarrow$ www.google.de \\
+            \texttt{same-eff-tld} & bbc.co.uk $\rightarrow$ london.co.uk \\
+            \texttt{same-tld} & bbc.co.uk $\rightarrow$ london.uk \\
+            \texttt{different} & google.com $\rightarrow$ facebook.net \\
+            \bottomrule
+            \\
+        \end{tabular}
+    \end{subtable} 
+\end{table}

@@ -1,0 +1,29 @@
+\subsection{Countermeasures}
+\label{rpo:sec:mitigation}
+
+Relative path overwrites rely on the web server and the web browser interpreting
+URLs differently. HTML pages can use only absolute (or root-relative) URLs,
+which removes the need for the web browser to expand relative paths.
+Alternatively, when the HTML page contains a \texttt{<base>} tag, browsers are
+expected to use the URL provided therein to expand relative paths instead of
+interpreting the current document's URL. Both methods can remove ambiguities and
+render RPO impossible if applied correctly.
+
+Web developers can reduce the attack surface of their sites by eliminating any
+injection sinks for strings that could be interpreted as a style directive.
+However, doing so is challenging because in the attack presented in this paper,
+style injection does not require a specific sink type and does not need the
+ability of injecting markup. Injection can be accomplished with relatively
+commonly used characters, that is, alphanumeric characters and
+\texttt{()\{\}/"}.
+
+Instead of preventing RPO and style injection vulnerabilities, the most
+promising approach could be to avoid exploitation. In fact, declaring a modern
+document type that causes the HTML document to be rendered in standards mode
+makes the attack fail in all browsers except for Internet Explorer. Web
+developers can harden their pages against the frame-override technique in
+Internet Explorer by using commonly recommended HTTP headers:
+\texttt{X-Content-Type-Options} to disable ``content type sniffing'' and always
+use the MIME type sent by the server (which must be configured correctly),
+\texttt{X-Frame-Options} to disallow loading the page in a frame, and
+\texttt{X-UA-Compatible} to turn off Internet Explorer's compatibility view.

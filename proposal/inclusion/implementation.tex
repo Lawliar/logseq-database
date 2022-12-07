@@ -1,0 +1,27 @@
+\subsection{Implementation}
+\label{inclusion:sec:implementation}
+
+In this section, we discuss our prototype implementation of \excision for
+detecting and blocking malicious third-party content inclusions. We implemented
+\excision as a set of modifications to the Chromium browser\footnote{While our
+implementation could be adopted as-is by any browser vendors that use
+WebKit-derived engines, the design presented here is highly likely to be
+portable to other browsers.}. In order to implement our system, we needed to
+modify Blink and the Chromium extension engine to enable \excision to detect and
+block inclusions of malicious content in an online and automatic fashion while
+the web page is loading. The entire set of modifications consists of less than
+1,000 lines of C++ and several lines of JavaScript.
+
+\subsubsection{Enhancements to the Blink}
+
+Blink is primarily responsible for parsing HTML documents, managing script
+execution, and fetching resources from the network. Consequently, it is ideally
+suited for constructing the inclusion tree for a web page, as well as blocking
+the inclusion of malicious content.
+
+\subsubsection{Enhancements to the Extension Engine}
+
+The Chromium extension engine handles the loading, management, and execution of
+extensions. To access the page's DOM, the extension injects and executes
+\emph{content scripts} in the page's context which are regular JavaScript
+programs.

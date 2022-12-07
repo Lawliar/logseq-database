@@ -127,3 +127,9 @@ endforeach()
 `
 this can be so helpful!
 https://stackoverflow.com/questions/9298278/cmake-print-out-all-accessible-variables-in-a-script
+
+## add_compile_options and add_link_options
+
+make sure these two commands are added before add_executable
+as stated here: https://stackoverflow.com/questions/40516794/cmake-not-applying-compile-option-using-add-compile-options
+otherwise they won't take effect

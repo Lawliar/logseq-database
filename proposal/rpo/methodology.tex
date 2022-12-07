@@ -1,0 +1,139 @@
+\subsection{Methodology}
+\label{rpo:sec:methodology}
+
+Our methodology consists of three main phases. We seed our system with pages
+from the Common Crawl archive to extract \textit{candidate} pages that include
+at least one stylesheet using a relative path. To determine whether these
+candidate pages are \textit{vulnerable}, we attempt to inject style directives
+by requesting variations of each page's URL to cause \textit{path confusion} and
+test whether the generated response reflects the injected style directives.
+Finally, we test how often vulnerable pages can be \textit{exploited} by
+checking whether the reflected style directives are parsed and used for
+rendering in a web browser.
+
+\subsubsection{Candidate Identification}
+\label{rpo:sec:methodology:candidate}
+
+For finding the initial seed set of candidate pages with relative-path
+stylesheets, we leverage the Common Crawl from August 2016, which contains more
+than 1.6 billion pages. We use a Java HTML parser to filter any pages containing
+only inline CSS or stylesheets referenced by absolute URLs, leaving us with over
+203 million pages on nearly 6 million sites. For scalability purposes, we
+further reduce the set of candidate pages in two steps:
+
+\begin{enumerate}
+
+\item We retain only pages from sites listed in the Alexa Top 1 million ranking,
+which reduces the number of candidate pages to 141 million pages on 223 thousand
+sites.
+
+\item We observed that many sites use templates customized through query strings
+or path parameters. We expect these templates to cause similar vulnerability and
+exploitability behavior for their instantiations, thus we can speed up our
+detection by grouping URLs using the same template, and testing only one random
+representative of each group.
+
+\end{enumerate}
+
+Since our methodology contains a step during which we actively test whether a
+vulnerability can be exploited, we remove from the candidate set all pages
+hosted on sites in \texttt{.gov}, \texttt{.mil}, \texttt{.army}, \texttt{.navy},
+and \texttt{.airforce}. The final candidate set consists of 137 million pages
+(31 million page groups) on 222 thousand sites.
+
+\subsubsection{Vulnerability Detection}
+\label{rpo:sec:methodology:vulnerable}
+
+To determine whether a candidate page is vulnerable, we implemented a
+lightweight crawler based on the Python Requests API. At a high level, the
+crawler simulates how a browser expands relative paths and tests whether style
+directives can be injected into the resources loaded as stylesheets using path
+confusion. For each page group from the candidate set, the crawler randomly
+selects one representative URL and mutates it according to a number of
+techniques explained below. The style directive we inject to test for reflection
+vulnerabilities is shown in the legend of Figure~\ref{rpo:fig:taint_techniques}.
+
+\input{rpo/figures/vulnerability_detection}
+
+\paragraph{Path Parameter}
+
+A number of web frameworks such as PHP, ASP, or JSP can be configured to use URL
+schemes that encode script input parameters as a directory-like string following
+the name of the script in the URL. Figure~\ref{rpo:fig:taint:parameter_simple}
+shows a generic example where there is no parameter in the URL. Since the
+crawler does not know the name of valid parameters, it simply appends the
+payload as a subdirectory to the end of the URL. In this case, content injection
+can occur if the page reflects the page URL or referrer into the response.
+
+Different web frameworks handle path parameters slightly differently, which is
+why we distinguish a few additional cases. If parameters are present in the URL,
+we can distinguish these cases based on a number of regular expressions that we
+generated. For example, parameters can be separated by slashes (see
+Figure~\ref{rpo:fig:taint:parameter_php}) or semicolons (see
+Figure~\ref{rpo:fig:taint:parameter_jsp}). When the crawler detects one of these
+known schemes, it injects the payload into each parameter. Consequently, in
+addition to URL and referrer reflection, injection can also be successful when
+any of the parameters is reflected in the page.
+
+\paragraph{Encoded Path}
+
+This technique targets web servers such as IIS that decode encoded slashes in
+the URL for directory traversal, whereas web browsers do not. Specifically, we
+use \texttt{\%2F}, an encoded version of `\texttt{/}', to inject our payload
+into the URL in such a way that the canonicalized URL is equal to the original
+page URL (see Figure~\ref{rpo:fig:taint:path}). Injection using this technique
+succeeds if the page reflects the page URL or referrer into its output.
+
+\paragraph{Encoded Query}
+
+Similar to the technique above, we replace the URL query delimiter `\texttt{?}'
+with its encoded version \texttt{\%3F} so that web browsers do not interpret it
+as such. In addition, we inject the payload into every value of the query
+string, as can be seen in Figure~\ref{rpo:fig:taint:query}. CSS injection
+happens if the page reflects either the URL, referrer, or any of the query
+values in the HTML response.
+
+\paragraph{Cookie}
+
+Since stylesheets referenced by a relative path are located in the same origin
+as the referencing page, its cookies are sent when requesting the stylesheet.
+CSS injection may be possible if an attacker can create new cookies or tamper
+with existing ones (a strong assumption compared to the other techniques), and
+if the page reflects cookie values in the response. As shown in
+Figure~\ref{rpo:fig:taint:cookie}, the URL is only modified by adding slashes to
+cause path confusion. The payload is injected into each cookie value and sent by
+the crawler as an HTTP header.
+
+\subsubsection{Exploitability Detection}
+\label{rpo:sec:methodology:exploitable}
+
+Once a page has been found to be vulnerable to style injection using RPO, the
+final step is to verify whether the reflected CSS in the response is evaluated
+by a real browser. To do so, we built a crawler based on Google Chrome, and used
+the Remote Debugging Protocol~\cite{debugging_protocol} to drive the browser and
+record HTTP requests and responses. In addition, we developed a Chrome extension
+to populate the cookie header in CSS stylesheet requests with our payload.
+
+In order to detect exploitable pages, we crawled all the pages from the previous
+section that had at least one reflection. Specifically, for each page we checked
+which of the techniques in Figure~\ref{rpo:fig:taint_techniques} led to
+reflection, and crafted the main URL with a CSS payload. The CSS payload used to
+verify exploitability is different from the simple payload used to test
+reflection. Specifically, the style directive is prefixed with a long sequence
+of \texttt{\}} and \texttt{]} characters to close any preceding open curly
+braces or brackets that may be located in the source code of the page, since
+they might prevent the injected style directive from being parsed correctly. The
+style directive uses a randomly-generated URL to load a background image for the
+HTML body. We determine whether the injected style is evaluated by checking the
+browser's network traffic for an outgoing HTTP request for the image.
+
+\paragraph{Overriding Document Types}
+
+Reflected CSS is not always interpreted by the browser. One possible explanation
+is the use of a modern document type in the page, which does not cause the
+browser to render the page in quirks mode. Under certain circumstances, Internet
+Explorer allows a parent page to force the parsing mode of a framed page into
+quirks mode~\cite{prssi}. To test how often this approach succeeds in practice,
+we also crawled vulnerable pages with Internet Explorer~11 by framing them while
+setting \texttt{X-UA-Compatible} to \texttt{IE=EmulateIE7} via a \texttt{meta}
+tag in the attacker's page.

@@ -1,0 +1,47 @@
+\definecolor{lightgray}{rgb}{.6,.6,.6}
+\definecolor{darkgray}{rgb}{.4,.4,.4}
+
+\lstdefinelanguage{JSON}{
+  keywords={break, case, catch, continue, debugger, default, delete, do, else, false, finally, for, function, if, in, instanceof, new, null, return, switch, this, throw, true, try, typeof, var, void, while, with},
+  morecomment=[l]{//},
+  morecomment=[s]{/*}{*/},
+  morestring=[b]',
+  morestring=[b]",
+  ndkeywords={class, export, boolean, throw, implements, import, this},
+  keywordstyle=\color{black}\bfseries,
+  ndkeywordstyle=\color{darkgray}\bfseries,
+  identifierstyle=\color{black},
+  commentstyle=\color{lightgray}\ttfamily,
+  stringstyle=\color{black}\ttfamily,
+  sensitive=true
+}
+
+\lstdefinelanguage{JavaScript}{
+  keywords={break, case, catch, continue, debugger, default, delete, do, else, false, finally, for, function, if, in, instanceof, new, null, return, switch, this, throw, true, try, typeof, var, void, while, with},
+  morecomment=[l]{//},
+  morecomment=[s]{/*}{*/},
+  morestring=[b]',
+  morestring=[b]",
+  ndkeywords={class, export, boolean, throw, implements, import, this},
+  keywordstyle=\color{black}\bfseries,
+  ndkeywordstyle=\color{darkgray}\bfseries,
+  identifierstyle=\color{black},
+  commentstyle=\color{lightgray}\ttfamily,
+  stringstyle=\color{red}\ttfamily,
+  sensitive=true
+}
+
+\lstset{
+    basicstyle=\fontsize{9}{10}\selectfont\ttfamily,
+    showstringspaces=false,
+    showspaces=false
+}
+
+\newcommand{\origintracer}{\textsc{OriginTracer}\xspace}
+
+\section{Identifying Ad Injection in Browser Extensions}
+
+\input{adinjection/overview}
+\input{adinjection/design}
+\input{adinjection/implementation}
+\input{adinjection/analysis}

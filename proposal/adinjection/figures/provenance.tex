@@ -1,0 +1,17 @@
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=0.7\textwidth]{adinjection/figures/provenance.pdf}
+    \caption{Element-granularity provenance tracking.
+        \textbf{(1)}~Content loaded directly from the publisher is labeled
+        with the publisher's origin, \(l_0\).
+        \textbf{(2)}~An external script reference to origin \(l_1\) is performed.
+        \textbf{(3)}~DOM modifications from \(l_1\)'s script are labeled with
+        the label set \(\left\{l_0,l_1\right\}\).
+        \textbf{(4)}~Further external script loads and subsequent DOM
+        modifications induce updated label sets -- e.g.,
+        \(\left\{l_0,l_1,l_2\right\}\).
+        \textbf{(5)}~A DOM modification that originates from an extension
+        produces provenance label sets \(\left\{l_0, l_1, l_2, l_3\right\}\) for
+        the element.}
+    \label{adinjection:fig:provenance}
+\end{figure}

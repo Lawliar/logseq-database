@@ -1,0 +1,45 @@
+\subsection{Overview}
+\label{inclusion:sec:overview}
+
+While the same origin policy (SOP) enforces a modicum of origin-based separation
+between code and data from different principals, developers have clamored for
+more flexible sharing models provided by, e.g., Content Security Policy
+(CSP)~\cite{csp_spec}, Cross-Origin Resource Sharing (CORS)~\cite{cors_spec},
+and postMessage-based cross-frame communication. These newer standards permit
+greater flexibility in performing cross-origin inclusions, and each come with
+associated mechanisms for restricting communication to trusted origins. However,
+recent work has shown that these standards are difficult to apply securely in
+practice~\cite{ndss2013postman,raid2014csp}, and do not necessarily address the
+challenges of trusting remote inclusions on the dynamic Web. In addition to the
+inapplicability of some approaches such as CSP, third parties can leverage their
+power to bypass these security mechanisms. For example, ISPs and browser
+extensions are able to tamper with HTTP traffic to modify or remove CSP rules in
+HTTP responses~\cite{usenixsec2015webeval,sp2015adinjection}.
+
+In this section, we propose an in-browser approach called \excision to
+automatically detect and block malicious third-party content inclusions as web
+pages are loaded into the user's browser or during the execution of browser
+extensions. Our approach does not rely on examination of the content of the
+resources; rather, it relies on analyzing the sequence of inclusions that leads
+to the resolution and loading of a terminal remote resource. Unlike prior
+work~\cite{ccs2012madtracer}, \excision resolves \emph{inclusion sequences
+(chains)} through instrumentation of the browser itself, an approach that
+provides a high-fidelity view of the third-party inclusion process as well as
+the ability to interdict content loading in real-time. This precise view also
+renders ineffective common obfuscation techniques used by attackers to evade
+detection. Obfuscation causes the detection rate of these approaches to degrade
+significantly since obfuscated third-party inclusions cannot be traced using
+existing techniques~\cite{ccs2012madtracer}. Furthermore, the in-browser
+property of our system allows users to browse websites with a higher confidence
+since malicious third-party content is prevented from being included while the
+web page is loading.
+
+We implemented \excision as a set of modifications to the Chromium browser, and
+evaluated its effectiveness by analyzing the Alexa Top 200K over a period of 11
+months. Our evaluation demonstrates that \excision achieves a 93.39\% detection
+rate, a false positive rate of 0.59\%, and low performance overhead. We also
+performed a usability test of our research prototype, which shows that \excision
+does not detract from the user's browsing experience while automatically
+protecting the user from the vast majority of malicious content on the Web. The
+detection results suggest that \excision could be used as a complementary system
+to other techniques such as CSP.

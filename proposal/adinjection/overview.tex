@@ -1,0 +1,63 @@
+\subsection{Overview}
+\label{adinjection:sec:intro}
+
+While ad injection cannot necessarily be categorized as an outright malicious
+activity on its own, it is highly likely that many users in fact \emph{do not
+want or expect} browser extensions to inject advertisements or other content
+into Web pages. Moreover, it can have a significant impact on the security and
+privacy of both users as well as website publishers. For example, recent studies
+have shown that ad-injecting extensions not only serve ads from ad networks
+other than the ones with which the website publishers intended, but they also
+attempt to trick users into installing malware by inserting rogue elements into
+the web page~\cite{sp2015adinjection,www2015adinjection}.
+
+To address this problem, several automatic approaches have been proposed to
+detect malicious behaviors (e.g., ad injection) in browser
+extensions~\cite{www2015adinjection,usenixsec2014hulk,usenixsec2015webeval}. In
+addition, centralized distribution points such as Chrome Web Store and Mozilla
+Add-ons are using semi-automated techniques for review of extension behavior to
+detect misbehaving extensions. However, there is no guarantee that analyzing the
+extensions for a limited period of time leads to revealing the ad injection
+behaviors.
+
+Although ad injection can therefore potentially pose significant risks, this
+issue is not as clear-cut as it might first seem. Some users might legitimately
+want the third-party content injected by the extensions they install, even
+including injected advertisements. This creates a fundamental dilemma for
+automated techniques that aim to identify clearly malicious or unwanted content
+injection, since such techniques cannot intuit user intent and desires in a
+fully automatic way.
+
+To resolve this dilemma, we present \origintracer, an in-browser approach to
+highlight extension-based content modification of web pages. \origintracer
+monitors the execution of browser extensions to detect content modifications
+such as the injection of advertisements. Content modifications are visually
+highlighted in the context of the web page in order to
+\begin{inparaenum}[\itshape i)\upshape]
+     \item notify users of the presence of modified content, and
+     \item inform users of the \emph{source} of the modifications.
+\end{inparaenum}
+With this information, users can then make an informed decision as to whether
+they actually want these content modifications from specific extensions, or
+whether they would rather uninstall the extensions that violate their
+expectations.
+
+\origintracer assists users in detecting content injection by distinguishing
+injected or modified DOM elements from genuine page elements. This is performed
+by annotating web page DOM elements with a \emph{provenance label set} that
+indicates the principal(s) responsible for adding or modifying that element,
+both while the page is loading from the publisher as well as during normal
+script and extension execution. These annotations serve as trustworthy,
+fine-grained provenance indicators for web page content. \origintracer can be
+easily integrated into any browser in order to inform users of extension-based
+content modification. Since \origintracer identifies all types of content
+injections, it is able to highlight all injected advertisements regardless of
+their types (e.g., flash ads, banner ads, and text ads).
+
+We implemented a prototype of \origintracer as a set of modifications to the
+Chromium browser, and evaluated its effectiveness by conducting a user study.
+The user study reveals that \origintracer produced a significantly greater
+awareness of third-party content modification, and did not detract from the
+users' browsing experience. Our results also suggests that \origintracer can be
+used as a complementary system to ad blocking systems such as
+AdblockPlus~\cite{adblockplus} and Ghostery~\cite{ghostery}.
