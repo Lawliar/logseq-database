@@ -1,10 +1,21 @@
 \section{Introduction}
 \subsection{Low-level system software security}
+% What is low-level system software
+Low-level system software plays an pivot role in the whole cyberspace that we live in -- they run everywhere because they connect the users who send commands through them and the hardware that physically performs all kinds of computational tasks. 
+Conceptually, they accept and parse commands from the user, break down the tasks, convey and execute them on the real hardware.  
+They are essential to the whole tech industry. 
+% Some example of these low-level system software
+Noticable examples of these low-level system software for today are 1). the OS kernel (e.g., the Linux kernel), and 2). the firmware. They former runs mostly on desktop and server to efficiently drive the common commodity hardware pieces (e.g., hard drive, CPU and RAM) and deal with the users' requests while the latter runs in a more constrained hardware environment like the Microcontrol Unit (MCU) and is not as user-facing as the former. 
+
+% Why their security is important
+Because of such an important role they play, they are usually placed in a high-privileged execution environment and subsequently suffer the victim of extremely calculated and powerful cyber attacks~\cite{kuruvila_hardware-assisted_2021,maggi_attacks_2020,miller_remote_2015}. Due to the fundemental nature of these critical software, patching their vulnerabilities after deployment is usually delayed, inconvenient and error-prone which leaves a window for attacks.\todo{add citation here} As a result, detecting the potentially exploitable bugs before they are deployed in practice is crucial to mitigate these security threats.  
+
+In terms of reasoning and analyzing software, symbolic execution as well as fuzz testing have seen huge success in various aspects of securing normal user-space programs. In fact, seminal works \todo{add citation here} have identified countless potentially dangerous bugs in various user-space programs. Thus it would be very tempting to 
 % execution units sharing address space is great, flexible, enable high performant software designs.
-Modern operating systems manage running instances of software in the granularity of processes. 
-Each process is conceptually comprised of threads for parallel job processing. While threads have 
-independent copies of the basic data structure such as process context for OS to manage their execution, they by design share the same memory address space. Sharing address space has numerous benefits. In terms of performance, it allows low-overhead communication among the running units. For example, Threads can coordinate efficiently with locking mechanisms implemented based on variable shared in the address space (e.g, spinlock~\cite{spinlock}). In terms of development flexibility, sharing the same memory space allows developers to define global data structures accessible from different components of the software.
-These benefits outweigh the risk of security back in the early 60s when the design of virtual memory was introduced. It works well when most components in a software are developed by the same party. However, as the software engineering paradigm shifts, more parties are often involved in developing a single piece of software, and therefore, the lack of security boundaries among their components becomes a realistic concern and an opportunity for attacks. This trend is driven by the following factors.
+%Modern operating systems manage running instances of software in the granularity of processes. 
+%Each process is conceptually comprised of threads for parallel job processing. While threads have 
+%independent copies of the basic data structure such as process context for OS to manage their execution, they by design share the same memory address space. Sharing address space has numerous benefits. In terms of performance, it allows low-overhead communication among the running units. For example, Threads can coordinate efficiently with locking mechanisms implemented based on variable shared in the address space (e.g, spinlock~\cite{spinlock}). In terms of development flexibility, sharing the same memory space allows developers to define global data structures accessible from different components of the software.
+%These benefits outweigh the risk of security back in the early 60s when the design of virtual memory was introduced. It works well when most components in a software are developed by the same party. However, as the software engineering paradigm shifts, more parties are often involved in developing a single piece of software, and therefore, the lack of security boundaries among their components becomes a realistic concern and an opportunity for attacks. This trend is driven by the following factors.
 
 % first problem, code entities are from different origins. but they are sharing the same address space.
 First, modern software is much less monolithic and more modularized. They use code from different origins at different privilege levels. 
