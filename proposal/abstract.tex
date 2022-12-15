@@ -5,7 +5,7 @@ They operate the power grids (e.g., the Programmable Logic Controller), factory 
 Unlike their desktop-side or server-side counterparts, they feature in 
 1). Intensive and direct interactions with the hardware without the abstraction from the operating system (OS), 
 2). Relatively large code space, and 
-3). Diversity of their execution environments. 
+3). Usually employs an event-driven design. 
 These features uniquely pose significant challenges on automatic detection of their defects.
 These defects subsequently lead to all kinds of security problems and attacks. 
 
@@ -16,6 +16,6 @@ Unfortunately, due to the aforementioned challenges, it has not achieved so much
 In this thesis, I present three novel systems which address these challenges in order to better apply symbolic execution, this powerful program analysis tool, to secure the low-level system software. 
 First, to address the intensive interactions with the hardware, I present \textsc{SPEAR}, a novel symbolic execution framework which runs the firmware directly on the real device while channelling it to the symbolic engine on the workstation, taking the advantages of both worlds. 
 Second, to scale symbolic execution to a large code base, I present \textsc{KUBO}, an inter-procedural static analysis tool based on symbolic execution to reason the undefined behaviors (UB) inside the linux kernel. \textsc{KUBO} uniquely combines UB Sanitizers and backward symbolic execution to statically and soundly confirm the triggerability of the UB bugs inside the linux kernel. 
-Finally, to increase the bar of in-process memory abuse, I propose \textsc{Savior}, a hybrid testing system designed for prioritization of exploring buggy code and verification of bug existence. The strategies should yield a more complete detection of bugs and significantly accelerate the detection rate. 
+Finally in the project of \textsc{SHIELD}, because of low-level system software's event-driven design, I incorporate the interrupt firing sequence as well as the code coverage into mutation strategy as well as constraint solving.
 
 \end{abstract}

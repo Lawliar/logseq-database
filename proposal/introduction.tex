@@ -1,5 +1,5 @@
 \section{Introduction}
-\subsection{In-Process Memory Abuse}
+\subsection{Low-level system software security}
 % execution units sharing address space is great, flexible, enable high performant software designs.
 Modern operating systems manage running instances of software in the granularity of processes. 
 Each process is conceptually comprised of threads for parallel job processing. While threads have 
@@ -55,7 +55,8 @@ Second, I present \textsc {Norax}~\cite{norax}, a practical system that retrofit
 
 %Finally: savior, a verifiable bug-driven hybrid testing framework, to detect memory errors that could potentially lead to 
 % in-process memory abuse attacks.
-Finally, I propose \textsc {Savior}, the first hybrid testing system driven by bug search and empowered with buggy condition verification. Differing from theexisting hybrid testing tools, \textsc {Savior} prioritizes the concolic execution to solve branch predicates guarding more potential 
+Finally, I propose \textsc {Savior}, the first hybrid testing system driven by bug search and empowered with buggy condition verification. Differing from the
+existing hybrid testing tools, \textsc {Savior} prioritizes the concolic execution to solve branch predicates guarding more potential 
 vulnerabilities and then drives fuzz testing to reach code with more potential vulnerabilities. Going beyond that, \textsc {Savior} inspects all vulnerable 
 candidates along the running program path in concolic execution. By modeling the faulty situations with SMT constraints, it solves proofs 
 of valid vulnerabilities and outputs concrete test cases. Our evaluation shows that the bug-driven approach outperforms the state-of-art 
