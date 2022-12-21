@@ -1,16 +1,18 @@
 \section{Introduction}
 \subsection{Low-level system software security}
 % What is low-level system software
-Low-level system software plays an pivot role in the whole cyberspace that we live in -- they run everywhere because they connect the users who send commands through them and the hardware that physically performs all kinds of computational tasks. 
+Low-level system software plays a pivot role in the whole cyberspace that we live in -- they run everywhere because they connect the users who send commands through them and the hardware that physically performs all kinds of computational tasks. 
 Conceptually, they accept and parse commands from the user, break down the tasks, convey and execute them on the real hardware.  
-They are essential to the whole tech industry. 
+They are essential for this information age and the world. 
 % Some example of these low-level system software
-Noticable examples of these low-level system software for today are 1). the OS kernel (e.g., the Linux kernel), and 2). the firmware. They former runs mostly on desktop and server to efficiently drive the common commodity hardware pieces (e.g., hard drive, CPU and RAM) and deal with the users' requests while the latter runs in a more constrained hardware environment like the Microcontrol Unit (MCU) and is not as user-facing as the former. 
+Noticeable examples of these low-level system software for today are 1). the OS kernel (e.g., the Linux kernel), and 2). the firmware. The OS kernel runs mostly on desktop and server environments to efficiently drive the common commodity hardware pieces (e.g., hard drive, CPU and RAM) and deal with the users' requests while the firmware usually runs in a more constrained hardware environment like the Micro-control Unit (MCU) and is not as user-facing as the former. 
 
 % Why their security is important
-Because of such an important role they play, they are usually placed in a high-privileged execution environment and subsequently suffer the victim of extremely calculated and powerful cyber attacks~\cite{kuruvila_hardware-assisted_2021,maggi_attacks_2020,miller_remote_2015}. Due to the fundemental nature of these critical software, patching their vulnerabilities after deployment is usually delayed, inconvenient and error-prone which leaves a window for attacks.\todo{add citation here} As a result, detecting the potentially exploitable bugs before they are deployed in practice is crucial to mitigate these security threats.  
+Because of such an important role they play, they are usually placed in a high-privileged execution environment and subsequently suffer the victim of extremely calculated and powerful cyberattacks~\cite{kuruvila_hardware-assisted_2021,maggi_attacks_2020,miller_remote_2015}. Due to the fundamental nature of these critical software, patching their vulnerabilities after deployment is usually delayed, inconvenient and error-prone which leaves a window for attacks.\todo{add citation here} As a result, detecting the potentially exploitable bugs before the software being deployed in practice is crucial to mitigate these security threats.  
 
-In terms of reasoning and analyzing software, symbolic execution as well as fuzz testing have seen huge success in various aspects of securing normal user-space programs. In fact, seminal works \todo{add citation here} have identified countless potentially dangerous bugs in various user-space programs. Thus it would be very tempting to 
+Meanwhile, in terms of reasoning and analyzing software, symbolic execution as well as the closely-related fuzz testing have seen huge success in various aspects of securing normal user-space programs. 
+In fact, seminal works \todo{add citation here} in these fields have identified countless dangerous bugs in various user-space programs. 
+Thus, it would be very tempting to apply these extensively-studied bug detecting techniques to securing these low-level system software. 
 % execution units sharing address space is great, flexible, enable high performant software designs.
 %Modern operating systems manage running instances of software in the granularity of processes. 
 %Each process is conceptually comprised of threads for parallel job processing. While threads have 
@@ -18,25 +20,37 @@ In terms of reasoning and analyzing software, symbolic execution as well as fuzz
 %These benefits outweigh the risk of security back in the early 60s when the design of virtual memory was introduced. It works well when most components in a software are developed by the same party. However, as the software engineering paradigm shifts, more parties are often involved in developing a single piece of software, and therefore, the lack of security boundaries among their components becomes a realistic concern and an opportunity for attacks. This trend is driven by the following factors.
 
 % first problem, code entities are from different origins. but they are sharing the same address space.
-First, modern software is much less monolithic and more modularized. They use code from different origins at different privilege levels. 
-However, most OSes still treat processes as indivisible security entities. Making the matter worse, a recent study~\cite{enigmasurvey} shows that, around two billion software components with known vulnerabilities are downloaded per year. 
-Researchers also found that 85.6\% of the libraries used in over a million Android applications in the Google play store are outdated~\cite{3rdpartysurvey}. 
-This has caused malicious actors to exploit these widely used libraries~\cite{taomikesdk,baidusdk,fbsdk,dropboxsdk} or implant their harmful logics into important infrastructure softwares~\cite{xcodeghost}. 
 
-% lead to second problem, it makes attacker's life easier.
-Second, this memory-sharing design also opens a convenient door for advanced attacks. For example, Return-Oriented Programing (ROP~\cite{rop}) allows attackers to execute malicious payload without code injection. Information leak attacks~\cite{serna2012cve} take advantage of the single-process design to exfiltrate sensitive data such as private key. They can also disclose function pointer values stored in the same memory address space, which allows bypass of Address Space Layout Randomization (ASLR~\cite{aslr}).
 
-Over the years, we have seen various kinds of attacks that exploit this address space sharing feature.
-\point{Stealing secret data} Via either injected shellcode or planted malicious libraries, attackers may obtain unchecked access to victim processes' memory, and in turn, exfiltrate cleartext secrets. Moreover, data thefts may happen without code injection if memory disclosure vulnerabilities exist in target programs. Such attacks are often seen in both network-facing programs and mobile apps. The former, including web servers and browsers, is often prone to remote secret thefts (e.g., the Heartbleed bug~\cite{heartbleed}) whereas the latter tends to contain many untrusted libraries (e.g., advertisement and analytics~\cite{adinjection_profit}).
+However, unlike the normal user-space programs which enjoy a normalized and abstract execution environment provided by the operating system, low-level system software runs in much more complex and diverse environments. 
+This inevitably poses unique technical challenges when applying these well-established bug detection techniques to them. 
+We identify these technical challenges as follows: 
 
-\point{Mining memory} In-process malicious code may silently scan the entire user-space memory for private data, such as passwords, credit card numbers, and sensitive logs. For instance, memory-scrapping code are found inside almost all the recent attacks on POS (Point of Sale) machines~\cite{pos}. Memory scrapers are also used for illegally identifying and tracking users~\cite{memscrap}.
+\point{Direct and intensive interaction with the hardware} 
+Unlike user-space programs which interact with the hardware through the well-defined system calls, low-level system software directly interact with the hardware through hardware-provided interfaces, namely, 1). Memory-map Input and Output (MMIO), 2). Interrupt and 3). Direct Memory Access (DMA). 
+So when designing a symbolic execution or fuzz testing framework, instead of focusing on handling the generic well-defined system call interfaces, one has to consider these hardware dependencies. 
+This mainly incurs three problems: 
+\begin{itemize}
+    \item Limited visibility and computing resource: 
+            User-space program enjoys much visibility and abundance of computing resources while the low-level system software is not meant for being debugged thus has much less visibility, debugging utility as well as computing resources (e.g, RAM). 
+            This is problematic since most symbolic execution and fuzz testing frameworks are built on the assumptions that it has full visibility into the programs' states and relatively large amount of computing resources. 
+    \item Hardware fidelity: 
+            Due to the diversity of the hardware, apart from directly accessing them, many existing works tried to emulate the hardware or to abstract them away. 
+            But hardware by itself is much like the software in terms of containing complex logic, thus simple abstraction usually lead to low hardware fidelity thus false positives. 
+    \item Handle hardware interfaces properly: 
+            Even with the aforementioned two problems solved, there is no existing work that tried to handle these three hardware interfaces like they do for the system calls. 
+            It is still yet an open problem to handle the MMIO, interrupt, and DMA properly.  
+\end{itemize}
 
-\point{Executing private code} Malicious code injected into a victim process can freely execute the code loaded in the memory space, including private and privileged functions that are only intended for a few pieces of code in the same process. For instance, dlopen is a private API on iOS and is not allowed to be directly called by apps. However, since iOS runtime always loads dlopen and other private APIs inside every app process, malicious apps can stealthily invoke these system-reserved APIs to escalate privileges or bypass security checks~\cite{iris,jekyll}.
 
-\point{Privilege Escalation} When vulnerable components are exploited, attackers are able to execute malicious logics via either injected code or reused code gadgets in the victim process. The malicious logics are then granted the same privilege as the exploited process.
+\point{Relatively large code base} 
+In-process malicious code may silently scan the entire user-space memory for private data, such as passwords, credit card numbers, and sensitive logs. 
+For instance, memory-scrapping code are found inside almost all the recent attacks on POS (Point of Sale) machines~\cite{pos}. 
+Memory scrapers are also used for illegally identifying and tracking users~\cite{memscrap}.
 
-% summarize, what is in-process memory abuse.
-Despite their different goals, the aforementioned attacks all hinge on the same capability to succeed -- access to data or code that belong to other components (e.g., functions, modules, libraries, etc.) executing in the same process context.
+\point{Heavily event-driven design} Malicious code injected into a victim process can freely execute the code loaded in the memory space, including private and privileged functions that are only intended for a few pieces of code in the same process. For instance, dlopen is a private API on iOS and is not allowed to be directly called by apps. However, since iOS runtime always loads dlopen and other private APIs inside every app process, malicious apps can stealthily invoke these system-reserved APIs to escalate privileges or bypass security checks~\cite{iris,jekyll}.
+
+
  In this thesis, we generically refer to attacks that exploit memory address space sharing as \emph{In-process memory abuse}. Ranging from data theft to privilege escalation, a variety of user-space attacks, launched either remotely or locally, can succeed because attackers can freely access (or abuse) target programs' memory content in the same process context.
 %problem statement again
 
