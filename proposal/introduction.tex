@@ -39,20 +39,22 @@ This mainly incurs three problems:
             But hardware by itself is much like the software in terms of containing complex logic, thus simple abstraction usually lead to low hardware fidelity thus false positives. 
     \item Handle hardware interfaces properly: 
             Even with the aforementioned two problems solved, there is no existing work that tried to handle these three hardware interfaces like they do for the system calls. 
-            It is still yet an open problem to handle the MMIO, interrupt, and DMA properly.  
+            It is still yet an open problem to handle the MMIO, interrupt, and DMA properly and authentically.  
 \end{itemize}
 
 
-\point{Relatively large code base} 
-In-process malicious code may silently scan the entire user-space memory for private data, such as passwords, credit card numbers, and sensitive logs. 
-For instance, memory-scrapping code are found inside almost all the recent attacks on POS (Point of Sale) machines~\cite{pos}. 
-Memory scrapers are also used for illegally identifying and tracking users~\cite{memscrap}.
+\point{Large code base} 
+Low-level system software tend to have relatively large code base mainly because 1). On the hardware's front, as the hardware usually contains complex functionalities, in order to fully drive each feature from the hardware, the software on top of it needs to enumerate and handle each one of them. 2). On the user's front, it needs to accept, parse and break down the relatively semantically-rich user commands and formulate them into machine-executable tasks, this also takes a large code base to achieve.
 
-\point{Heavily event-driven design} Malicious code injected into a victim process can freely execute the code loaded in the memory space, including private and privileged functions that are only intended for a few pieces of code in the same process. For instance, dlopen is a private API on iOS and is not allowed to be directly called by apps. However, since iOS runtime always loads dlopen and other private APIs inside every app process, malicious apps can stealthily invoke these system-reserved APIs to escalate privileges or bypass security checks~\cite{iris,jekyll}.
+\point{Heavily event-driven design} 
+Due to the critical role that the low-level system software is playing, its performance is carefully optimized and essential to all the applications that are built on top of it. 
+As a result, an event-driven design is usually employed to further improve performance. 
+However, rarely does the existing works that take these events into consideration during the design of their solutions. 
+They usually just use a simple heuristic-based method, which often can not be realized in practice.
 
 
- In this thesis, we generically refer to attacks that exploit memory address space sharing as \emph{In-process memory abuse}. Ranging from data theft to privilege escalation, a variety of user-space attacks, launched either remotely or locally, can succeed because attackers can freely access (or abuse) target programs' memory content in the same process context.
-%problem statement again
+
+In this thesis, we design three different novel solutions targeting the aforementioned challenges respectively based on the current state-of-the-art. 
 
 %\point{Conducting code-reuse attacks} This is a more generic form of executing code in
 %the context of a victim process. The attack is mostly originated from a subverted vulnerable components, attacker then redirects execution to different code sections loaded in the same process. The goal is to impersonate as the compromised process for various purposes such as privilege escalation, sandbox-escaping, etc. Since the wide adoption of mitigation techniques like Data Execution Prevention (DEP~\cite{dep}), code-reuse attacks~\cite{ropnoreturn, ret2libc, ret2libc2, ret2libc3,jitrop} have become a common attacking technique.
