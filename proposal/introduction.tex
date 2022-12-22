@@ -46,7 +46,7 @@ This mainly incurs three problems:
 \point{Large code base} 
 Low-level system software tend to have relatively large code base mainly because 1). On the hardware's front, as the hardware usually contains complex functionalities, in order to fully drive each feature from the hardware, the software on top of it needs to enumerate and handle each one of them. 2). On the user's front, it needs to accept, parse and break down the relatively semantically-rich user commands and formulate them into machine-executable tasks, this also takes a large code base to achieve.
 
-\point{Heavily event-driven design} 
+\point{Heavy event-driven design} 
 Due to the critical role that the low-level system software is playing, its performance is carefully optimized and essential to all the applications that are built on top of it. 
 As a result, an event-driven design is usually employed to further improve performance. 
 However, rarely does the existing works that take these events into consideration during the design of their solutions. 
