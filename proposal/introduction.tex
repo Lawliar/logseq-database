@@ -60,13 +60,19 @@ In this thesis, we design three different novel solutions targeting the aforemen
 %the context of a victim process. The attack is mostly originated from a subverted vulnerable components, attacker then redirects execution to different code sections loaded in the same process. The goal is to impersonate as the compromised process for various purposes such as privilege escalation, sandbox-escaping, etc. Since the wide adoption of mitigation techniques like Data Execution Prevention (DEP~\cite{dep}), code-reuse attacks~\cite{ropnoreturn, ret2libc, ret2libc2, ret2libc3,jitrop} have become a common attacking technique.
 \subsection{Thesis Statement}
 
-In light of the surging issue of in-process memory abuse and the lack of effective countermeasures, my research takes three steps to protect victim programs from such attacks.
+In light of the current dire security situation in the low-level system software, also to apply symbolic execution as well as fuzz testing to better secure the low-level system software, 
+my research takes three steps to refine and improve the symbolic execution and fuzz testing techniques to make them more fit for those critical software that we daily depend on.
 
-First, we need new memory protection mechanisms to protect sensitive data and code against malicious code that manages to run in the same process context. One obvious solution to in-process memory abuse is to redesign the memory sharing scheme and how OSes manage execution units (i.e, threads), creating independent address space for each software components. Unfortunately, despite vast research efforts, such solutions are often not backward compatible. They require completely rewriting applications running atop, which makes such solutions impractical.
+First, we need to have fast and high-fidelity access to the real hardware so that the quality of the software testing can be drastically improved. 
+Current solutions either connect to the real hardware devices through debugging port or emulate them in the emulators. 
+The former is costly, requires high customization, and does not support all the hardware features. 
+The latter causes high false positives, i.e., the bugs it detected often cannot be realistically replayed in the real hardware.
 
-Second, we need strong and practical software attack mitigations to protect valuable yet vulnerable components from being directly exploited. As creating isolations among mutually untrusted components alone may fail to prevent such in-process memory abuse. Numerous studies~\cite{boomerang,tsgx} have shown that attackers are able to exploit code running inside trusted executing environments, bypassing all deployed mitigations~\cite{controljujutsu,jitrop,rop}. 
+Second, we need to tailor the costly symbolic execution towards the large code base that the low-level system software usually has. 
+At least for certain type of bugs, we can optimize the symbolic execution strategy to reason those types of bugs more efficiently so that it can scale to a large code base. 
 
-Lastly, since software offense and defense is an ever-going arm race. There is no existing approaches which can provide guaranteed protection against all variants of in-process memory abuse. To develop comprehensive defense, another important perspective is to stand in the shoes of an attacker. We need tools that help with finding unintended memory accessing bugs in an automated fashion. Decreasing those software bugs that lead to illegal memory access can effectively increase the bar of in-process memory abuse.
+
+Lastly, we need to adapt those bug detection techniques towards a more event-driven design. The current bug detection techniques mainly focus on testing sequential code without worrying about interrupt, as interrupts are abstracted away by the operating system from the user-space programs. But interrupt serves as an essential part for low-level system software, thus we need to incorporate interrupts into the design. 
 
 \subsection{Approaches Overview}
 In this thesis, 
