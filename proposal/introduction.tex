@@ -89,16 +89,28 @@ This simple design ensures the highest of hardware fidelity since all concrete e
 It is also very fast out-performing the state-of-the-art symbolic execution framework by 1.5 to 2 times. 
 
 %second work: norax provides xom primitive for combating information-leak based memory reuse attacks
-Second, I present \textsc{KUBO}~\cite{kubo}, a practical system that retrofits execute-only memory (XOM) into stripped COTS binaries. Since code reuse attacks exploiting memory disclosure vulnerabilities can bypass all deployed mitigations. One promising defense against this class of attacks is to enable XOM protection on top of fine-grained ASLR. However, existing works implementing XOM, despite their efficacy, only protect programs that have been (re)built with new compiler support, leaving commercial-off-the-shelf (COTS) binaries and source-unavailable programs unprotected.  Unlike these techniques, \textsc {Norax} requires neither source code nor debugging symbols. \textsc {Norax} statically transforms existing binaries so that during runtime their code sections can be loaded into XOM memory pages with embedded data relocated and data references properly updated. \textsc {Norax} allows transformed binaries to leverage the new hardware-based XOM support--a feature widely available on AArch64 platforms (e.g., recent mobile devices) yet virtually unused due to the incompatibility of existing binaries. Furthermore, NORAX is designed to co-exist with other COTS binary hardening techniques, such as in-place randomization (IPR~\cite{ipr}). We apply NORAX to the commonly used Android system binaries running on SAMSUNG Galaxy S6 and LG Nexus 5X devices. The results show that \textsc {Norax} on average slows down the execution of transformed binaries by 1.18\% and increases their memory footprint by 2.21\%, suggesting NORAX is practical for real-world adoption.
+Second, I present \textsc{KUBO}~\cite{kubo}, a scalable symbolic execution based static detector for undefined behaviors in the OS kernel.
+Undefined behaviors plague the OS kernel because OS kernel, as an important example of the system software, has to deal with all sort of different architectures and hardware. 
+While C programming language, the predominant language used in the low level system software defines all different expected behaviors, it still has many behaviors that are left undefined due to architectural differences. 
+For example, signed integer overflow is a well-known undefined behavior in C language standard~\cite{misc:C-standard}. 
+Although for one specific architecture, e.g., x86, its behavior is fixed, i.e., overflown integer will wrap around (i.e., \textbf{INT\_MAX + 1 = INT\_MIN}). 
+However, since on other architectures (e.g., the GPU) overflown integer can saturate rather than wrapping around. 
+These irreconcilable differences make it impossible for the C language standard to pick one expected behavior. 
+Previous works cannot scale undefined behavior detection to the whole kernel code space. 
+They usually just do an intra-procedural per-function analysis, leaving false positive to be as high as 87\%. 
+In \textsc{KUBO}, we examined all the undefined-behavior-fixing patches in linux kernel over the past several years and systemized the bug triggering inputs from the userspace. 
+In doing this, we constructed the bare minimal program slice for determining the triggerability of each UB bug thus scaling symbolic execution while taking advantage of its precision.
+In our experiment we found 23 new undefined behavior bugs in the linux kernel out of which 14 are confirmed.
 
 %Finally: savior, a verifiable bug-driven hybrid testing framework, to detect memory errors that could potentially lead to 
 % in-process memory abuse attacks.
-Finally, I propose \textsc {Savior}, the first hybrid testing system driven by bug search and empowered with buggy condition verification. Differing from the
-existing hybrid testing tools, \textsc {Savior} prioritizes the concolic execution to solve branch predicates guarding more potential 
-vulnerabilities and then drives fuzz testing to reach code with more potential vulnerabilities. Going beyond that, \textsc {Savior} inspects all vulnerable 
-candidates along the running program path in concolic execution. By modeling the faulty situations with SMT constraints, it solves proofs 
-of valid vulnerabilities and outputs concrete test cases. Our evaluation shows that the bug-driven approach outperforms the state-of-art 
-code coverage driven hybrid testing tools in vulnerability detection. In our preliminary experiments comparing \savior with state-of-the-art software testing techniques on the widely used LAVA benchmark~\cite{lava}. Within 5 hours, in addition to triggering all bugs in {\tt base64}, {\tt md5sum} and {\tt uniq}, \savior found 1904 bugs in {\tt who} and many other unlisted bugs. This is, to the best of our knowledge, by far the best results in the existing literatures.
+Finally, I propose \textsc{Shield}, the first hybrid testing system driven by bug search and empowered with buggy condition verification. 
+Differing from the existing hybrid testing tools, \textsc {Savior} prioritizes the concolic execution to solve branch predicates guarding more potential vulnerabilities and then drives fuzz testing to reach code with more potential vulnerabilities. 
+Going beyond that, \textsc {Savior} inspects all vulnerable candidates along the running program path in concolic execution. 
+By modeling the faulty situations with SMT constraints, it solves proofs of valid vulnerabilities and outputs concrete test cases. 
+Our evaluation shows that the bug-driven approach outperforms the state-of-art code coverage driven hybrid testing tools in vulnerability detection. 
+In our preliminary experiments comparing \savior with state-of-the-art software testing techniques on the widely used LAVA benchmark~\cite{lava}. 
+Within 5 hours, in addition to triggering all bugs in {\tt base64}, {\tt md5sum} and {\tt uniq}, \savior found 1904 bugs in {\tt who} and many other unlisted bugs. This is, to the best of our knowledge, by far the best results in the existing literatures.
 
 %On average, \textsc {Savior} detects vulnerabilities XX\% faster and discovers YY\% more 
 %security violations. According to the experimental result on 14 well fuzzed benchmark programs, \textsc {Savior} triggers 2196 unique security violations within 24 hours.
