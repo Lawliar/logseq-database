@@ -46,7 +46,7 @@ This mainly incurs three problems:
 \point{Large code base} 
 Low-level system software tend to have relatively large code base mainly because 1). On the hardware's front, as the hardware usually contains complex functionalities, in order to fully drive each feature from the hardware, the software on top of it needs to enumerate and handle each one of them. 2). On the user's front, it needs to accept, parse and break down the relatively semantically-rich user commands and formulate them into machine-executable tasks, this also takes a large code base to achieve.
 
-\point{Heavy event-driven design} 
+\point{Heavily event-driven design} 
 Due to the critical role that the low-level system software is playing, its performance is carefully optimized and essential to all the applications that are built on top of it. 
 As a result, an event-driven design is usually employed to further improve performance. 
 However, rarely does the existing works that take these events into consideration during the design of their solutions. 
@@ -61,7 +61,7 @@ In this thesis, we design three different novel solutions targeting the aforemen
 \subsection{Thesis Statement}
 
 In light of the current dire security situation in the low-level system software, also to apply symbolic execution as well as fuzz testing to better secure the low-level system software, 
-my research takes three steps to refine and improve the symbolic execution and fuzz testing techniques to make them more fit for those critical software that we daily depend on.
+my research takes three steps to refine and improve the symbolic execution and fuzz testing techniques to make them more fit for those critical low-level software that we daily depend on.
 
 First, we need to have fast and high-fidelity access to the real hardware so that the quality of the software testing can be drastically improved. 
 Current solutions either connect to the real hardware devices through debugging port or emulate them in the emulators. 
@@ -72,19 +72,24 @@ Second, we need to tailor the costly symbolic execution towards the large code b
 At least for certain type of bugs, we can optimize the symbolic execution strategy to reason those types of bugs more efficiently so that it can scale to a large code base. 
 
 
-Lastly, we need to adapt those bug detection techniques towards a more event-driven design. The current bug detection techniques mainly focus on testing sequential code without worrying about interrupt, as interrupts are abstracted away by the operating system from the user-space programs. But interrupt serves as an essential part for low-level system software, thus we need to incorporate interrupts into the design. 
+Lastly, we need to adapt those bug detection techniques towards a more event-driven design. The current bug detection techniques mainly focus on testing sequential code without worrying about interrupt, as interrupts are abstracted away by the operating system from the user-space programs. But interrupt serves as an essential part for low-level system software, thus we need to incorporate interrupts into the design for a more efficient and comprehensive testing. 
 
 \subsection{Approaches Overview}
 In this thesis, 
-%I first investigate the effectiveness and feasibility of existing works that try to directly or indirectly mitigate and prevent in-process memory abuse. Then,
-I present three novel techniques aiming to defend in-process memory abuse. 
-%from two different aforementioned angles, namely \emph{memory access regulation} and \emph{memory access bug detection}.
+I present three novel techniques aiming to make symbolic execution and fuzz testing more efficient and effective for the critical low-level software. 
 
 %first work: shreds aids developers to create use-to-use in-process memory isolation to protect their secret data
-First, I present \textsc {Shreds}~\cite{shreds}, a set of OS-backed programming primitives that addresses developers currently unmet needs for fine-grained, convenient, and efficient protection of sensitive memory content against in-process adversaries. A shred can be viewed as a flexibly defined segment of a thread execution (hence the name). Each shred is associated with a protected memory pool, which is accessible only to code running in the shred. To stay backward compatible, shreds offer in-process private memory without relying on separate page tables, nested paging, or even modified hardware. Plus, shreds provide the essential data flow and control flow protections for running sensitive code. We have built the compiler toolchain and the OS module that together enable shreds on Linux. We demonstrated the usage of shreds and evaluated their performance using 5 non-trivial open source software, including OpenSSH and Lighttpd. The results show that shreds are fairly easy to use and incur low runtime overhead (4.67\%).
+First, I present \textsc{SPEAR}\todo{add citation}, a new symbolic execution framework designed for embedded applications which uniquely provides high-fidelity and high-speed execution environment. 
+Old symbolic execution designs suffer when the firmware interacts with the hardware. 
+More specifically, due to their migrating firmware from its native environments to the emulators running on the workstation, they have to either emulate those missing peripherals or forward peripheral accesses to the real hardware. 
+The former usually results in false program state, the latter is slow. 
+\textsc{SPEAR} uniquely runs the concrete execution on the real hardware. 
+The concrete execution is only responsible for reporting runtime information necessary for the expensive symbolic execution running on the workstation. 
+This simple design ensures the highest of hardware fidelity since all concrete execution is carried out on the real hardware. 
+It is also very fast out-performing the state-of-the-art symbolic execution framework by 1.5 to 2 times. 
 
 %second work: norax provides xom primitive for combating information-leak based memory reuse attacks
-Second, I present \textsc {Norax}~\cite{norax}, a practical system that retrofits execute-only memory (XOM) into stripped COTS binaries. Since code reuse attacks exploiting memory disclosure vulnerabilities can bypass all deployed mitigations. One promising defense against this class of attacks is to enable XOM protection on top of fine-grained ASLR. However, existing works implementing XOM, despite their efficacy, only protect programs that have been (re)built with new compiler support, leaving commercial-off-the-shelf (COTS) binaries and source-unavailable programs unprotected.  Unlike these techniques, \textsc {Norax} requires neither source code nor debugging symbols. \textsc {Norax} statically transforms existing binaries so that during runtime their code sections can be loaded into XOM memory pages with embedded data relocated and data references properly updated. \textsc {Norax} allows transformed binaries to leverage the new hardware-based XOM support--a feature widely available on AArch64 platforms (e.g., recent mobile devices) yet virtually unused due to the incompatibility of existing binaries. Furthermore, NORAX is designed to co-exist with other COTS binary hardening techniques, such as in-place randomization (IPR~\cite{ipr}). We apply NORAX to the commonly used Android system binaries running on SAMSUNG Galaxy S6 and LG Nexus 5X devices. The results show that \textsc {Norax} on average slows down the execution of transformed binaries by 1.18\% and increases their memory footprint by 2.21\%, suggesting NORAX is practical for real-world adoption.
+Second, I present \textsc{KUBO}~\cite{kubo}, a practical system that retrofits execute-only memory (XOM) into stripped COTS binaries. Since code reuse attacks exploiting memory disclosure vulnerabilities can bypass all deployed mitigations. One promising defense against this class of attacks is to enable XOM protection on top of fine-grained ASLR. However, existing works implementing XOM, despite their efficacy, only protect programs that have been (re)built with new compiler support, leaving commercial-off-the-shelf (COTS) binaries and source-unavailable programs unprotected.  Unlike these techniques, \textsc {Norax} requires neither source code nor debugging symbols. \textsc {Norax} statically transforms existing binaries so that during runtime their code sections can be loaded into XOM memory pages with embedded data relocated and data references properly updated. \textsc {Norax} allows transformed binaries to leverage the new hardware-based XOM support--a feature widely available on AArch64 platforms (e.g., recent mobile devices) yet virtually unused due to the incompatibility of existing binaries. Furthermore, NORAX is designed to co-exist with other COTS binary hardening techniques, such as in-place randomization (IPR~\cite{ipr}). We apply NORAX to the commonly used Android system binaries running on SAMSUNG Galaxy S6 and LG Nexus 5X devices. The results show that \textsc {Norax} on average slows down the execution of transformed binaries by 1.18\% and increases their memory footprint by 2.21\%, suggesting NORAX is practical for real-world adoption.
 
 %Finally: savior, a verifiable bug-driven hybrid testing framework, to detect memory errors that could potentially lead to 
 % in-process memory abuse attacks.
