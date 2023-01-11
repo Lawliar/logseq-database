@@ -89,9 +89,9 @@ This simple design ensures the highest of hardware fidelity since all concrete e
 It is also very fast out-performing the state-of-the-art symbolic execution framework by 1.5 to 2 times. 
 
 %second work: norax provides xom primitive for combating information-leak based memory reuse attacks
-Second, I present \textsc{KUBO}~\cite{kubo}, a scalable symbolic execution based static detector for undefined behaviors in the OS kernel.
-Undefined behaviors plague the OS kernel because OS kernel, as an important example of the system software, has to deal with all sort of different architectures and hardware. 
-While C programming language, the predominant language used in the low level system software defines all different expected behaviors, it still has many behaviors that are left undefined due to architectural differences. 
+Second, I present \textsc{KUBO}~\cite{kubo}, a scalable symbolic execution based static detector for undefined behaviors in the OS kernels.
+Undefined behaviors plague the OS kernel because the OS kernel, as an important example of the system software, has to deal with all sort of different architectures and hardware. 
+While C programming language, the predominant language used in the low level system software defines all different expected behaviors, it still has many behaviors that are left undefined due to the architectural differences. 
 For example, signed integer overflow is a well-known undefined behavior in C language standard~\cite{misc:C-standard}. 
 Although for one specific architecture, e.g., x86, its behavior is fixed, i.e., overflown integer will wrap around (i.e., \textbf{INT\_MAX + 1 = INT\_MIN}). 
 However, since on other architectures (e.g., the GPU) overflown integer can saturate rather than wrapping around. 
