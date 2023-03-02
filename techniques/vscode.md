@@ -35,3 +35,8 @@ Then
 add "~/.virtualenv" to "venv folders" and "venv path", then you are good to go!
 
 "remote-ssh" is really useful!
+
+### Opened tabs for same folder but in different environments
+So when you work on some folder, vscode will memorize the opened tabs when you last close the workspace.
+But as I mounted a folder from my remote ubuntu machine to my WSL.
+When I open the same folder inside the mounted folder, from different host (i.e., one remote ubuntu, another one WSL), the memorized tabs are different, this is pretty amazing.
