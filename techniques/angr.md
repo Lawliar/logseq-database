@@ -1,6 +1,7 @@
 ## content for certain address does not match the firmware decompiled by Ghidra:
 - If you are reading the content of memory (even flash i.e., code), the content can be different from what ghidra told you.
 - This might be that, there are certain breakpoints that are not removed from the MCU, thus messing up all the content. 
+- Especially you are reading/syncing through Symbion (which uses gdb).
 - Reflashing the board to get rid of those breakpoint can solve this problem.
 
 ## Thumb not determined properly
