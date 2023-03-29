@@ -34,3 +34,6 @@ I reinstall gnome-session, and switch back to it via update-laternatives, it wor
 
 ## prevent ubuntu from hibernation
 https://askubuntu.com/questions/473037/how-to-permanently-disable-sleep-suspend
+
+## xRDP infamous authenication is required to refresh system repositories
+https://c-nergy.be/blog/?p=14051
