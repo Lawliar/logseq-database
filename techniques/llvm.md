@@ -51,3 +51,8 @@ And I specify all the flags just to stage 1, for 2, 3 it's just a few flags(e.g.
 
 ### Observation:
 As clang-12 works with the one-liner(compiled to X64, with the instrumentation pass), but when I added optimization flag(e.g., -Oz), the same problem occurs. Although this one is different from the previous "pointer being messed up" one, as this is due to , the module initialization is called twice, thus resulting in 2 different runtime structure being created, which subsequently results in the type for the SymID struct being created twice, and the send one's name, unsuprisingly becomes"SymID.0" which fails my assertation in the program which asserts it to be "SymID". I guess this is because me adding the "-Oz" flags makes the whole pipeline called twice? I don't see porting to a new pass manager can solve this problem
+
+
+### use new pass manager but also use the commandline arguments for the self-written pass:
+https://github.com/llvm/llvm-project/issues/56137
+in short `-Xclang -load -Xclang <pass path> -Xclang -fpass-plugin=<path path>`

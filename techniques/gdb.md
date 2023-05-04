@@ -10,3 +10,9 @@ ignore <breakpoint identifier> 100000
 `
 after execution
 `info breakpoints`
+
+## choose to follow child or parent when fork is called
+https://visualgdb.com/gdbreference/commands/set_follow-fork-mode
+
+## connect to gdb server through TCP port
+https://linuxlink.timesys.com/docs/wiki/engineering/HOWTO_Use_GDBServer

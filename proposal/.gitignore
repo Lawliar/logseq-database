@@ -29,3 +29,4 @@
 # Output
 *.gz
 *.pptx
+.vscode
