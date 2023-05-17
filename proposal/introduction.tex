@@ -104,7 +104,8 @@ In our experiment we found 23 new undefined behavior bugs in the linux kernel ou
 
 %Finally: savior, a verifiable bug-driven hybrid testing framework, to detect memory errors that could potentially lead to 
 % in-process memory abuse attacks.
-Finally, I propose \textsc{Shield}, the first hybrid testing system driven by bug search and empowered with buggy condition verification. 
+Finally, I propose \textsc{Shield},the first hybrid fuzz testing framework that takes firmware's event-driven design into consideration. 
+Existing fuzz testing framework conceptually 
 Differing from the existing hybrid testing tools, \textsc {Savior} prioritizes the concolic execution to solve branch predicates guarding more potential vulnerabilities and then drives fuzz testing to reach code with more potential vulnerabilities. 
 Going beyond that, \textsc {Savior} inspects all vulnerable candidates along the running program path in concolic execution. 
 By modeling the faulty situations with SMT constraints, it solves proofs of valid vulnerabilities and outputs concrete test cases. 
