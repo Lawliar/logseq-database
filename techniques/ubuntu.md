@@ -32,6 +32,11 @@ After gnone is fucked up, I am fed up with the ugly xforce, so I switch back to 
 I installed gnome-shell ubuntu-gnome-desktop(which to my suprise, were not installed)
 I reinstall gnome-session, and switch back to it via update-laternatives, it worked.
 
+
+Even if the above does not work:  this one below looks like a magic clean sweep:
+
+https://unix.stackexchange.com/a/555927/439645, be sure to try this.
+
 ## prevent ubuntu from hibernation
 https://askubuntu.com/questions/473037/how-to-permanently-disable-sleep-suspend
 

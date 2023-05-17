@@ -136,3 +136,5 @@ usage: `locate libc.so.6` to see the locations of these libraries
 `sudo apt install pax-utils`
 
 
+## steal a process from other terminal
+look into command `reptyr`
