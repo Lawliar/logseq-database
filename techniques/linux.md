@@ -138,3 +138,6 @@ usage: `locate libc.so.6` to see the locations of these libraries
 
 ## steal a process from other terminal
 look into command `reptyr`
+
+## linux from scratch
+https://www.linuxfromscratch.org/lfs/downloads/stable/LFS-BOOK-11.3.pdf
