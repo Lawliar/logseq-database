@@ -141,3 +141,9 @@ look into command `reptyr`
 
 ## linux from scratch
 https://www.linuxfromscratch.org/lfs/downloads/stable/LFS-BOOK-11.3.pdf
+
+## how to make ubuntu terminal history output go away:
+`clean` and `reset` only clean up but you can still scroll up to see the history printing,
+this can cause trouble especially when you are fixing many program errors one by one, you fix one and you wanna quickly locate the next one.
+
+with `clear && printf '\e[3J'` the history seems disappear which is pretty amazing
