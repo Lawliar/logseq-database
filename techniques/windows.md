@@ -41,3 +41,6 @@ run `netsh winsock reset` as admin, and then reboot.
 
 ## 网易云输出设备：
 为什么一定要选“WaveOut: Microsoft Sound Mapper”?
+
+## copy paste between local windows and remote machine did not work through remote desktop connection:
+https://cloudzy.com/blog/copy-paste-not-working-in-rdp/

@@ -147,3 +147,5 @@ https://www.linuxfromscratch.org/lfs/downloads/stable/LFS-BOOK-11.3.pdf
 this can cause trouble especially when you are fixing many program errors one by one, you fix one and you wanna quickly locate the next one.
 
 with `clear && printf '\e[3J'` the history seems disappear which is pretty amazing
+more explaination about this terminal escape command: 
+https://superuser.com/questions/555554/putty-clear-scrollback-from-commandline
