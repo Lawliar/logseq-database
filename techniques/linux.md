@@ -149,3 +149,6 @@ this can cause trouble especially when you are fixing many program errors one by
 with `clear && printf '\e[3J'` the history seems disappear which is pretty amazing
 more explaination about this terminal escape command: 
 https://superuser.com/questions/555554/putty-clear-scrollback-from-commandline
+
+## How to mount a USB device
+- https://vitux.com/how-to-manually-mount-unmount-a-usb-device-on-ubuntu/
