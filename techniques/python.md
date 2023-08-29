@@ -133,3 +133,7 @@ https://newbedev.com/where-is-python-s-sys-path-initialized-from
 
 ## ModuleNotFoundError: No module named 'distutils.cmd'
 `sudo apt install python3.7-distutils`
+
+## Python IOError: [Errno 5] Input/output error?
+I have no idea which files causes this problem (which subsequently led to bup backing up (indexing) failed)
+But I located those problem-causing files by a quick `find . -name "*"`, and it indeed have files like this, and after I delete them, bup works fine. (still don't know what causes this problem tho)
