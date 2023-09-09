@@ -36,6 +36,10 @@ add "~/.virtualenv" to "venv folders" and "venv path", then you are good to go!
 
 "remote-ssh" is really useful!
 
+### remote-ssh promt passphrase multiple times then login failed
+1. I tried to delete ~/.vscode-server from the remote machine as suggesteed here, but no good https://github.com/microsoft/vscode-remote-release/issues/2518
+2. then I guess, this problem is because, I disabled password login from my remote machine (only allowing pubkey), but I don't have ssh-agent running. So I followed this https://code.visualstudio.com/docs/remote/troubleshooting#_enabling-alternate-ssh-authentication-methods to disable useLocalServer and configure ControlMaster. Then it finally worked.
+
 ### Opened tabs for same folder but in different environments
 So when you work on some folder, vscode will memorize the opened tabs when you last close the workspace.
 But as I mounted a folder from my remote ubuntu machine to my WSL.
