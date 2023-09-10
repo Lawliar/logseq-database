@@ -154,13 +154,9 @@ https://superuser.com/questions/555554/putty-clear-scrollback-from-commandline
 - https://vitux.com/how-to-manually-mount-unmount-a-usb-device-on-ubuntu/
 
 ## recursively find files and sort them by file size:
-- `find . -name "*.dot" -ls | sort -r -n -k7`
-- Explaination: 
-    - the first half find all file names ended with ".dot" and display detailed info about each found file (including the file size). 
-    - the second half , `-r` means reverse order, `-n` compares the numerical value, `-k7` means use the 7th column. 
+https://unix.stackexchange.com/a/88066/439645
 
-## recursively find files and combine their sizes:
-- ` find  -name '*[dfg|cfg].dot' -printf "%s\n" | awk '{t+=$1}END{print t}'`
-- Explaination:
-    - the first half find all file names that ends with "cfg.dot" or "dfg.dot", `-printf "%s\n"` display the selected files sizes. 
-    - the latter half using awk adding those file sizes together and print the total. 
+find . -type f -printf "%s\t%p\n" | sort -n
+
+## monitor command output
+if you wanto to repeatly monitor the output of the command, but you don't want to type in constantly, you can use the watch command
