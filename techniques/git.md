@@ -44,3 +44,6 @@ fatal: clone of 'https://repo.or.cz/jimtcl.git' into submodule path '/home/lcm/D
 
 -- how to solve:
 https://stackoverflow.com/questions/35821245/github-server-certificate-verification-failed
+
+## ignore ^M at the end of each line
+https://stackoverflow.com/questions/1889559/make-git-diff-ignore-m
