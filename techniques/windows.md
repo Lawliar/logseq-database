@@ -44,3 +44,11 @@ run `netsh winsock reset` as admin, and then reboot.
 
 ## copy paste between local windows and remote machine did not work through remote desktop connection:
 https://cloudzy.com/blog/copy-paste-not-working-in-rdp/
+
+## wifi cannot show:
+https://www.youtube.com/watch?v=PupMFBL39RI
+
+## when installing windows, cannot format/create new partition
+https://www.youtube.com/watch?v=tgQ-KP0Zh8U
+also, if the problem persists, instead of deleting and newing a partition, 
+there is likely to be a small partition, (the big one you try to create a new partition on/formatting is partition 1, and there is a small partition 0), you can try to format that one, and then extend, (it will eat the big one), then you can format later 

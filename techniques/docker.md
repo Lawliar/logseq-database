@@ -50,3 +50,7 @@ use `-a stdin -a stderr -a stdout` to `docker run` in this way, if you did any r
 
 ## docker network:
 https://docs.docker.com/network/network-tutorial-standalone/
+
+## docker cannot resolve dns:
+
+https://medium.com/@faithfulanere/solved-docker-build-could-not-resolve-archive-ubuntu-com-apt-get-fails-to-install-anything-9ea4dfdcdcf2
