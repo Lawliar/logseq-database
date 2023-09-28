@@ -133,3 +133,6 @@ https://stackoverflow.com/questions/9298278/cmake-print-out-all-accessible-varia
 make sure these two commands are added before add_executable
 as stated here: https://stackoverflow.com/questions/40516794/cmake-not-applying-compile-option-using-add-compile-options
 otherwise they won't take effect
+
+## using embedded gcc with cmake, then missing reference to `_exit`
+https://stackoverflow.com/questions/53633705/cmake-the-c-compiler-is-not-able-to-compile-a-simple-test-program
