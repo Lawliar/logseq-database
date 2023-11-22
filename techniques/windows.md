@@ -52,3 +52,13 @@ https://www.youtube.com/watch?v=PupMFBL39RI
 https://www.youtube.com/watch?v=tgQ-KP0Zh8U
 also, if the problem persists, instead of deleting and newing a partition, 
 there is likely to be a small partition, (the big one you try to create a new partition on/formatting is partition 1, and there is a small partition 0), you can try to format that one, and then extend, (it will eat the big one), then you can format later 
+
+## configure win11 as a server
+1. install openssh client and server, and make server automatic start
+2. firewall allow PING
+3. assign static IP to the ethernet interface
+4. in setting->system->remote desktop, enable remote access
+Then you can access the computer with the user/password of the machine that is remotely accessed
+
+## remote login win with microsoft account
+https://cmdrkeene.com/remote-desktop-with-microsoft-account-sign-in/

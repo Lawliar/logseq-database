@@ -154,9 +154,10 @@ https://superuser.com/questions/555554/putty-clear-scrollback-from-commandline
 - https://vitux.com/how-to-manually-mount-unmount-a-usb-device-on-ubuntu/
 
 ## recursively find files and sort them by file size:
-https://unix.stackexchange.com/a/88066/439645
 
-find . -type f -printf "%s\t%p\n" | sort -n
-
-## monitor command output
-if you wanto to repeatly monitor the output of the command, but you don't want to type in constantly, you can use the watch command
+## download torrent via command line
+transmission-cli
+## see ^M, 
+dos2unix
+find . -type f | xargs -Ix sed -i -r 's/\r//g' x
+##

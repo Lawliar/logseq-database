@@ -137,3 +137,21 @@ https://newbedev.com/where-is-python-s-sys-path-initialized-from
 ## Python IOError: [Errno 5] Input/output error?
 I have no idea which files causes this problem (which subsequently led to bup backing up (indexing) failed)
 But I located those problem-causing files by a quick `find . -name "*"`, and it indeed have files like this, and after I delete them, bup works fine. (still don't know what causes this problem tho)
+
+## windows report missing dll when importing module
+install visual c++
+https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist?view=msvc-170
+
+## some python program just crashed with a "Segmentation fault (core dumped)" and without any tracing information
+for this case, just use 
+`
+import faulthandler
+faulthandler.enable()
+`
+it will print something instead of just a `Segmentation fault (core dumped)`
+
+## get file creation time:
+https://stackoverflow.com/a/39501288
+
+## sort a dict according to key for python 3.7 or higher:
+https://stackoverflow.com/a/47017849
