@@ -157,7 +157,10 @@ https://superuser.com/questions/555554/putty-clear-scrollback-from-commandline
 
 ## download torrent via command line
 transmission-cli
+
 ## see ^M, 
 dos2unix
 find . -type f | xargs -Ix sed -i -r 's/\r//g' x
-##
+
+## manipulate local dns record
+`resolvectl status`

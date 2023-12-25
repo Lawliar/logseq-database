@@ -155,3 +155,8 @@ https://stackoverflow.com/a/39501288
 
 ## sort a dict according to key for python 3.7 or higher:
 https://stackoverflow.com/a/47017849
+
+## nested list,dict comphehension is awesome!
+suppose we have a nested dict here: in order to get all the keys of the inner dict together, we can just do:
+
+`times = np.sort(np.unique( np.array([inner_key for outer_dict in rounds.values() for inner_key in outer_dict.keys()]) )`

@@ -56,3 +56,6 @@ As clang-12 works with the one-liner(compiled to X64, with the instrumentation p
 ### use new pass manager but also use the commandline arguments for the self-written pass:
 https://github.com/llvm/llvm-project/issues/56137
 in short `-Xclang -load -Xclang <pass path> -Xclang -fpass-plugin=<path path>`
+
+### if you specify -flto to clang, and ask it to compile .c to .o, it will generate llvm bitcode for some reason
+remove the -flto, then it will be fine

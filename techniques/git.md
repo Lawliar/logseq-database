@@ -47,3 +47,9 @@ https://stackoverflow.com/questions/35821245/github-server-certificate-verificat
 
 ## ignore ^M at the end of each line
 https://stackoverflow.com/questions/1889559/make-git-diff-ignore-m
+
+### mounting linux folder to windows causes problems:
+https://www.reddit.com/r/git/comments/10dg36k/windows_carriage_return_m_showing_up_in_git_diff/
+
+### .gitignore does not work because you previously has added things
+https://stackoverflow.com/questions/25436312/gitignore-not-working
