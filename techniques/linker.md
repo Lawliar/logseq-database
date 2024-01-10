@@ -25,5 +25,6 @@ When porting to the latter, be aware of their own startup code, linker script, a
 It is often unwise to stick to the vendor's HAL, startup code, linker script, and so on and so forthIt is unwise to use the vendor's linker script and startup code, but use the RTOS's HAL.
 I mean, at the end of the day, maybe you can, but it takes a lot of time and efforts to debug, this very low level stuff.
 It's much more time efficient to just pick a combination of things that already work and add stuff on top of it (which is not architecture dependent)
+Also, consider which toolchain it uses, this is also very important
 
 

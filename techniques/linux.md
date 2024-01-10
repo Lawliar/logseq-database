@@ -164,3 +164,14 @@ find . -type f | xargs -Ix sed -i -r 's/\r//g' x
 
 ## manipulate local dns record
 `resolvectl status`
+
+## cursor on the terminal disappears
+`reset`
+
+## watch piped command
+https://unix.stackexchange.com/a/318860/439645
+
+watch 'command | othertool | yet-another-tool'
+
+## mount remote smb share without root
+https://unix.stackexchange.com/questions/466102/mouting-a-remote-drive-with-cifs
