@@ -48,3 +48,9 @@ to the client config file
 you can see this works by noting that `ip route` will not default to tun0
 you can also verify this by wiresharking your internet access
 also verify through access www.whatismyip.com
+
+## configuring the server: 
+### dev tun vs dev tap
+https://serverfault.com/a/125112/10199
+In short, dev tun, will only make your connected client see all the IP assigned machines.
+dev tap, feels like you connect to the switch, instead of the router. 

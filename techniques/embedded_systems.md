@@ -12,3 +12,10 @@ to use palSetPadMode(GPIOD, 6, PAL_MODE_ALTERNATE(7) and set the function for ce
 https://unix.stackexchange.com/questions/670636/unable-to-use-usb-dongle-based-on-usb-serial-converter-chip
 or just
 `sudo apt remove brltty`, as told by alejandro. 
+
+## newlib did not find the definition of _write and _read or etc
+So, the problem itself is kinda an old friend,
+the embedded application is linked against newlib, which reuiqres you to define those things (because in embedded application, io is highly customizable). 
+but, when I link the embedded application, with all other subfolders compiled as archieve (.a), it asked me to provide these symbols again. 
+But when I just compile these subfolders not as archieve but as individual object files, it stops complaining. 
+
