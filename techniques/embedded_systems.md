@@ -19,3 +19,22 @@ the embedded application is linked against newlib, which reuiqres you to define 
 but, when I link the embedded application, with all other subfolders compiled as archieve (.a), it asked me to provide these symbols again. 
 But when I just compile these subfolders not as archieve but as individual object files, it stops complaining. 
 
+I guess, archiving the object files to .a, is different from linking individual object files. 
+and the latter preserves more symbols?
+
+## using clang linker to link firmware
+do not do this, this is hell, at least currently is.
+
+## incooperate llvm into building your firmware.
+There is a huge motivator to use clang to build your firmware. 
+One major factor is, LLVM has many passes and instrumentations that are unmatched by gcc toolchain.
+However, the downside of using clang as the embedded toolchain is that, it might not work.
+Some evidences that I found along this line is:
+1. normal C statement in a naked function: clang will just say, this is not supported and abort, gcc will just carry on just fine.
+2. newlib compatibility and libgcc: many embedded projects still use functions (e.g., __libc_init_array) which is defined in arm-gcc toolchain, even if you use clang, the chance is, you have to link against the gcc-newlib when linking, and this has problem. And this is why I said, "don't use clang's linker" in the previous problem. 
+
+So, overall, the rule of thumb is:
+use clang only for the files that have to be compiled with clang, (e.g., user code that needs instrumentation), and leave everything else to gcc. And link the gcc-compiled code against the clang-compiled code. In this way, you don't have to deal with all the drivers, assembly, startup code, ISR 's pain triggered by compiling them with clang. And you enjoy the benefits of clang's instrumentation. 
+
+To do that, simply 1. build your user code(compiled with clang) with one cmake project(via add_library), build the library, then, compile your project normally with clang(another cmake project, but add_executable), then link them together.
+

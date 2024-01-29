@@ -59,3 +59,6 @@ in short `-Xclang -load -Xclang <pass path> -Xclang -fpass-plugin=<path path>`
 
 ### if you specify -flto to clang, and ask it to compile .c to .o, it will generate llvm bitcode for some reason
 remove the -flto, then it will be fine
+
+### no old version  API documentation?
+use internet archive for the specific page that you want to look for

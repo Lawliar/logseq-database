@@ -57,3 +57,9 @@ https://www.reddit.com/r/git/comments/10dg36k/windows_carriage_return_m_showing_
 ## .gitignore does not work because you previously has added things
 https://stackoverflow.com/questions/25436312/gitignore-not-working
 
+## if you already cloned a existing repo and want to add it to your own github repo, 
+you still have to do this:
+`
+git submodule add https://github.com/CarloWood/XYZ.git foo/bar
+`
+however, git will detect your existing version and use the right one. 

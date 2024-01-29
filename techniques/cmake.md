@@ -136,3 +136,6 @@ otherwise they won't take effect
 
 ## using embedded gcc with cmake, then missing reference to `_exit`
 https://stackoverflow.com/questions/53633705/cmake-the-c-compiler-is-not-able-to-compile-a-simple-test-program
+
+## CMAKE_TOOLCHAIN_FILE must be set **before** project
+the documentation says nothing about it
