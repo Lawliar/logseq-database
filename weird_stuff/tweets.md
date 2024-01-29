@@ -1,4 +1,4 @@
 - https://twitter.com/gmeline/status/1611788196836438016
 - https://twitter.com/HumansNoContext/status/1618564508020084738
 - https://twitter.com/fasc1nate/status/1692972875974902063?s=20
-
+- https://x.com/iamsankot/status/1749846012552991202?s=46&t=wW-dZgy8aWI5GEZNyba6fg
