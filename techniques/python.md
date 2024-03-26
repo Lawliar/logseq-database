@@ -160,3 +160,13 @@ https://stackoverflow.com/a/47017849
 suppose we have a nested dict here: in order to get all the keys of the inner dict together, we can just do:
 
 `times = np.sort(np.unique( np.array([inner_key for outer_dict in rounds.values() for inner_key in outer_dict.keys()]) )`
+
+## show where the package is installed
+python -m pip show <package name>
+
+## two files share the same global variable:
+
+in short: when you do `from xxx import a` and read a, `a` is not the variable defined in `xxx`
+instead, you should directly do `xxx.a`
+
+https://discuss.python.org/t/global-variables-shared-across-modules/16833/3

@@ -38,3 +38,9 @@ use clang only for the files that have to be compiled with clang, (e.g., user co
 
 To do that, simply 1. build your user code(compiled with clang) with one cmake project(via add_library), build the library, then, compile your project normally with clang(another cmake project, but add_executable), then link them together.
 
+
+## NXP board myth:
+- the NXP board is freedom kit, with MK66FN MCU (on-board segger debugger).
+1. I tried to connect it to segger flasher, it keeps saying cannot connect to segger target, even if, the segger target is shown in "lsusb". Then, I keep power cycling, sometimes, the segger target would disappear, and you see some error messages from dmesg, but I just keep power cycling, after 3 or 4 times, it worked, and the board is flashed.
+2. Then I proceed to run the firmware (with freeRTOS), and it did not work, connected to gdb, saw a hard fault, caused by initializing the  pxNewTCB->pxStack, which is pointed to 0x200(on the flash) for some reason. Not sure the cause, so I just keep power cycling. Then it worked. 
+

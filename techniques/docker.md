@@ -54,3 +54,17 @@ https://docs.docker.com/network/network-tutorial-standalone/
 ## docker cannot resolve dns:
 
 https://medium.com/@faithfulanere/solved-docker-build-could-not-resolve-archive-ubuntu-com-apt-get-fails-to-install-anything-9ea4dfdcdcf2
+
+## docker system df: local volume still exist after docker volume prune
+https://stackoverflow.com/a/40654726/7244310
+
+## use docker ce without docker desktop as according to some people docker desktop sucks
+### MacOS
+- use colima as the runtime https://github.com/abiosoft/colima
+- install buildx https://github.com/fullheart/my-dev-env/blob/main/osx/docker/colima/install_latest_buildx.sh
+Not sure about anything else, it is indeed faster than docker desktop.
+
+## bypass usb to docker container:
+### MacOS:
+- https://github.com/docker/for-mac/issues/900
+- in one word, no luck. Use usb to ip. 

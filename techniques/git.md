@@ -63,3 +63,7 @@ you still have to do this:
 git submodule add https://github.com/CarloWood/XYZ.git foo/bar
 `
 however, git will detect your existing version and use the right one. 
+
+## revert the change on one file
+`git checkout <commit where you want to revert to> <path to the file>`
+then commit

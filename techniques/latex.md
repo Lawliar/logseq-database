@@ -57,7 +57,7 @@ will number the line
 
 ## missing $$ inserted in includegraphics
 https://tex.stackexchange.com/questions/354109/includegraphics-missing-inserted-and-missing-number-treated-as-zero
-Basically becase the path to the image file has space(s), avoid the space for the included files
+Basically because the path to the image file has space(s), avoid the space for the included files
 e.g.
 ```
 \includegraphics[width=0.48\textwidth]{code snippets/ISR_example.pdf}

@@ -132,6 +132,7 @@ ldconfig
 
 ## `locate` from `apt install mlocate`
 usage: `locate libc.so.6` to see the locations of these libraries
+
 ## lddtree
 `sudo apt install pax-utils`
 
@@ -175,3 +176,23 @@ watch 'command | othertool | yet-another-tool'
 
 ## mount remote smb share without root
 https://unix.stackexchange.com/questions/466102/mouting-a-remote-drive-with-cifs
+
+## list mountable devices
+sudo fdisk -l
+
+## how to check text line endings
+use file
+it will show "ASCII text"
+or "ASCII text with CRLF line terminators"
+
+## which the executable look up is not following the $PATH order
+https://stackoverflow.com/questions/14429615/path-precedence-not-being-followed
+
+
+## follow dmesg
+`sudo dmesg -wH`
+
+## mount nfs(hosted in a ubuntu machine) from WSL or MacOS
+MacOS does not seem to need to do anything, just mount
+for WSL, although many discussions are held online, the only thing that works for me is here:
+https://www.digitalocean.com/community/tutorials/how-to-set-up-an-nfs-mount-on-ubuntu-20-04

@@ -47,3 +47,14 @@ When I open the same folder inside the mounted folder, from different host (i.e.
 
 ## latex workshop, pdf to code, or code to pdf
 https://tex.stackexchange.com/a/538802
+
+## using vscode to replace clion
+extentions:
+	- CMake Tools
+	- C/C++
+	- Output Colorizer
+related github issue:https://github.com/microsoft/vscode-cmake-tools/issues/478
+
+- things that are opposing doing so includes:
+	1. ControlMaster is not supported on windows, so you have to type your passphrase again and again, which is annoying. https://github.com/microsoft/vscode-remote-release/issues/96
+	2. Configuing cmake is not straight-forward, and it will run cmake by default in the `build` folder, which is invasive. 
