@@ -58,3 +58,9 @@ related github issue:https://github.com/microsoft/vscode-cmake-tools/issues/478
 - things that are opposing doing so includes:
 	1. ControlMaster is not supported on windows, so you have to type your passphrase again and again, which is annoying. https://github.com/microsoft/vscode-remote-release/issues/96
 	2. Configuing cmake is not straight-forward, and it will run cmake by default in the `build` folder, which is invasive. 
+
+### pass cmake arguments to vscode cmake
+https://stackoverflow.com/questions/67563340/how-to-pass-command-line-arguments-to-cmake-in-vscode
+
+## local history, in case you fucked things up:
+https://stackoverflow.com/a/71501328/7244310

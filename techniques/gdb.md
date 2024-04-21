@@ -16,3 +16,6 @@ https://visualgdb.com/gdbreference/commands/set_follow-fork-mode
 
 ## connect to gdb server through TCP port
 https://linuxlink.timesys.com/docs/wiki/engineering/HOWTO_Use_GDBServer
+
+## gdb complete list of command
+https://sourceware.org/gdb/current/onlinedocs/gdb.html/index.html#SEC_Contents

@@ -67,3 +67,14 @@ however, git will detect your existing version and use the right one.
 ## revert the change on one file
 `git checkout <commit where you want to revert to> <path to the file>`
 then commit
+
+## git ignore
+https://stackoverflow.com/questions/466764/git-command-to-show-which-specific-files-are-ignored-by-gitignore
+
+
+## pull or push commits to another remote repo
+1. use `git remote add <name> <URL>` to add another remote repo another than the one that you already use, give it a proper name.
+2. use `git fetch <name>` to fetch all the commits belonging to this newly added repo.
+3. use `git remote -v` to check out all the remote repos that you have added and their name.
+4. use `git log <name>/<branch>` to see all the commits in more details
+5. once you identify the commits that you wanna pull, use `git cherry-pick <commit id>` to pull that into your own. 

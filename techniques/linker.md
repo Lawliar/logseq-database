@@ -28,3 +28,4 @@ It's much more time efficient to just pick a combination of things that already 
 Also, consider which toolchain it uses, this is also very important
 
 
+## ldconfig to see all the in-path dynamically libraries
