@@ -14,3 +14,7 @@ basically:
 
 fuck the other hex editor
 
+
+## delete everything between spaces
+`daw` only deletes a word
+`daW` deletes the word seperated by spaces

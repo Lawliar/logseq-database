@@ -22,6 +22,11 @@ this automatically add `-I` to every front of every comma-sperated string
 directly pass the parameters to the linker, e.g., "-Wl,--defsym=__main__stack_size__=0x400"
 then this symbol will be defined in the linker script
 
+
+## shared library not found
+even when you `-L<libpath> -l<libname>`, when you run the binary, or ldd the binary, it still cannot find the specified lib
+so, you should use `-Wl,-rpath` to append the libpath to the executable.
+
 ## when you use pattern rules to specify the build target
 you have to use '%' symbol both at the target and the requisite. 
 And the '%' match the same string (which they called stem).
