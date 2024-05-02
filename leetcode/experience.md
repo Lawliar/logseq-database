@@ -147,3 +147,35 @@ two pointers, one at the front, one back at the back and move closer to the midd
 This makes sense, as two pointers have a combined movement of n.
 I remember I previously had the same idea for the similar problem ( 27. Remove Elements ), but this turns out slow,(why it worked for this one, but did not work for 27. )  27, in a sense is also two-pointer based solution, but that is two pointers starting from the same position, moving in one direction in different speeds, but, in here, it is two pointers starting from the opposite ends and move in different directions. 
 
+## DP for longest substring and longest subsequence:
+1. DP for longest substring:
+```
+       for i in range(n+1):
+            for j in range(n+1):
+                if(i == 0):
+                    dp[0][j] = ""
+                elif(j == 0):
+                    dp[i][0] = ""
+                elif s1[i-1]==s2[j-1]:
+                    dp[i][j] = dp[i-1][j-1] + s1[i-1]
+                else:
+                    dp[i][j] = ""
+                if len(dp[i][j]) > len(ret):
+                    ret = dp[i][j]
+```
+2. DP for longest subsequence:
+
+```
+        for i in range(n+1):
+            for j in range(n+1):
+                if(i == 0):
+                    dp[0][j] = ""
+                elif(j == 0):
+                    dp[i][0] = ""
+                elif s1[i]==s2[j]:
+                    dp[i][j] = dp[i-1][j-1] + s1[i]
+                else:
+                    op1 = dp[i-1][j]
+                    op2 = dp[i][j-1]
+                    dp[i][j] = op1 if len(op1) > len(op2) else op2 
+```
