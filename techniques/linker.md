@@ -22,10 +22,15 @@ Some RTOS (e.g., FREERTOS) just provide task scheduling and basic functionalitie
 Some RTOS (e.g., ChibiOS) provides scheduling and basic functionalities, and also provide HAL, linker script.  
 When using the former, you often times uses the vendor's (STM32) HAL.
 When porting to the latter, be aware of their own startup code, linker script, and unique compilation and linking symbols and flags. 
-It is often unwise to stick to the vendor's HAL, startup code, linker script, and so on and so forthIt is unwise to use the vendor's linker script and startup code, but use the RTOS's HAL.
+It is often unwise to stick to the vendor's HAL, startup code, linker script, and so on and so forth. 
+It is unwise to use the vendor's linker script and startup code, but use the RTOS's HAL.
 I mean, at the end of the day, maybe you can, but it takes a lot of time and efforts to debug, this very low level stuff.
 It's much more time efficient to just pick a combination of things that already work and add stuff on top of it (which is not architecture dependent)
 Also, consider which toolchain it uses, this is also very important
 
 
-## ldconfig to see all the in-path dynamically libraries
+## `ldconfig -p` to see all the in-path dynamically libraries
+
+
+## some good materials for further reading
+https://reverseengineering.stackexchange.com/a/1993

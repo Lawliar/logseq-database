@@ -55,6 +55,7 @@ there is likely to be a small partition, (the big one you try to create a new pa
 
 ## configure win11 as a server
 1. install openssh client and server, and make server automatic start
+	https://learn.microsoft.com/en-us/windows-server/administration/openssh/openssh_install_firstuse?tabs=gui
 2. firewall allow PING
 3. assign static IP to the ethernet interface
 4. in setting->system->remote desktop, enable remote access
@@ -62,3 +63,19 @@ Then you can access the computer with the user/password of the machine that is r
 
 ## remote login win with microsoft account
 https://cmdrkeene.com/remote-desktop-with-microsoft-account-sign-in/
+
+## windows explorer keeps working on it for dozens of seconds
+https://superuser.com/a/1083969/1279549
+
+## wake-on-lan WOL
+1. enable in WOL BIOS (I did not have such a setting in my BIOS, which turned out to be fine)
+	1.1 also, according to some post, you should not enable hibernation in BIOS. But I did, and it worked. I can wake the computer from hibernation even. I guess, as long as the fast startup is not enabled, it will be fine. 
+2. change the network interface setting for the specific NIC
+	2.1 In advanced:
+		2.1 Disable "shutdown wake-on-lan"
+		2.2 Disable any "green" setting (I did not have any, but some posts said so)
+		2.3 Enable "Wake on magic packet" 
+	2.2 In power management:
+		2.1 check "allow this device to wake the computer"
+		2.2 check "only allow a magic packet to wake the computer"
+3. Then you can wake, remember to configure the interface to static ip, and specify both the MAC and and the static ip from the "wakeonlan" 

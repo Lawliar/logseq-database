@@ -170,3 +170,11 @@ in short: when you do `from xxx import a` and read a, `a` is not the variable de
 instead, you should directly do `xxx.a`
 
 https://discuss.python.org/t/global-variables-shared-across-modules/16833/3
+
+
+## transpose a matrix
+list(zip(*matrix))
+
+### rotate the matrix clockwise by 90 degrees: transpose the matrix, reverse the columns
+### rotate the matrix counter clockwise by 90 degrees: transpose the matrix, reverse the rows
+### rotate the matrix by 180 degrees:reverse the rows and the colums

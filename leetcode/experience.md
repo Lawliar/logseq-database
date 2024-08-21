@@ -147,3 +147,102 @@ two pointers, one at the front, one back at the back and move closer to the midd
 This makes sense, as two pointers have a combined movement of n.
 I remember I previously had the same idea for the similar problem ( 27. Remove Elements ), but this turns out slow,(why it worked for this one, but did not work for 27. )  27, in a sense is also two-pointer based solution, but that is two pointers starting from the same position, moving in one direction in different speeds, but, in here, it is two pointers starting from the opposite ends and move in different directions. 
 
+
+## pitfall to initialize a 2D array:
+instead of "[[0]*m] * n", you should do [[0]*m for i in range(n)]
+
+
+## merge intervals:
+sort the intervals gives you the nice porperty of "if 1 and 2 are not mergable, then 1 and 3 are not mergeble as well"
+however, you do not have to modify and merge the interval in place(involing the list.pop), you can just create a new merge list, and keep updating the last element.
+
+### recursive dfs:
+dfs uses queue, bfs uses stack. (That is why you can code easily a bfs with recursion), but to use recursion to implement dfs, is stupid and inefficient, as it uses queue. 
+https://stackoverflow.com/questions/2549541/performing-breadth-first-search-recursively
+
+### in-order,pre-order,post-order, are different flavors of DFS.
+https://stackoverflow.com/a/4526966/7244310
+
+
+
+
+
+
+## important primitive data structures
+1. list: array
+2. doubled-linked list: collections.deque
+3. set and dict: hash maps
+
+## more advanced data structures:
+1. ordered_dict: `doubled-linked list` with `dict`
+
+
+## format integer to a string
+format(<the integer>, "<padding char><how many padding chars><format>")
+http://docs.python.org/2/library/string.html#format-specification-mini-language
+
+## bitwise-and-of numbers-range
+More specifically, the common prefix of all these bit strings is also the common prefix between the starting and ending numbers of the specified range (i.e. 9 and 12 respectively in the above example).
+
+## about the boundary conditions of binary search:
+since `p = l + (r-l) // 2`
+if `l` and `r` are neighboring elements, p will always point to `l`. Thinking about this will help figure out the bounary condition, if you do not want a dead loop.
+if the boundary condition is `l <= r`, then, `l` and `r` both have to move
+if the bounadry condition is `l < r`, then, `l` always have to move, while `r` does not have to. 
+
+## IPO:
+I kept thinking about, how to retrive the projects within the given capital efficiently.
+So, basically, I have an interval, I iterate through the projects checking if each project's capital falls into the interval.
+At the end of each interval, I increase the interval to something not overlapping with the current interval.
+
+I initially, iterate through all the projects everytime and check if its capital falls into the interval.
+When the interval gets updated, I iterate through again.
+
+However, I could have just sorted it!
+
+### recursion with cache <=> top-down DP
+recursion is also stack, which is also used for implementating BFS, right?
+one problem with recursion is that, it might process a problem which was solved before.
+
+### inverse a binary tree:
+- pre-order:
+`
+def invertTree(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
+    if root == None:
+         return None
+    root.right, root.left = root.left, root.right
+    self.invertTree(root.right)
+    self.invertTree(root.left)
+return root
+`
+- in-order
+`
+ def invertTree(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
+    if root == None:
+        return None
+    self.invertTree(root.left)
+    root.right, root.left = root.left, root.right
+    self.invertTree(root.left)
+    return root
+`
+- post-order
+`
+def invertTree(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
+    if root == None:
+        return None
+    self.invertTree(root.left)
+    self.invertTree(root.right)
+    root.right, root.left = root.left, root.right
+    return root
+`
+
+## circular sub array: consider prefix sum and suffix sum.
+
+### different advanced data structures
+- trie
+- complete binary tree => (min/max) heap/priority heap
+- LRU cache (doublly linked list  + hashmap) 
+
+## list is not hashable, while a class is. 
+
+## a = [[1,2]], then `for i, (x,y) in enumerate(a):` is legal

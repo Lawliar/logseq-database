@@ -113,3 +113,7 @@ to reduce the padded white space
 ### use p{1mm} or c{1mm} to specify the column length
 
 ### use \multicolumn{1}{c}{...} to still make each cell centered
+
+## remove page number
+\pagestyle{empty} failed to remove the page number for the title page
+but \pagenumbering{gobble} seems to be able to remove all of the page number
