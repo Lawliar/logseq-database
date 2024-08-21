@@ -78,3 +78,20 @@ https://stackoverflow.com/questions/466764/git-command-to-show-which-specific-fi
 3. use `git remote -v` to check out all the remote repos that you have added and their name.
 4. use `git log <name>/<branch>` to see all the commits in more details
 5. once you identify the commits that you wanna pull, use `git cherry-pick <commit id>` to pull that into your own. 
+
+## change submodule's url 
+https://stackoverflow.com/a/30885128/7244310
+1. change .gitmodule file
+2. `git submodule sync` to reflect that to the .git/config
+
+## update the submodule
+- If you want to modify other's repo, meanwhile, keeping them as submodules, then don't add the submodule from other's repo, you must fork. 
+- After fork, you can change, and update the submodules as you want, and you can commit changes to the submodule's repos that you also own.
+- However, you need to sync that to the main repo too. 
+- Suppose, now you update your submodules, and commit and push to their own repos, then 
+    1. cd to root,run `git submodule update --remote --merge`
+    2. cd to the submodule, check out the main/master branch
+    3. cd to the root, and add the new submodules
+    4. commit and push the changes
+
+
