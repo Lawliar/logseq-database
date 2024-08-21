@@ -246,3 +246,35 @@ def invertTree(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
 ## list is not hashable, while a class is. 
 
 ## a = [[1,2]], then `for i, (x,y) in enumerate(a):` is legal
+## DP for longest substring and longest subsequence:
+1. DP for longest substring:
+```
+       for i in range(n+1):
+            for j in range(n+1):
+                if(i == 0):
+                    dp[0][j] = ""
+                elif(j == 0):
+                    dp[i][0] = ""
+                elif s1[i-1]==s2[j-1]:
+                    dp[i][j] = dp[i-1][j-1] + s1[i-1]
+                else:
+                    dp[i][j] = ""
+                if len(dp[i][j]) > len(ret):
+                    ret = dp[i][j]
+```
+2. DP for longest subsequence:
+
+```
+        for i in range(n+1):
+            for j in range(n+1):
+                if(i == 0):
+                    dp[0][j] = ""
+                elif(j == 0):
+                    dp[i][0] = ""
+                elif s1[i]==s2[j]:
+                    dp[i][j] = dp[i-1][j-1] + s1[i]
+                else:
+                    op1 = dp[i-1][j]
+                    op2 = dp[i][j-1]
+                    dp[i][j] = op1 if len(op1) > len(op2) else op2 
+```
