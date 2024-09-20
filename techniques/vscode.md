@@ -64,3 +64,16 @@ https://stackoverflow.com/questions/67563340/how-to-pass-command-line-arguments-
 
 ## local history, in case you fucked things up:
 https://stackoverflow.com/a/71501328/7244310
+
+
+## uint32_t not a type name even if you include "stdint.h"
+https://stackoverflow.com/questions/53713543/uint32-t-does-not-name-a-type-vscode-with-stm32-in-windows
+
+it looks like "stm32f4xx_hal.h" is messing with "stdint.h"
+
+so you need to define the STM32XXX macro in your c_cpp_properties.json
+in case, you don't know how to do that, 
+ctrl+shift+p, and look for: `c/c++: edit configuration`
+
+## vscode failed to get the included header file
+https://stackoverflow.com/questions/77250124/how-can-i-solve-this-compile-error-please-update-your-includepath-squiggles-ar

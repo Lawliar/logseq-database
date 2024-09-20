@@ -10,6 +10,7 @@ to use palSetPadMode(GPIOD, 6, PAL_MODE_ALTERNATE(7) and set the function for ce
 
 ## unable to use USB-to-serial dongle
 https://unix.stackexchange.com/questions/670636/unable-to-use-usb-dongle-based-on-usb-serial-converter-chip
+https://askubuntu.com/questions/1403705/dev-ttyusb0-not-present-in-ubuntu-22-04
 or just
 `sudo apt remove brltty`, as told by alejandro. 
 
@@ -47,3 +48,26 @@ To do that, simply 1. build your user code(compiled with clang) with one cmake p
 
 ## 1. quit serial port terminal
 `CTRL` + `]`
+
+
+## pyserial
+after install pyserial, use `python -m serial.tools.list_ports`
+and serial.tools.miniterm
+
+## want to debug a variable, but it got optimized away?
+// Disable optimizations for this function so "frame" argument
+// does not get optimized away
+__attribute__((optimize("O0")))
+void watchdog_fault_handler_c(sContextStateFrame *frame) {}
+
+## gdb reset the board
+mon reset
+
+## write to RAM and read after reboot.
+Even though RAM is not reset between reboot, so you can use spared RAM to store some information. 
+However, since, you write to the RAM right before the reboot.
+That write might be cached and never touched memory. 
+Then the board reboots, when resets the cache, and the information is lost.
+
+
+

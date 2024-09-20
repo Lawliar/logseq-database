@@ -224,4 +224,8 @@ fi
 4. Even with this successful setting, I am not able to wake the computer from shutting down, rather only from suspension.
 
 
-
+## how to diff two command line outputs
+https://askubuntu.com/a/229450/803553
+### take-away
+1. `` substitutes commandline output to new commandline
+2. () is process substitution, it allows process input/output to be referred to using a filename. 

@@ -90,8 +90,7 @@ https://stackoverflow.com/a/30885128/7244310
 - However, you need to sync that to the main repo too. 
 - Suppose, now you update your submodules, and commit and push to their own repos, then 
     1. cd to root,run `git submodule update --remote --merge`
-    2. cd to the submodule, check out the main/master branch
-    3. cd to the root, and add the new submodules
-    4. commit and push the changes
+    2. cd to the root, and add the new submodules
+    3. commit and push the changes
 
 
