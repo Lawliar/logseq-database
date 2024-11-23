@@ -39,6 +39,7 @@ add "~/.virtualenv" to "venv folders" and "venv path", then you are good to go!
 ### remote-ssh promt passphrase multiple times then login failed
 1. I tried to delete ~/.vscode-server from the remote machine as suggesteed here, but no good https://github.com/microsoft/vscode-remote-release/issues/2518
 2. then I guess, this problem is because, I disabled password login from my remote machine (only allowing pubkey), but I don't have ssh-agent running. So I followed this https://code.visualstudio.com/docs/remote/troubleshooting#_enabling-alternate-ssh-authentication-methods to disable useLocalServer and configure ControlMaster. Then it finally worked.
+3. There is one time I thought this did not work on windows, but, after I specify ForwardAgent locally in my ssh config file, and setup the ssh agent to automatically spawn on windows through https://code.visualstudio.com/docs/remote/troubleshooting#_setting-up-the-ssh-agent (Set-Service ssh-agent -StartupType Automatic, Start-Service ssh-agent Get-Service ssh-agent), it finally worked.
 
 ### Opened tabs for same folder but in different environments
 So when you work on some folder, vscode will memorize the opened tabs when you last close the workspace.
@@ -76,4 +77,11 @@ in case, you don't know how to do that,
 ctrl+shift+p, and look for: `c/c++: edit configuration`
 
 ## vscode failed to get the included header file
-https://stackoverflow.com/questions/77250124/how-can-i-solve-this-compile-error-please-update-your-includepath-squiggles-ar
+fuck this:https://stackoverflow.com/questions/77250124/how-can-i-solve-this-compile-error-please-update-your-includepath-squiggles-ar
+do this instead:
+https://stackoverflow.com/a/50360945/7244310.
+Basically, instead of specifying each include dir, which is fucking impossible and hard to maintain.
+Just, ask cmake to generate the compile command, and pass that to the `compileCommands` in c_cpp_properties.json
+
+### so how to make makefile produce the same compilation options?
+https://github.com/rizsotto/Bear

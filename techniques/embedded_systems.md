@@ -70,4 +70,9 @@ That write might be cached and never touched memory.
 Then the board reboots, when resets the cache, and the information is lost.
 
 
-
+## how to dictate where the array or function goes to:
+the array is defined like this:
+const uint8_t DRIFT_LOOKUP_TABLE[1015] __attribute__((section(".ram"))) ={
+...
+}
+then, make sure, this .ram section appears in the linker script

@@ -1,5 +1,3 @@
-## check active IPs on a switch
-besides angry IP scanner, there is `nmap -sP 192.168.1.0/24`
 ## Make Linux Submodule
 ```
 make modules SUBDIRS=drivers/...

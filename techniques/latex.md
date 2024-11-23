@@ -117,3 +117,12 @@ to reduce the padded white space
 ## remove page number
 \pagestyle{empty} failed to remove the page number for the title page
 but \pagenumbering{gobble} seems to be able to remove all of the page number
+
+## undefined citation:
+somehow after I delete the options passed to natlib package, everything works
+
+## \label in table or figure, should always be placed right after \caption
+otherwise, the ref would appear as ??
+
+## convert svg to pdf 
+https://superuser.com/a/381128/1279549
