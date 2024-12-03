@@ -87,6 +87,9 @@ sth like this if you wanto to mount a folder shared in windows to linux
 `
 //10.110.150.217/Users/lcm/Documents/GitHub /home/lcm/win-github cifs username=lcm,noauto,sync,rw,users 0 0
 `
+### in /etc/fstab
+although you can use the device psedo file, (e.g., `/dev/sda`) to specify the device that you want to mount, it is recommended, however to use the UUID, since the device name is dynamnic and can be different from boot to boot. 
+as to how to use UUID, refer to here, https://help.ubuntu.com/community/UsingUUID, as well aw the fstab page above
 
 ## check if a mountpoint is mounted
 https://serverfault.com/questions/50585/whats-the-best-way-to-check-if-a-volume-is-mounted-in-a-bash-script
@@ -229,3 +232,11 @@ https://askubuntu.com/a/229450/803553
 ### take-away
 1. `` substitutes commandline output to new commandline
 2. () is process substitution, it allows process input/output to be referred to using a filename. 
+
+
+### linux as storage server
+- since I somehow have the set up of a linux machine with 4T SSD + 14 T Hard drive, and a windows machine with 512G SSD and A GPU.
+- It is natural to mount the storage to windows and MacOS.
+- Although I initially want to use nfs to rule it all, it works on MacOS-Linux, without issue, however, I saw here that NFS is not great on mounting to windows
+https://www.reddit.com/r/linuxadmin/comments/ji6uil/mount_nfs_on_windows/
+- So, I use Samba for the same storage following here https://ubuntu.com/tutorials/install-and-configure-samba#3-setting-up-samba
