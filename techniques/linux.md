@@ -240,3 +240,9 @@ https://askubuntu.com/a/229450/803553
 - Although I initially want to use nfs to rule it all, it works on MacOS-Linux, without issue, however, I saw here that NFS is not great on mounting to windows
 https://www.reddit.com/r/linuxadmin/comments/ji6uil/mount_nfs_on_windows/
 - So, I use Samba for the same storage following here https://ubuntu.com/tutorials/install-and-configure-samba#3-setting-up-samba
+
+### resize partition and subsequently, the fs w/ losing data.
+this usually happens in VM, as, in physical machine, you need to replace the physical median, which involves copy the data already, whereas in VM, if you run out of disk space, you can expand the physical capacity of the disk, then you need to resize the file system to fit the new size. 
+although this can be easily achieved through chatgpt, but it is still interesting to learn that, you first resize the partition, then you resize the fs.
+the first part is usually done through `fdisk`
+the latter is done through `resize2fs` for ext4

@@ -16,6 +16,8 @@ https://www.maketecheasier.com/mount-windows-share-folder-linux/
 https://unix.stackexchange.com/questions/251057/can-i-connect-a-ubuntu-linux-laptop-to-a-windows-10-laptop-via-ethernet-cable
 in short use ifconfig on windows to check its IP address
 and use manual mode on ubuntu to make sure it's on the same segment as the IP on windows w.w.w.x
+### mounted smb drive cannot see its size
+1. there seems to be two ways to mount a smb drive, one way is to add a short cut, another one will add a identifier (e.g., Z,Y,X), the latter will give you the size. 
 
 ## windows wake from sleep on its own
 ### check the reason 
