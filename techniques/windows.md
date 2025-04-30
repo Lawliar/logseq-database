@@ -81,3 +81,7 @@ https://superuser.com/a/1083969/1279549
 		2.1 check "allow this device to wake the computer"
 		2.2 check "only allow a magic packet to wake the computer"
 3. Then you can wake, remember to configure the interface to static ip, and specify both the MAC and and the static ip from the "wakeonlan" 
+
+
+## if some software cannot write to the disk, and it is in another language than Windows. 
+Looks like the game cannot make a save file the default language of your OS is not Japanese. If you are using windows 10: Go to Control Panel -> Clock,Language and Region -> Region ->Administrative tab -> Click on Change system locale... under the Language for non-Unicode programs to change the language the Japanese. Restart your computer and enjoy!

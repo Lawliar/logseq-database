@@ -246,3 +246,9 @@ this usually happens in VM, as, in physical machine, you need to replace the phy
 although this can be easily achieved through chatgpt, but it is still interesting to learn that, you first resize the partition, then you resize the fs.
 the first part is usually done through `fdisk`
 the latter is done through `resize2fs` for ext4
+
+### find duplicate files:
+find . ! -empty -type f -exec md5sum {} + | sort | uniq -w32 -dD
+
+### no loop device
+"sudo modprobe loop"
