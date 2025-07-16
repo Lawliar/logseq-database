@@ -91,8 +91,10 @@ sth like this if you wanto to mount a folder shared in windows to linux
 although you can use the device psedo file, (e.g., `/dev/sda`) to specify the device that you want to mount, it is recommended, however to use the UUID, since the device name is dynamnic and can be different from boot to boot. 
 as to how to use UUID, refer to here, https://help.ubuntu.com/community/UsingUUID, as well aw the fstab page above
 
-## check if a mountpoint is mounted
+also, if you are mounting a nfs drive, if you use user option, noexec,nodev,nosuid are enforced and you cannot overwrite
+### check if a mountpoint is mounted
 https://serverfault.com/questions/50585/whats-the-best-way-to-check-if-a-volume-is-mounted-in-a-bash-script
+
 
 ## failed to create symbolic link: operation not supported on socket
 most likely it's because you're making a shared library in a shared folder, making shared library is not supported, somehow? Just move to a local folder, because creating a sym link to a shared file(not physically located in the file system) does not make too much sense.

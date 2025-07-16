@@ -31,3 +31,7 @@ shift + right click
 
 ## ps1 prompt not colorized 
 https://unix.stackexchange.com/questions/360545/tmux-not-colorizing-ps1-prompt
+
+## reload conf without shuting down session
+tmux source-file ~/.tmux.conf
+https://superuser.com/questions/580992/how-do-i-reload-tmux-configuration

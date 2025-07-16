@@ -85,3 +85,36 @@ https://superuser.com/a/1083969/1279549
 
 ## if some software cannot write to the disk, and it is in another language than Windows. 
 Looks like the game cannot make a save file the default language of your OS is not Japanese. If you are using windows 10: Go to Control Panel -> Clock,Language and Region -> Region ->Administrative tab -> Click on Change system locale... under the Language for non-Unicode programs to change the language the Japanese. Restart your computer and enjoy!
+
+
+## attached disk but it did not appear automatically
+
+most likely it is formatted by linux/mac
+do the following:
+1. run cmd
+2. run diskpart.exe
+3. list disk(it should appear here, also in the device manager)
+4. clean (effectively clean everything on the disk)
+5. create partition primary
+6. active
+7. format fs=fat32 quick (fs can be NTFS/exFAT/FAT32) 
+8. assign (assign a driver letter)
+9. exit
+
+## ethernet not working (operation unsuccessful)
+1. https://www.youtube.com/watch?v=dXUfZ3yQKjs&ab_channel=IzzyLaif this guy sounds confident, and plausible, although it did not work for me.
+2. I download Intel® Ethernet Adapter Complete Driver Pack from Intel website, and install APP/SETUP/SETUPBD/Winx64/SetupBD and it worked
+
+## powershell/cmd admin session cannot find network drive
+you need to net use Y: \\<HOST>\share in that session 
+
+## windows last shutdown reason:
+windows reliability monitor
+
+
+## nvidia gpu on wsl2
+1. just install wsl2 on win11.
+2. make sure your windows has nvidia apps and drivers.
+3. just install cuda on WSL2 follow this:
+https://docs.nvidia.com/cuda/wsl-user-guide/index.html#getting-started-with-cuda-on-wsl
+(lspci does not show any NVIDIA devices, guess it is something else)
